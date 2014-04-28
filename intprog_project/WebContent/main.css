@@ -1,0 +1,22 @@
+h1
+{
+	text-align: center;
+}
+table
+{
+	border: 1pt solid black;
+	text-align: center;
+	margin-left: 50pt;
+
+}
+
+td
+{
+border: 1px solid black;
+width: 100pt;
+}
+td.namn
+{
+border: 1px solid black;
+width: 200pt;
+}
