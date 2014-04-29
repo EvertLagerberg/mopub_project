@@ -45,7 +45,6 @@ import bean.User;
 import java.sql.Timestamp;
 
 
-
 public class LocationController extends HttpServlet {
 
 	private static Connection conn = null;

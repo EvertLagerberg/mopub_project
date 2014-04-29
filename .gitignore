@@ -1,8 +1,7 @@
 # ignore ics.file-uploads:
 intprog_project/uploads/
 
-#ignore database connection:
-Java Resources/src/controller/connectDB.java
-intprog_project/WebContent/META-INF/context.xml
+
+
 
 intprog_project/build
