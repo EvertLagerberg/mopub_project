@@ -53,7 +53,7 @@ public class EventController extends HttpServlet {
 
 	private static Connection conn;
 	public static User loggedinUser = null;
-	private final String upload_directory = "/Users/evertlagerberg/Documents/workspaceEE/intprog_project/uploads";
+	private final String upload_directory = "/Users/evertlagerberg/Git/mopub_project/intprog_project/uploads";
 	private ComponentList list;
 	String formated_starttime;
 	String formated_endtime;
