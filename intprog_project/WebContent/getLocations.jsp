@@ -17,7 +17,6 @@
 </c:if>
 <p><c:out value="${message}"/></p>
 <form action="/intprog_project/LocationController" >
-<input type=text name=username size=20 />
 <p><input type=submit value="Ladda in locationdata"/></p>
 </form>
 
