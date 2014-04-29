@@ -6,14 +6,15 @@ drop table users_events;
 drop table users;
 drop table events;
 drop table groups;
+drop table locations;
+
 
 create table users (
-	id int NOT NULL AUTO_INCREMENT,
-    username varchar(64),
+    username varchar(64) NOT NULL,
     url varchar(200),
     email varchar(64),
     
-	PRIMARY KEY (id)
+	PRIMARY KEY (username)
 ) ENGINE=INNODB;
 
 
@@ -30,15 +31,15 @@ create table events (
 
 
 create table users_events (
-	user_id int NOT NULL,
+	username varchar(64) NOT NULL,
 	event_id int NOT NULL,
 	
-	PRIMARY KEY (user_id, event_id),
+	PRIMARY KEY (username, event_id),
 	
-	INDEX (user_id),
+	INDEX (username),
 	INDEX (event_id),
 	
-	FOREIGN KEY (user_id) REFERENCES users(id)
+	FOREIGN KEY (username) REFERENCES users(username)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE,
 	
@@ -52,10 +53,10 @@ create table users_events (
 create table groups (
 	id int NOT NULL AUTO_INCREMENT,
 	name varchar(64),
-	startime int,
-	endtime int,
-	startdate datetime,
-	enddate datetime,
+	starttime time,
+	endtime time,
+	startdate date,
+	enddate date,
 	
 	PRIMARY KEY (id)
 ) ENGINE=INNODB;
@@ -77,29 +78,31 @@ create table groups_weekdays (
 
 create table groups_users (
 	group_id int NOT NULL,
-	user_id int NOT NULL,
+	username varchar(64) NOT NULL,
 	
-	PRIMARY KEY (group_id, user_id),
+	PRIMARY KEY (group_id, username),
 	
 	
 	INDEX (group_id),
-	INDEX (user_id),
+	INDEX (username),
 	
 	FOREIGN KEY (group_id) REFERENCES groups(id)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE,
 	
-	FOREIGN KEY (user_id) REFERENCES users(id)
+	FOREIGN KEY (username) REFERENCES users(username)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE
 	
 
 ) ENGINE=INNODB;
 
-
+create table locations (
+	room varchar(64) NOT NULL,
+	longitude float NOT NULL,
+	latitude float NOT NULL,
 	
+	PRIMARY KEY (room)
 	
 
-
-
-
+) ENGINE=INNODB;
