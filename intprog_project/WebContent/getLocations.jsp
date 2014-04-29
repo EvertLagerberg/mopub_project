@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Lägg in Geolocations</title>
+<title>Geolocations</title>
 </head>
 <body>
 
@@ -18,28 +18,12 @@
 <p><c:out value="${message}"/></p>
 <form action="/intprog_project/LocationController" >
 <input type=text name=username size=20 />
-<p><input type=submit value="Ladda in locationionen"/></p>
+<p><input type=submit value="Ladda in locationdata"/></p>
 </form>
 
 
 
-<table>
-<tr>
-<td>Room</td>
-<td>Longitude</td>
-<td>Latitude</td>
-</tr>
 
-<c:forEach items="${locationlist}" var="location">
-<tr>
-<td><c:out value="${location.room}"/></td>
-<td><c:out value="${location.longitude}"/></td>
-<td><c:out value="${location.latitude}"/></td>
-
-
-</tr>
-</c:forEach>
-</table>
 
 
 
