@@ -57,6 +57,7 @@ public class EventController extends HttpServlet {
 	private ComponentList list;
 	String formated_starttime;
 	String formated_endtime;
+	String[] split_rooms;
 	boolean correctUser = false;
 	ArrayList<Group> grouplist = new ArrayList<Group>();
 	static String username_FORM = "";
@@ -278,7 +279,7 @@ public class EventController extends HttpServlet {
 
 	// parse calendarobjekt to events and insert them into database.
 	private void parseCalendartoDB(Calendar calendar) throws ParseException {
-
+		int event_id = 0;
 		list = calendar.getComponents();
 		String event_name = "";
 		String event_description = "";
@@ -317,14 +318,19 @@ public class EventController extends HttpServlet {
 
 				} else if (s.contains("LOCATION:")) {
 					String[] strip = s.split("LOCATION:");
-					event_location = strip[1];
+					split_rooms = strip[1].split("\\\\,");
+					
+					
+					System.out.println("8th Location syntax" + split_rooms[0]);
+					
+					
 
 				}
 
 			}
 			try {
 
-				query = "INSERT INTO events (name,description,starttime,endtime,location) VALUES (?,?,?,?,?)";
+				query = "INSERT INTO events (name,description,starttime,endtime) VALUES (?,?,?,?)";
 				PreparedStatement pstmt = conn.prepareStatement(query,
 						Statement.RETURN_GENERATED_KEYS);
 
@@ -332,7 +338,6 @@ public class EventController extends HttpServlet {
 				pstmt.setString(2, event_description);
 				pstmt.setString(3, formated_starttime);
 				pstmt.setString(4, formated_endtime);
-				pstmt.setString(5, event_location);
 
 				pstmt.executeUpdate();
 
@@ -341,12 +346,33 @@ public class EventController extends HttpServlet {
 					query = "INSERT INTO users_events (username,event_id) VALUES (?,?)";
 					pstmt = conn.prepareStatement(query);
 					pstmt.setString(1, loggedinUser.getUsername());
-					pstmt.setInt(2, generatedID.getInt(1));
+					event_id = generatedID.getInt(1);
+					pstmt.setInt(2, event_id);
 					pstmt.executeUpdate();
 				}
 			} catch (SQLException e) {
 				System.out.println(e);
 			}
+			
+			for(int i=0;i< split_rooms.length;i++){
+			try {
+				query = "INSERT INTO events_locations (event_id,room) VALUES (?,?)";
+				PreparedStatement pstmt = conn.prepareStatement(query);
+
+				pstmt.setInt(1, event_id);
+				pstmt.setString(2, split_rooms[i].trim());
+	
+
+				pstmt.executeUpdate();
+
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
+			}
+			
+			
+			
+			
 
 		}
 	}

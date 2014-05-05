@@ -37,6 +37,10 @@ public class Event {
 	private String location;
 	private String username;
 	private String weekday;
+	private String room;
+	private Float longitude;
+	private Float latitude;
+	
 
 	private Connection conn = null;
 
@@ -74,6 +78,18 @@ public class Event {
 	public void setWeekday(String e) {
 		this.weekday = e;
 	}
+	
+	public void setRoom(String e) {
+		this.room = e;
+	}
+	
+	public void setLongitude(Float e) {
+		this.longitude = e;
+	}
+	
+	public void setLatiude(Float e) {
+		this.latitude = e;
+	}
 
 	public int getID() {
 		return id;
@@ -106,6 +122,20 @@ public class Event {
 	public String getWeekday() {
 		return weekday;
 	}
+	
+	
+	public String getRoom() {
+		return room;
+	}
+	
+	public Float Longitude() {
+		return longitude;
+	}
+	
+	public Float getLatitude() {
+		return latitude;
+	}
+	
 
 	// end of class
 }

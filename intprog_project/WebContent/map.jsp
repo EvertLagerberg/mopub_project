@@ -5,9 +5,11 @@
 
 <head>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<title>Result</title>
+<title>Map Page</title>
 </head>
+
 <body>
-<p><c:out value="${message}"/></p>
+<h1>MAP PAGE</h1>
+<p>Välkommen hit!NU <c:out value="${Username}"/></p>
 </body>
 </html>

@@ -52,6 +52,16 @@
   </servlet-mapping>
   
   
+  <servlet>
+  <servlet-name>LoginController</servlet-name>
+  <servlet-class>controller.LoginController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>LoginController</servlet-name>
+  <url-pattern>/LoginController</url-pattern>
+  </servlet-mapping>
+  
+  
   
   
   <session-config>
@@ -66,7 +76,7 @@
 </resource-ref>
   
   
-  
+
   
   
   <display-name>intprog_project</display-name>
@@ -78,4 +88,10 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+
+  
+  
+  
+  
 </web-app>
