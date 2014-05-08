@@ -116,6 +116,38 @@ function checkTime(i) {
 }
 
    </script>
+   
+   
+   <table>
+<tr>
+<td>Username</td>
+<td>Starttime</td>
+<td>Endtime</td>
+<td class="namn">Namn</td>
+<td>Location</td>
+<td>Longitude</td>
+<td>Latitude</td>
+
+
+
+
+</tr>
+
+<c:forEach items="${eventlist}" var="event">
+<tr>
+<td><c:out value="${event.username}"/></td>
+<td><c:out value="${event.starttime}"/></td>
+<td><c:out value="${event.endtime}"/></td>
+<td><c:out value="${event.name}"/></td>
+<td><c:out value="${event.room}"/></td>
+<td><c:out value="${event.longitude}"/></td>
+<td><c:out value="${event.latitude}"/></td>
+
+</tr>
+</c:forEach>
+</table>
+   
+   
   </body>
 </html>
 

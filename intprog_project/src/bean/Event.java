@@ -34,9 +34,7 @@ public class Event {
 	private String description;
 	private String starttime;
 	private String endtime;
-	private String location;
 	private String username;
-	private String weekday;
 	private String room;
 	private Float longitude;
 	private Float latitude;
@@ -47,7 +45,7 @@ public class Event {
 	public Event() {
 	}
 
-	public void setID(int e) {
+	public void setId(int e) {
 		this.id = e;
 	}
 
@@ -67,17 +65,11 @@ public class Event {
 		this.endtime = e;
 	}
 
-	public void setLocation(String e) {
-		this.location = e;
-	}
 	
 	public void setUsername(String e) {
 		this.username = e;
 	}
 	
-	public void setWeekday(String e) {
-		this.weekday = e;
-	}
 	
 	public void setRoom(String e) {
 		this.room = e;
@@ -87,11 +79,11 @@ public class Event {
 		this.longitude = e;
 	}
 	
-	public void setLatiude(Float e) {
+	public void setLatitude(Float e) {
 		this.latitude = e;
 	}
 
-	public int getID() {
+	public int getId() {
 		return id;
 	}
 
@@ -111,16 +103,9 @@ public class Event {
 		return endtime;
 	}
 
-	public String getLocation() {
-		return location;
-	}
 	
 	public String getUsername() {
 		return username;
-	}
-	
-	public String getWeekday() {
-		return weekday;
 	}
 	
 	
@@ -128,7 +113,7 @@ public class Event {
 		return room;
 	}
 	
-	public Float Longitude() {
+	public Float getLongitude() {
 		return longitude;
 	}
 	

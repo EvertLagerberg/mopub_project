@@ -11,20 +11,7 @@
   <url-pattern>/EventController</url-pattern>
   </servlet-mapping>
   
-  
-  
-  <servlet>
-  <servlet-name>MainController</servlet-name>
-  <servlet-class>controller.MainController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  <servlet-name>MainController</servlet-name>
-  <url-pattern>/schema</url-pattern>
-  </servlet-mapping>
-  
-  
-  
-  
+
   <servlet>
   <servlet-name>LocationController</servlet-name>
   <servlet-class>controller.LocationController</servlet-class>
@@ -45,14 +32,6 @@
   </servlet-mapping>
   
   
-  <servlet>
-  <servlet-name>UrlController</servlet-name>
-  <servlet-class>controller.UrlController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  <servlet-name>UrlController</servlet-name>
-  <url-pattern>/UrlController</url-pattern>
-  </servlet-mapping>
   
   
   

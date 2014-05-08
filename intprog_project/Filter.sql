@@ -2,4 +2,4 @@ SELECT events.*,users_events.username, groups_weekdays.wkday FROM groups_users I
 
 
 
-select users.username, events.*, locations.* from users inner join users_events on users.username=users_events.username inner join events on users_events.event_id=events.id inner join events_locations on events.id=events_locations.event_id inner join locations on locations.room= events_locations.room;
+select events.*, locations.* from events inner join events_locations on events.id=events_locations.event_id inner join locations on locations.room= events_locations.room;

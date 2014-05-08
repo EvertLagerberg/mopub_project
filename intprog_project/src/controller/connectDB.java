@@ -5,11 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import bean.Event;
 import bean.Location;
 
 public class connectDB {
@@ -141,4 +143,43 @@ public class connectDB {
 		}
 		return null;
 	}
+	
+	public static ArrayList getEvents(String username) {
+		conn = connect();
+
+		ArrayList<Event> list = new ArrayList<Event>();
+		try {
+			ResultSet rs = null;
+			String query = "select events.*, locations.* from "
+			+ "events inner join events_locations on events.id=events_locations.event_id "
+			+"inner join locations on locations.room= events_locations.room where events.username =?";
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, username);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Event e = new Event();
+				e.setId(rs.getInt("id"));
+				e.setName(rs.getString("name"));
+				e.setDescription(rs.getString("description"));
+				e.setStarttime(rs.getString("starttime"));
+				e.setEndtime(rs.getString("endtime"));
+				e.setUsername(rs.getString("username"));
+				e.setRoom(rs.getString("room"));
+				e.setLongitude(rs.getFloat("longitude"));
+				e.setLatitude(rs.getFloat("latitude"));
+				
+				list.add(e);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+
+		return list;
+	}
+	
+	
+	
+	
+//end of class	
 }

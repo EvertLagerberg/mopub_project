@@ -25,6 +25,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import bean.Event;
 import bean.Group;
 import bean.User;
 
@@ -44,6 +45,10 @@ public class LoginController extends HttpServlet {
 
 		if (connectDB.findUser(username)) {
 			System.out.println("True");
+			
+			ArrayList<Event> eventlist = connectDB.getEvents(username);
+			request.setAttribute("eventlist", eventlist);
+			
 
 			try {
 				RequestDispatcher rd = request.getRequestDispatcher("map.jsp");
