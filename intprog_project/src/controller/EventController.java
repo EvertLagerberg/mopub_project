@@ -17,9 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -43,6 +45,7 @@ import bean.User;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.data.ParserException;
@@ -64,7 +67,38 @@ public class EventController extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		HttpSession session = request.getSession(true);}
+		HttpSession session = request.getSession(true);
+
+		if(request.getParameter("action").equals("addUrl")){
+			String input = request.getParameter("url");
+			try{
+				URL schemafile = new URL(input);
+				BufferedReader in = new BufferedReader(new InputStreamReader(schemafile.openStream()));
+
+				String line;
+				// Nu har jag lagt in varje rad i en array bara för att få se resultatet på sidan. 
+				ArrayList<String> schemaList= new ArrayList<String>();
+				while ((line = in.readLine()) != null){
+					schemaList.add(line);
+				}
+				in.close();
+
+				request.setAttribute("schemaList", schemaList);
+
+				RequestDispatcher rd2 =
+						request.getRequestDispatcher("register.jsp");
+				rd2.forward(request, response);
+			}
+			catch(ServletException e){
+				System.out.print(e.getMessage());
+			}
+			catch(IOException e){
+				System.out.print(e.getMessage());
+			}
+
+
+		}
+	}
 		// end of main function
 	
 	// Convert .ics-file to java calendar object
