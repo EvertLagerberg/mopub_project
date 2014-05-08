@@ -55,7 +55,7 @@ public class connectDB {
 	
 
 	public static ResultSet insertEvent(String username, String name, String description, String starttime, String endtime){
-		query = "INSERT INTO events (username,name,description,starttime,endtime) VALUES (?,?,?,?)";
+		query = "INSERT INTO events (username,name,description,starttime,endtime) VALUES (?,?,?,?,?)";
 		conn = connect(); 
 		
 		try {
@@ -85,11 +85,8 @@ public class connectDB {
 }
 	
 	public static void insertEventsLocation(int event_id, String room){
-		query = "INSERT INTO events (username,name,description,starttime,endtime) VALUES (?,?,?,?,?)";
 		conn = connect(); 
 		try {
-		pstmt = conn.prepareStatement(query,
-		Statement.RETURN_GENERATED_KEYS);
 		query = "INSERT INTO events_locations (event_id,room) VALUES (?,?)";
 		PreparedStatement pstmt = conn.prepareStatement(query);
 		pstmt.setInt(1, event_id);
