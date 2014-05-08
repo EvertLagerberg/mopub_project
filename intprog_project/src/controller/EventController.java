@@ -71,7 +71,6 @@ public class EventController extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		username = session.getAttribute("Username").toString();
 
-
 		if (request.getParameter("action").equals("addUrl")) {
 			String input = request.getParameter("url");
 			try {
@@ -159,17 +158,17 @@ public class EventController extends HttpServlet {
 			} else if (s.contains("END:VEVENT")) {
 
 				System.out.println("\n");
-				// Username ska skickas till EventController
 				
+
 				event_id = connectDB
 						.insertEvent(username, event_name, event_description,
 								formated_starttime, formated_endtime);
-				if(!split_rooms[0].equals("Saknas")){
-				for (int i = 0; i < split_rooms.length; i++) {
-					System.out.println(event_id);
-					connectDB.insertEventsLocation(event_id,
-							split_rooms[i].trim());
-				}
+				if (!split_rooms[0].equals("Saknas")) {
+					for (int i = 0; i < split_rooms.length; i++) {
+						System.out.println(event_id);
+						connectDB.insertEventsLocation(event_id,
+								split_rooms[i].trim());
+					}
 				}
 
 			}
