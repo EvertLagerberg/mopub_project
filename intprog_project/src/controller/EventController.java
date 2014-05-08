@@ -64,199 +64,9 @@ public class EventController extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-
-		conn = connectDB.connect();
-		HttpSession session = request.getSession(true);
-		String name = "";
-		String message = "";
-
-		String usermail_FORM = "";
-		String userUrl_FORM = "";
-
-		// Read in new user + user calendar from form
-		if (ServletFileUpload.isMultipartContent(request)) {
-			
-			// username_FORM = request.getParameter("username");
-
-			try {
-				List<FileItem> formfields = new ServletFileUpload(
-						new DiskFileItemFactory()).parseRequest(request);
-
-				for (FileItem item : formfields) {
-					if (item.isFormField()) {
-
-						if (item.getFieldName().equals("username")) {
-							username_FORM = item.getString();
-
-						}
-						if (item.getFieldName().equals("usermail")) {
-							usermail_FORM = item.getString();
-
-						}
-						if (item.getFieldName().equals("userurl")) {
-							userUrl_FORM = item.getString();
-
-						}
-					}
-
-					// read in .ics-files
-					if (!item.isFormField()) {
-
-						name = username_FORM + ".ics";
-						item.write(new File(upload_directory + File.separator
-								+ name));
-					}
-				}
-				if (findUser(username_FORM) && usermail_FORM.equals("")
-						&& userUrl_FORM.equals("")) {
-					request.setAttribute("message", "Blivande huvudsida");
-					session.setAttribute("Username", username_FORM);
-					grouplist = getGroupsDB();
-
-					request.setAttribute("grouplist", grouplist);
-
-					try {
-						RequestDispatcher rd = request
-								.getRequestDispatcher("main.jsp");
-						rd.forward(request, response);
-					} catch (ServletException e) {
-						System.out.print(e.getMessage());
-					} catch (IOException e) {
-						System.out.print(e.getMessage());
-					}
-					return;
-				} else if (!findUser(username_FORM) && usermail_FORM.equals("")
-						&& userUrl_FORM.equals("")) {
-					request.setAttribute("message",
-							"Finns ingen med det användarnamnet!");
-
-					try {
-						RequestDispatcher rd = request
-								.getRequestDispatcher("login.jsp");
-						rd.forward(request, response);
-					} catch (ServletException e) {
-						System.out.print(e.getMessage());
-					} catch (IOException e) {
-						System.out.print(e.getMessage());
-					}
-					return;
-				} else if (findUser(username_FORM)) {
-
-					request.setAttribute("message",
-							"Användarnamnet är upptaget");
-				} else {
-					loggedinUser = insertUser(username_FORM, usermail_FORM,
-							userUrl_FORM);
-
-					// session.setAttribute("UserID", loggedinUser.getID());
-					session.setAttribute("Username", loggedinUser.getUsername());
-
-					// File uploaded successfully
-					request.setAttribute("message", "Användaren är inlagd");
-					correctUser = true;
-				}
-
-			} catch (Exception ex) {
-
-				request.setAttribute("message", "Something went wrong" + ex);
-			}
-			if (correctUser) {
-				Calendar calendar = createCalendar(upload_directory
-						+ File.separator + name);
-
-				try {
-					parseCalendartoDB(calendar);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				try {
-					conn.close();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-				try {
-
-					RequestDispatcher rd = request
-							.getRequestDispatcher("login.jsp");
-					rd.forward(request, response);
-				} catch (ServletException e) {
-					System.out.print(e.getMessage());
-				} catch (IOException e) {
-					System.out.print(e.getMessage());
-				}
-			}
-
-			else {
-				try {
-					RequestDispatcher rd = request
-							.getRequestDispatcher("userForm.jsp");
-					rd.forward(request, response);
-				} catch (ServletException e) {
-					System.out.print(e.getMessage());
-				} catch (IOException e) {
-					System.out.print(e.getMessage());
-				}
-			}
-			try {
-				conn.close();
-
-			} catch (SQLException e) {
-				System.out.print(e.getMessage());
-
-			}
-		}
+		HttpSession session = request.getSession(true);}
 		// end of main function
-	}
-
-	// find user in database
-	public static Boolean findUser(String username) {
-		String query = "";
-
-		try {
-
-			query = "SELECT * FROM users WHERE username= ?";
-			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setString(1, username);
-			ResultSet rs = null;
-			rs = stmt.executeQuery();
-			if (rs.next()) {
-				return true;
-			} else {
-				return false;
-			}
-		} catch (SQLException e) {
-			System.out.println(query);
-		}
-		return null;
-	}
-
-	// inser new user in database
-	public User insertUser(String username, String usermail, String userUrl) {
-		User u = null;
-		String query = "";
-		try {
-
-			query = "INSERT INTO users (username,url,email) VALUES (?,?,?)";
-			PreparedStatement pstmt = conn.prepareStatement(query,
-					Statement.RETURN_GENERATED_KEYS);
-			pstmt.setString(1, username);
-			pstmt.setString(2, userUrl);
-			pstmt.setString(3, usermail);
-			pstmt.executeUpdate();
-			u = new User();
-			u.setUsername(username);
-			u.setUsermail(usermail);
-			u.setUserUrl(userUrl);
-
-		} catch (SQLException e) {
-			System.out.println("Fel med att sätt in användare");
-		}
-		return u;
-	}
-
+	
 	// Convert .ics-file to java calendar object
 	private Calendar createCalendar(String filepath) throws IOException {
 
@@ -328,88 +138,19 @@ public class EventController extends HttpServlet {
 				}
 
 			}
-			try {
-
-				query = "INSERT INTO events (name,description,starttime,endtime) VALUES (?,?,?,?)";
-				PreparedStatement pstmt = conn.prepareStatement(query,
-						Statement.RETURN_GENERATED_KEYS);
-
-				pstmt.setString(1, event_name);
-				pstmt.setString(2, event_description);
-				pstmt.setString(3, formated_starttime);
-				pstmt.setString(4, formated_endtime);
-
-				pstmt.executeUpdate();
-
-				ResultSet generatedID = pstmt.getGeneratedKeys();
-				if (generatedID.next()) {
-					query = "INSERT INTO users_events (username,event_id) VALUES (?,?)";
-					pstmt = conn.prepareStatement(query);
-					pstmt.setString(1, loggedinUser.getUsername());
+			    // Username ska skickas till EventController
+				String username = "Tommy";
+				ResultSet generatedID = connectDB.insertEvent(username, event_name,event_description,formated_starttime,formated_endtime);
+				try {
 					event_id = generatedID.getInt(1);
-					pstmt.setInt(2, event_id);
-					pstmt.executeUpdate();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
 				}
-			} catch (SQLException e) {
-				System.out.println(e);
-			}
-			
+				
 			for(int i=0;i< split_rooms.length;i++){
-			try {
-				query = "INSERT INTO events_locations (event_id,room) VALUES (?,?)";
-				PreparedStatement pstmt = conn.prepareStatement(query);
-
-				pstmt.setInt(1, event_id);
-				pstmt.setString(2, split_rooms[i].trim());
-	
-
-				pstmt.executeUpdate();
-
-			} catch (SQLException e) {
-				System.out.println(e);
-			}
-			}
-			
-			
-			
-			
-
+			  connectDB.insertEventsLocation(event_id, split_rooms[i].trim());
+				}
 		}
-	}
-
-	// get all groups in DB agdfnd put sdfsfdfsd in ArrayList
-	public static ArrayList getGroupsDB() {
-
-		ArrayList list = new ArrayList();
-		try {
-
-			ResultSet rs = null;
-			// String query = "select * from groups";
-			String query = "select * from groups inner join"
-					+ " groups_users on groups.id = groups_users.group_id where"
-					+ " groups_users.username = ?";
-
-			PreparedStatement pstmt = conn.prepareStatement(query);
-
-			pstmt.setString(1, username_FORM);
-
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				Group g = new Group();
-				g.setID(rs.getInt("id"));
-
-				g.setName(rs.getString("name"));
-				g.setStarttime(rs.getString("starttime"));
-				g.setEndtime(rs.getString("endtime"));
-				g.setStartdate(rs.getString("startdate"));
-				g.setEnddate(rs.getString("enddate"));
-
-				list.add(g);
-			}
-		} catch (SQLException e) {
-			System.out.println("fel" + e);
-		}
-		return list;
 	}
 
 	// end of class

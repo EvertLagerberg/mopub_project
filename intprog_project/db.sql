@@ -1,19 +1,12 @@
-use intprog_project;
 
 drop table events_locations;
-drop table groups_weekdays;
-drop table groups_users;
 drop table users_events;
 drop table users;
 drop table events;
-drop table groups;
 drop table locations;
 
 create table users (
     username varchar(64) NOT NULL,
-    url varchar(200),
-    email varchar(64),
-    
 	PRIMARY KEY (username)
 ) ENGINE=INNODB;
 
@@ -47,53 +40,6 @@ create table users_events (
 	ON UPDATE CASCADE
 	
 	
-) ENGINE=INNODB;
-
-create table groups (
-	id int NOT NULL AUTO_INCREMENT,
-	name varchar(64),
-	starttime time,
-	endtime time,
-	startdate date,
-	enddate date,
-	
-	PRIMARY KEY (id)
-) ENGINE=INNODB;
-
-
-create table groups_weekdays (
-	group_id int NOT NULL,
-	wkday varchar(64) NOT NULL,
-	
-	PRIMARY KEY (group_id, wkday),
-	
-	INDEX (group_id),
-	
-	FOREIGN KEY (group_id) REFERENCES groups(id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
-	
-) ENGINE=INNODB;
-
-create table groups_users (
-	group_id int NOT NULL,
-	username varchar(64) NOT NULL,
-	
-	PRIMARY KEY (group_id, username),
-	
-	
-	INDEX (group_id),
-	INDEX (username),
-	
-	FOREIGN KEY (group_id) REFERENCES groups(id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
-	
-	FOREIGN KEY (username) REFERENCES users(username)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
-	
-
 ) ENGINE=INNODB;
 
 create table locations (
