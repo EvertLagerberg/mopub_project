@@ -77,9 +77,8 @@ public class connectDB {
 }
 	
 	public static void insertEventsLocation(int event_id, String room){
+
 		try {
-		pstmt = conn.prepareStatement(query,
-		Statement.RETURN_GENERATED_KEYS);
 		query = "INSERT INTO events_locations (event_id,room) VALUES (?,?)";
 		PreparedStatement pstmt = conn.prepareStatement(query);
 		pstmt.setInt(1, event_id);
@@ -96,7 +95,9 @@ public class connectDB {
 	
 	public static void insertLocation(String room, Float longitude, Float latitude) {
 		
+
 		conn = connect(); 
+
 		try {
 			query = "INSERT INTO locations (room,longitude,latitude) VALUES (?,?,?)";
 			PreparedStatement pstmt = conn.prepareStatement(query);
