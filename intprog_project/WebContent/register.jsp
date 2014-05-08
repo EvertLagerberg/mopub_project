@@ -14,7 +14,7 @@
 </head>
 <body>
 <h3>Url to ics-file:</h3>
-<form action="/intprog_project/UrlController" method="POST">
+<form action="/intprog_project/EventController" method="POST">
 <input type="hidden" name="action" value="addUrl">
 <input type="text" name="url" value=""><br>
 <input type="submit" value="Submit">

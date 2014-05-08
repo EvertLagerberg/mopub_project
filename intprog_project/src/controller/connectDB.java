@@ -101,7 +101,7 @@ public class connectDB {
 	
 	public static void insertLocation(String room, Float longitude, Float latitude) {
 		
-		conn = connectDB.connect();
+		conn = connect();
 		try {
 			query = "INSERT INTO locations (room,longitude,latitude) VALUES (?,?,?)";
 			PreparedStatement pstmt = conn.prepareStatement(query);

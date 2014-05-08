@@ -68,6 +68,7 @@ public class EventController extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		HttpSession session = request.getSession(true);
+		
 
 		if(request.getParameter("action").equals("addUrl")){
 			String input = request.getParameter("url");
@@ -84,6 +85,9 @@ public class EventController extends HttpServlet {
 				in.close();
 
 				request.setAttribute("schemaList", schemaList);
+				
+				parseCalendartoDB(schemaList);
+				
 
 				RequestDispatcher rd2 =
 						request.getRequestDispatcher("register.jsp");
@@ -94,6 +98,9 @@ public class EventController extends HttpServlet {
 			}
 			catch(IOException e){
 				System.out.print(e.getMessage());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 
@@ -122,9 +129,9 @@ public class EventController extends HttpServlet {
 	}
 
 	// parse calendarobjekt to events and insert them into database.
-	private void parseCalendartoDB(Calendar calendar) throws ParseException {
+	private void parseCalendartoDB(ArrayList<String> schema) throws ParseException {
 		int event_id = 0;
-		list = calendar.getComponents();
+
 		String event_name = "";
 		String event_description = "";
 		java.util.Date event_starttime = null;
@@ -134,10 +141,10 @@ public class EventController extends HttpServlet {
 		DateFormat df = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
 		DateFormat new_df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		df.setTimeZone(TimeZone.getTimeZone("UTC"));
-		for (Object c : list) {
-			String str = c.toString();
+		for (String c : schema) {
+			
 			// parse-out Event-name
-			String[] tokens = str.split("\n");
+			String[] tokens = c.split("\n");
 			for (String s : tokens) {
 				if (s.contains("SUMMARY:")) {
 					String[] strip = s.split("SUMMARY:");
