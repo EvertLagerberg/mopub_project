@@ -163,14 +163,9 @@ public class EventController extends HttpServlet {
 				} else if (s.contains("LOCATION:")) {
 					String[] strip = s.split("LOCATION:");
 					split_rooms = strip[1].split("\\\\,");
-					
-					
+				
 					System.out.println("8th Location syntax" + split_rooms[0]);
-					
-					
-
 				}
-
 			}
 			    // Username ska skickas till EventController
 				String username = "Tommy";

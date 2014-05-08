@@ -1,18 +1,12 @@
 
 drop table events_locations;
-drop table users_events;
-drop table users;
 drop table events;
 drop table locations;
-
-create table users (
-    username varchar(64) NOT NULL,
-	PRIMARY KEY (username)
-) ENGINE=INNODB;
 
 
 create table events (
 	id int NOT NULL AUTO_INCREMENT,
+	username varchar(64) NOT NULL,
     name varchar(256),
     description varchar(1024),
     starttime datetime,
@@ -22,25 +16,6 @@ create table events (
 ) ENGINE=INNODB;
 
 
-create table users_events (
-	username varchar(64) NOT NULL,
-	event_id int NOT NULL,
-	
-	PRIMARY KEY (username, event_id),
-	
-	INDEX (username),
-	INDEX (event_id),
-	
-	FOREIGN KEY (username) REFERENCES users(username)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
-	
-	FOREIGN KEY (event_id) REFERENCES events(id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE
-	
-	
-) ENGINE=INNODB;
 
 create table locations (
 	room varchar(64) NOT NULL,
