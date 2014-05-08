@@ -55,7 +55,7 @@ public class connectDB {
 	
 
 	public static ResultSet insertEvent(String username, String name, String description, String starttime, String endtime){
-		query = "INSERT INTO events (username,name,description,starttime,endtime) VALUES (?,?,?,?)";
+		query = "INSERT INTO events (username,name,description,starttime,endtime) VALUES (?,?,?,?,?)";
 		conn = connect(); 
 		
 		try {
@@ -68,25 +68,15 @@ public class connectDB {
 		pstmt.setString(5, endtime);
 		pstmt.executeUpdate();
 		ResultSet generatedID = pstmt.getGeneratedKeys();
-		try {
-			conn.close();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		return generatedID;
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
-	
 	}
 		
 		return null;
 }
 	
 	public static void insertEventsLocation(int event_id, String room){
-		query = "INSERT INTO events (username,name,description,starttime,endtime) VALUES (?,?,?,?,?)";
-		conn = connect(); 
 		try {
 		pstmt = conn.prepareStatement(query,
 		Statement.RETURN_GENERATED_KEYS);
@@ -94,8 +84,6 @@ public class connectDB {
 		PreparedStatement pstmt = conn.prepareStatement(query);
 		pstmt.setInt(1, event_id);
 		pstmt.setString(2, room);
-
-
 		pstmt.executeUpdate();
 		
 	} catch (SQLException e) {
@@ -103,12 +91,6 @@ public class connectDB {
 		e.printStackTrace();
 	
 	}
-		try {
-			conn.close();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 }
 
 	
