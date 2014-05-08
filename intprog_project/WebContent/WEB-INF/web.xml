@@ -23,23 +23,6 @@
   </servlet-mapping>
   
   
-  <servlet>
-  <servlet-name>GroupController</servlet-name>
-  <servlet-class>controller.GroupController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  <servlet-name>GroupController</servlet-name>
-  <url-pattern>/GroupController</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-  <servlet-name>GroupUserController</servlet-name>
-  <servlet-class>controller.GroupUserController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  <servlet-name>GroupUserController</servlet-name>
-  <url-pattern>/GroupUserController</url-pattern>
-  </servlet-mapping>
   
   
   <servlet>
