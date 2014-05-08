@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import bean.Event;
 import bean.Group;
 import bean.User;
+
 import java.sql.Timestamp;
 
 ;
@@ -45,7 +46,7 @@ public class MainController extends HttpServlet {
 		ArrayList<Group> grouplist = new ArrayList<Group>();
 		conn = connectDB.connect();
 		HttpSession session = request.getSession(true);
-		groupID = (int) session.getAttribute("session_groupID");
+		groupID =  Integer.parseInt((String) session.getAttribute("session_groupID"));
 
 		eventlist = getGroupEventsDB();
 		request.setAttribute("eventlist", eventlist);

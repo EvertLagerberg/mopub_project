@@ -2,7 +2,11 @@ package controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
+import java.sql.ResultSet;
+
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -13,7 +17,9 @@ import bean.Location;
 public class connectDB {
 	private static DataSource dataSource;
 	private static Connection conn = null;
+	static PreparedStatement pstmt;
 	private static String query = "";
+
 
 	public static Connection connect() {
 
@@ -32,7 +38,7 @@ public class connectDB {
 		return conn;
 
 	}
-	//dfgfgd
+
 	public static void Database(String jndiname) {
 		try {
 			dataSource = (DataSource) new InitialContext()
@@ -47,6 +53,51 @@ public class connectDB {
 		return dataSource.getConnection();
 	}
 	
+
+	public static ResultSet insertEvent(String username, String name, String description, String starttime, String endtime){
+		query = "INSERT INTO events (username,name,description,starttime,endtime) VALUES (?,?,?,?)";
+		
+		try {
+		pstmt = conn.prepareStatement(query,
+		Statement.RETURN_GENERATED_KEYS);
+		pstmt.setString(1, username);
+		pstmt.setString(2, name);
+		pstmt.setString(3, description);
+		pstmt.setString(4, starttime);
+		pstmt.setString(5, endtime);
+		pstmt.executeUpdate();
+		ResultSet generatedID = pstmt.getGeneratedKeys();
+		
+		return generatedID;
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	
+	}
+		return null;
+}
+	
+	public static void insertEventsLocation(int event_id, String room){
+		query = "INSERT INTO events (username,name,description,starttime,endtime) VALUES (?,?,?,?,?)";
+		
+		try {
+		pstmt = conn.prepareStatement(query,
+		Statement.RETURN_GENERATED_KEYS);
+		query = "INSERT INTO events_locations (event_id,room) VALUES (?,?)";
+		PreparedStatement pstmt = conn.prepareStatement(query);
+		pstmt.setInt(1, event_id);
+		pstmt.setString(2, room);
+
+
+		pstmt.executeUpdate();
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	
+	}
+}
+
 	
 	public static void insertLocation(String room, Float longitude, Float latitude) {
 		
@@ -74,7 +125,24 @@ public class connectDB {
 		
 	}
 	
+
 	
+	public static Boolean findUser(String username) {
+		try {
 
-
+			query = "SELECT * FROM events WHERE username= ?";
+			PreparedStatement stmt = conn.prepareStatement(query);
+			stmt.setString(1, username);
+			ResultSet rs = null;
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			System.out.println(query);
+		}
+		return null;
+	}
 }

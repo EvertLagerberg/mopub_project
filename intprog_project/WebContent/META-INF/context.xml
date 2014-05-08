@@ -30,6 +30,6 @@
     <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
     -->
 
-<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="8" maxIdle="4" name="jdbc/db" password="root" type="javax.sql.DataSource" url="jdbc:mysql://localhost:8889/intprog_project" username="root"/>
+<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="8" maxIdle="4" name="jdbc/db" password="root" type="javax.sql.DataSource" url="jdbc:mysql://localhost:8889/mopub" username="root"/>
 
 </Context>
