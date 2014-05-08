@@ -141,11 +141,10 @@ public class EventController extends HttpServlet {
 		DateFormat df = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
 		DateFormat new_df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		df.setTimeZone(TimeZone.getTimeZone("UTC"));
-		for (String c : schema) {
-			
-			// parse-out Event-name
-			String[] tokens = c.split("\n");
-			for (String s : tokens) {
+		for (String s : schema){ 
+			System.out.println(s);
+		}
+		for (String s : schema) {
 				if (s.contains("SUMMARY:")) {
 					String[] strip = s.split("SUMMARY:");
 					event_name = strip[1];
@@ -176,18 +175,13 @@ public class EventController extends HttpServlet {
 			}
 			    // Username ska skickas till EventController
 				String username = "Tommy";
-				ResultSet generatedID = connectDB.insertEvent(username, event_name,event_description,formated_starttime,formated_endtime);
-				try {
-					event_id = generatedID.getInt(1);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-				
+				int eventID = connectDB.insertEvent(username, event_name,event_description,formated_starttime,formated_endtime);
+			
 			for(int i=0;i< split_rooms.length;i++){
-			  connectDB.insertEventsLocation(event_id, split_rooms[i].trim());
+				System.out.println(i);
+			  connectDB.insertEventsLocation(eventID, split_rooms[i].trim());
 				}
 		}
 	}
 
 	// end of class
-}
