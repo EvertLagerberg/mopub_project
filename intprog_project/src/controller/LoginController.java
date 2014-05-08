@@ -33,7 +33,8 @@ public class LoginController extends HttpServlet {
 	private static Connection conn = null;
 	private String query;
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 
 		conn = connectDB.connect();
 
@@ -41,21 +42,16 @@ public class LoginController extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		session.setAttribute("Username", username);
 
-		if (findUser(username)) {
+		if (connectDB.findUser(username)) {
 			System.out.println("True");
-			
+
 			try {
-				RequestDispatcher rd = request
-						.getRequestDispatcher("map.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("map.jsp");
 				rd.forward(request, response);
 			} catch (ServletException e) {
 				System.out.print(e.getMessage());
 			}
-			
 
-			
-			
-			
 		} else {
 			System.out.println("false");
 			try {
@@ -70,25 +66,4 @@ public class LoginController extends HttpServlet {
 
 	}
 
-	// find user in database MÅSTE GÖRAS OM!
-	public static Boolean findUser(String username) {
-		String query = "";
-
-		try {
-
-			query = "SELECT * FROM users WHERE username= ?";
-			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setString(1, username);
-			ResultSet rs = null;
-			rs = stmt.executeQuery();
-			if (rs.next()) {
-				return true;
-			} else {
-				return false;
-			}
-		} catch (SQLException e) {
-			System.out.println(query);
-		}
-		return null;
-	}
 }
