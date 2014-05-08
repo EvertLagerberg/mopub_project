@@ -70,7 +70,7 @@ public class LoginController extends HttpServlet {
 
 	}
 
-	// find user in database
+	// find user in database MÅSTE GÖRAS OM!
 	public static Boolean findUser(String username) {
 		String query = "";
 

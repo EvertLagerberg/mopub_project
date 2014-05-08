@@ -1,15 +1,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<html>
 
+
+
+
+<!DOCTYPE html>
+<html>
 <head>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<title>Map Page</title>
+<meta charset="ISO-8859-1">
+<title>Upload</title>
 </head>
-
 <body>
-<h1>REGISTER USER/CALENDAR PAGE</h1>
-<p>Välkommen hit! <c:out value="${Username}"/></p>
+<h3>Url to ics-file:</h3>
+<form action="/intprog_project/UrlController" method="POST">
+<input type="hidden" name="action" value="addUrl">
+<input type="text" name="url" value=""><br>
+<input type="submit" value="Submit">
+</form>
+<%=request.getAttribute("schemaList")%>
 </body>
 </html>

@@ -47,23 +47,14 @@ import java.sql.Timestamp;
 
 public class LocationController extends HttpServlet {
 
-	private static Connection conn = null;
 
-	private String query;
-	public static int failedSQL_count = 0;
 
 	ArrayList<Location> locationlist = new ArrayList();
 	ArrayList<String> nodata = new ArrayList<String>();
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
 
-		conn = connectDB.connect();
-		
-		
-		
-		
 
-		
 		
 	   	String room = "";
     	float longitude = 0;
@@ -72,10 +63,6 @@ public class LocationController extends HttpServlet {
     	int nodata_count = 0;
     	int success_count =0;
  
-    	
-    	
-    	
-    	
     	
         String url = "http://www.kth.se/places/search/?query=";
         System.out.println("Fetching %s..." + url);
@@ -86,11 +73,8 @@ public class LocationController extends HttpServlet {
         Elements media = doc.select("[src]");
         Elements imports = doc.select("link[href]");
 
-
-
         System.out.println("\nLinks: (%d)" + links.size());
         
-       
         for (Element link : links) {
         	Boolean correct = true;
             //System.out.println(" * a: <%s>  (%s)", link.attr("abs:href"), trim(link.text(), 35));
@@ -128,10 +112,7 @@ public class LocationController extends HttpServlet {
                 }
                 if(correct){
                 	
-            		insertLocation(room,longitude,latitude);
-
-            	
-                	
+            		connectDB.insertLocation(room,longitude,latitude);
                 	
                     System.out.println(room + longitude + ":" + latitude);
                     success_count++;
@@ -149,7 +130,6 @@ public class LocationController extends HttpServlet {
                     System.out.println("Total rooms handled: " + totalcount);
                     System.out.println("DataSuccess:" + success_count);
                     System.out.println("Datafailed: " + nodata_count);
-                    System.out.println("Duplicate found when insertin to DB: " + failedSQL_count);
                 	break;
                 }
             }
@@ -157,16 +137,9 @@ public class LocationController extends HttpServlet {
         }
         System.out.println("här");
     
-	
 
-	
 
-		try {
-			conn.close();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+
 
 		try {
 			RequestDispatcher rd = request.getRequestDispatcher("getLocations.jsp");
@@ -181,32 +154,7 @@ public class LocationController extends HttpServlet {
 		// end of doGet
 	}
 
-public static Location insertLocation(String room, Float longitude, Float latitude) {
-	
-	Location l = null;
-	String query = "";
-	try {
 
-		query = "INSERT INTO locations (room,longitude,latitude) VALUES (?,?,?)";
-		PreparedStatement pstmt = conn.prepareStatement(query);
-		pstmt.setString(1, room);
-		pstmt.setFloat(2, longitude);
-		pstmt.setFloat(3, latitude);
-		pstmt.executeUpdate();
-		l = new Location();
-		l.setRoom(room);
-		l.setLongitude(longitude);
-		l.setLatitude(latitude);
-		
-
-	} catch (SQLException e) {
-		System.out.println(e);
-		failedSQL_count++;
-		
-	}
-	return l;
-	
-}
 
 
 

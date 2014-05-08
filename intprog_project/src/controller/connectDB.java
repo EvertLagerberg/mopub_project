@@ -2,7 +2,9 @@ package controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -10,11 +12,14 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import bean.Location;
+
 public class connectDB {
 	private static DataSource dataSource;
 	private static Connection conn = null;
-	static String query = "";
 	static PreparedStatement pstmt;
+	private static String query = "";
+
 
 	public static Connection connect() {
 
@@ -48,6 +53,7 @@ public class connectDB {
 		return dataSource.getConnection();
 	}
 	
+
 	public static ResultSet insertEvent(String username, String name, String description, String starttime, String endtime){
 		query = "INSERT INTO events (username,name,description,starttime,endtime) VALUES (?,?,?,?)";
 		
@@ -79,7 +85,6 @@ public class connectDB {
 		Statement.RETURN_GENERATED_KEYS);
 		query = "INSERT INTO events_locations (event_id,room) VALUES (?,?)";
 		PreparedStatement pstmt = conn.prepareStatement(query);
-
 		pstmt.setInt(1, event_id);
 		pstmt.setString(2, room);
 
@@ -92,6 +97,36 @@ public class connectDB {
 	
 	}
 }
+
+	
+	public static void insertLocation(String room, Float longitude, Float latitude) {
+		
+		conn = connectDB.connect();
+		try {
+			query = "INSERT INTO locations (room,longitude,latitude) VALUES (?,?,?)";
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, room);
+			pstmt.setFloat(2, longitude);
+			pstmt.setFloat(3, latitude);
+			pstmt.executeUpdate();
+			
+
+		} catch (SQLException e) {
+			System.out.println(e);
+			
+		}
+		
+		try {
+			conn.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	}
+	
+
+	
 	public static Boolean findUser(String username) {
 		try {
 
