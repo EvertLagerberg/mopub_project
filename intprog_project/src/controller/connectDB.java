@@ -68,6 +68,7 @@ public class connectDB {
 		pstmt.setString(5, endtime);
 		pstmt.executeUpdate();
 		ResultSet generatedID = pstmt.getGeneratedKeys();
+		int inten = generatedID.getInt(1);
 		try {
 			conn.close();
 		} catch (SQLException e1) {
