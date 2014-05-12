@@ -1,10 +1,14 @@
 package controller;
 
 import java.sql.Connection;
+
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.naming.InitialContext;
@@ -13,6 +17,9 @@ import javax.sql.DataSource;
 
 import bean.Event;
 import bean.Location;
+
+import java.util.Date;
+import java.text.DateFormat;
 
 public class connectDB {
 	private static DataSource dataSource;
@@ -84,6 +91,10 @@ public class connectDB {
 	//insert event and corresponding location(s) in DB
 	public static void insertEventsLocation(int event_id, String room) {
 		conn = connect();
+		System.out.println("--------------------------->" + room);
+		if (room.equals("")){
+			room = "Saknas";
+		}
 		try {
 			query = "INSERT INTO events_locations (event_id,room) VALUES (?,?)";
 			PreparedStatement pstmt = conn.prepareStatement(query);
@@ -94,22 +105,31 @@ public class connectDB {
 			conn.close();
 
 		} catch (SQLException e) {
+			query = "INSERT INTO events_locations (event_id,room) VALUES (?,?)";
+			PreparedStatement pstmt;
+			try {
+				room = "Saknas";
+				pstmt = conn.prepareStatement(query);
+				pstmt.setInt(1, event_id);
+				pstmt.setString(2, room);
+				pstmt.executeUpdate();
+				conn.close();
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-
+			e1.printStackTrace();
 		}
-
+		}
 	}
 	//insert locations with long, lat in DB
-	public static void insertLocation(String room, Float longitude,
-			Float latitude) {
+	public static void insertLocation(String room, double longitude,
+			double latitude) {
 		conn = connect();
 		try {
 			query = "INSERT INTO locations (room,longitude,latitude) VALUES (?,?,?)";
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, room);
-			pstmt.setFloat(2, longitude);
-			pstmt.setFloat(3, latitude);
+			pstmt.setDouble(2, longitude);
+			pstmt.setDouble(3, latitude);
 			pstmt.executeUpdate();
 			
 			conn.close();
@@ -146,15 +166,23 @@ public class connectDB {
 	
 	public static ArrayList getEvents(String username) {
 		conn = connect();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		String Date = dateFormat.format(date);
+		System.out.println(dateFormat.format(date));
 
 		ArrayList<Event> list = new ArrayList<Event>();
 		try {
 			ResultSet rs = null;
 			String query = "select events.*, locations.* from "
 			+ "events inner join events_locations on events.id=events_locations.event_id "
-			+"inner join locations on locations.room= events_locations.room where events.username =?";
+			+"inner join locations on locations.room= events_locations.room where events.username =? and "
+			+"endtime > ? ORDER BY starttime;";
+			System.out.println(query);
+
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, username);
+			pstmt.setString(2, Date);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Event e = new Event();
