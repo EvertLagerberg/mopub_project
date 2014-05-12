@@ -1,0 +1,26 @@
+
+/* makes map take up whole screen*/
+html,body {
+	height: 100%;
+}
+/* makes map take up whole screen*/
+#map_canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/*removes scrollbar*/
+body {
+	overflow-y: hidden;
+}
+/*separate pages*/
+.row {
+	padding-top: 40px;
+	padding-bottom: 500px;
+}
+
+.navbar {
+	margin-bottom: 20px;
+}
+
