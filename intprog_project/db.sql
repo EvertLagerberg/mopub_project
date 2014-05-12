@@ -19,8 +19,8 @@ create table events (
 
 create table locations (
 	room varchar(64) NOT NULL,
-	longitude float NOT NULL,
-	latitude float NOT NULL,
+	longitude double NOT NULL,
+	latitude double NOT NULL,
 	
 	PRIMARY KEY (room)
 	

@@ -124,7 +124,6 @@ public class EventController extends HttpServlet {
 		df.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 		for (String s : schema) {
-			System.out.println(s);
 			if (s.contains("BEGIN:VEVENT")) {
 				split_rooms = null;
 				split_rooms = new String[] { "Saknas" };
@@ -154,21 +153,23 @@ public class EventController extends HttpServlet {
 			} else if (s.contains("LOCATION:")) {
 				String[] strip = s.split("LOCATION:");
 				split_rooms = strip[1].split("\\\\,");
+				
+				
 
 			} else if (s.contains("END:VEVENT")) {
 
 				System.out.println("\n");
-				
 
 				event_id = connectDB
 						.insertEvent(username, event_name, event_description,
 								formated_starttime, formated_endtime);
-				if (!split_rooms[0].equals("Saknas")) {
-					for (int i = 0; i < split_rooms.length; i++) {
-						System.out.println(event_id);
-						connectDB.insertEventsLocation(event_id,
-								split_rooms[i].trim());
-					}
+
+				if(!split_rooms[0].equals("Saknas")){
+				for (int i = 0; i < split_rooms.length; i++) {
+					connectDB.insertEventsLocation(event_id,
+							split_rooms[i].trim());
+				}
+
 				}
 
 			}

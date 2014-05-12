@@ -57,8 +57,8 @@ public class LocationController extends HttpServlet {
 
 		
 	   	String room = "";
-    	float longitude = 0;
-    	float latitude = 0;
+    	double longitude = 0;
+    	double latitude = 0;
     	int totalcount = 0;
     	int nodata_count = 0;
     	int success_count =0;
