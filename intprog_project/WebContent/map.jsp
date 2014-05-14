@@ -91,9 +91,9 @@
 
 
 
-	<!--<div id="time">Current: - </div>
-	<div id="duration">Durarion: - </div>
-	<div id="total">Total:</div>
+  <div id="time">Current: - </div>
+  <div id="duration">Durarion: - </div>
+  <div id="total">Total:</div>
  
 <table>
 <tr>
@@ -122,7 +122,7 @@
 
 </tr>
 </c:forEach>
-</table>-->
+</table>
 
 
 
@@ -242,61 +242,89 @@
 
 
     <!--GOOGLE MAPS API SCRIPT -->
-    <script type="text/javascript">
+  <script type="text/javascript">
+
+  var list = new Array();
+  //schemaList är en array med bönor av varje event, som jag skapade upp i en controller.
+
+  <c:forEach items="${eventlist}" var="event" varStatus="status"> 
+      eventObject = new Object();
+      eventObject.name = "${event.name}";
+      eventObject.description = "${event.description}"; 
+      eventObject.starttime = "${event.starttime}"; 
+      eventObject.endtime = "${event.endtime}";
+      eventObject.room = "${event.room}";
+      eventObject.latitude="${event.latitude}";
+      eventObject.longitude="${event.longitude}";
+      list.push(eventObject);
+  </c:forEach>
+
+
   var rendererOptions = { draggable: true}; // Not needed
   var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
   var directionsService = new google.maps.DirectionsService();
-  var loc  = ["59.347", "18.073", "59.350", "18.069"]; // Change to array's with long and lat, for loop creates markers
-  var map;
-  
-  function initialize() {
-    var properties = {
-      center: new google.maps.LatLng(59.347353, 18.073558),
-      zoom:15,
-      mapTypeId:google.maps.MapTypeId.SATELLITE,
-      disableDefaultUI: true
-    };
+    var map;
+    
+    function initialize() {
 
-    map = new google.maps.Map(document.getElementById('map_canvas'), properties);
-    directionsDisplay.setMap(map);
+      var properties = {
+          center: new google.maps.LatLng(59.347353, 18.073558),
+          zoom:15,
+          mapTypeId:google.maps.MapTypeId.SATELLITE
+      };
+      map = new google.maps.Map(document.getElementById('map_canvas'), properties);
+      directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 
     google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
       computeTotalDistance(directionsDisplay.directions);
     });
 
+    for (var i = 0; i < list.length; i++) { 
+      console.log("inne i loopen");
+      console.log(list[i].name);
+      console.log(list[i].longitude);
+      console.log(list[i].longitude);      
+      var location = new google.maps.LatLng(list[i].latitude,list[i].longitude);
+      var marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        draggable: true, //not needed
+        title: list[i].name
+        });
 
-    var eMarker = new google.maps.Marker({
-      position: new google.maps.LatLng(loc[0], loc[1]),
-      position: map.getCenter(),
-      title: 'E',
-      map: map,
-      draggable: true
-    });
+      var content = infoWindowContent(list[i]);
+      var infowindow = new google.maps.InfoWindow()
+      google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+            return function() {
+               infowindow.setContent(content);
+               infowindow.open(map,marker);
+            };
+        })(marker,content,infowindow)); 
 
-    var lMarker = new google.maps.Marker({
-      position: new google.maps.LatLng(loc[2], loc[3]),
-      map: map,
-      title: 'L'
-    });
+      }
+    }
 
-  }
-  
+    function infoWindowContent(event){
+      var contentString = '<div id="content">'+ '<h4>'+event.name+'</h4>'+
+        '<p><b>'+ event.starttime + '<br>'+event.endtime +'<br></b>'+event.description+'</p></div>';
+          return contentString;
+      }
+    
   function Route() {
-    var start = new google.maps.LatLng(loc[0], loc[1]);
-    var end = new google.maps.LatLng(loc[2], loc[3]);
+    var start = new google.maps.LatLng(list[0].longitude,list[0].latitude);
+    var end = new google.maps.LatLng(list[1].longitude,list[1].latitude);
     var request = {
-      origin:start,
-      destination:end,
-      travelMode: google.maps.TravelMode.WALKING
+        origin:start,
+        destination:end,
+        travelMode: google.maps.TravelMode.WALKING
     };
     directionsService.route(request, function(response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);
-      }
-    });
-  } 
-
+        }
+      });
+    } 
   function computeTotalDistance(result) {
     var total = 0;
     var time= 0;
@@ -305,36 +333,36 @@
     var myroute = result.routes[0];
     for (var i = 0; i < myroute.legs.length; i++) {
       total += myroute.legs[i].distance.value;
-      time +=myroute.legs[i].duration.text;
-      from =myroute.legs[i].start_address;
-      to =myroute.legs[i].end_address;
-    }
+        time +=myroute.legs[i].duration.text;
+        from =myroute.legs[i].start_address;
+        to =myroute.legs[i].end_address;
+        }
     time = time.replace('hours','H');
     time = time.replace('mins','M');
     document.getElementById('duration').innerHTML = time ;
     document.getElementById('total').innerHTML =total + " meter";
-  }
-
+    }
+   
   google.maps.event.addDomListener(window,'load',initialize);
 
-//// time and date for the device
-function startTime() {
-  var currentdate=new Date();
-  var h=currentdate.getHours();
-  var m=currentdate.getMinutes();
-  var s=currentdate.getSeconds();
-  m = checkTime(m);
-  s = checkTime(s);
-  document.getElementById('time').innerHTML = h+":"+m+":"+s;
-  var t = setTimeout(function(){startTime()},500);
-}
+  //// time and date for the device
+  function startTime() {
+      var currentdate=new Date();
+        var h=currentdate.getHours();
+        var m=currentdate.getMinutes();
+        var s=currentdate.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('time').innerHTML = h+":"+m+":"+s;
+        var t = setTimeout(function(){startTime()},500);
+    }
+    function checkTime(i) {
+      if (i<10) {i = "0" + i};  // adds zeros in front of numbers < 10
+        return i;
+    }
+    
 
-function checkTime(i) {
-    if (i<10) {i = "0" + i};  // adds zeros in front of numbers < 10
-    return i;
-  }
-
-</script>
+   </script>
 
 
 
