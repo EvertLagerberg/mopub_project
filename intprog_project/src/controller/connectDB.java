@@ -1,8 +1,6 @@
 package controller;
 
 import java.sql.Connection;
-
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -91,7 +89,6 @@ public class connectDB {
 	//insert event and corresponding location(s) in DB
 	public static void insertEventsLocation(int event_id, String room) {
 		conn = connect();
-		System.out.println("--------------------------->" + room);
 		if (room.equals("")){
 			room = "Saknas";
 		}
@@ -105,6 +102,8 @@ public class connectDB {
 			conn.close();
 
 		} catch (SQLException e) {
+			insertAltroom(event_id,room);
+			System.out.println("--------------------------->" + room);
 			query = "INSERT INTO events_locations (event_id,room) VALUES (?,?)";
 			PreparedStatement pstmt;
 			try {
@@ -124,6 +123,18 @@ public class connectDB {
 	public static void insertLocation(String room, double longitude,
 			double latitude) {
 		conn = connect();
+		try {
+			query = "INSERT INTO locations (room,longitude,latitude) VALUES (?,?,?)";
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "Saknas");
+			pstmt.setDouble(2, 18.07062953710556 );
+			pstmt.setDouble(3, 59.347330625522105);
+			pstmt.executeUpdate();
+			
+			conn.close();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
 		try {
 			query = "INSERT INTO locations (room,longitude,latitude) VALUES (?,?,?)";
 			PreparedStatement pstmt = conn.prepareStatement(query);
@@ -164,7 +175,7 @@ public class connectDB {
 		return null;
 	}
 	
-	public static ArrayList getEvents(String username) {
+	public static ArrayList<Event> getEvents(String username) {
 		conn = connect();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
@@ -193,8 +204,8 @@ public class connectDB {
 				e.setEndtime(rs.getString("endtime"));
 				e.setUsername(rs.getString("username"));
 				e.setRoom(rs.getString("room"));
-				e.setLongitude(rs.getFloat("longitude"));
-				e.setLatitude(rs.getFloat("latitude"));
+				e.setLongitude(rs.getDouble("longitude"));
+				e.setLatitude(rs.getDouble("latitude"));
 				
 				list.add(e);
 			}
@@ -204,6 +215,46 @@ public class connectDB {
 		}
 
 		return list;
+	}
+	
+	public static void insertAltroom (int event_id,String altroom){
+		query = "INSERT INTO altroom (event_id,room) VALUES (?,?)";
+		PreparedStatement pstmt;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, event_id);
+			pstmt.setString(2, altroom);
+			pstmt.executeUpdate();
+		
+		conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	} 
+	
+	public static ArrayList<String> getAltroom (int event_id){
+		query = "SELECT * FROM altroom where event_id = ?";
+		PreparedStatement pstmt;
+		ArrayList<String> altrooms = new ArrayList<String>();
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, event_id);
+			rs = pstmt.executeQuery();
+			while (rs.next()){
+				altrooms.add(Integer.toString(rs.getInt("event_id"))+":"+rs.getString("room"));
+			}
+		conn.close();
+	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return altrooms;
+		
 	}
 	
 	

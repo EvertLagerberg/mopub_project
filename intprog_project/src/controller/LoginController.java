@@ -47,8 +47,32 @@ public class LoginController extends HttpServlet {
 			System.out.println("True");
 			
 			ArrayList<Event> eventlist = connectDB.getEvents(username);
-			request.setAttribute("eventlist", eventlist);
-			
+			ArrayList<Event> daylist = new ArrayList<Event>();
+			ArrayList<String> altRoom = new ArrayList<String>();
+			String startDay = eventlist.get(0).getStarttime().substring(0, 10);
+			for (int i=0; i<eventlist.size()-1; i++){
+				if (eventlist.get(i).getStarttime().substring(0, 10).equals(startDay)){
+					daylist.add(eventlist.get(i));
+				}
+			}
+			if (daylist.size()>1){
+				for (int m=0; m<daylist.size(); m++){
+					for (int n=m+1; n<daylist.size(); n++){	
+						if (daylist.get(m).getId() == daylist.get(n).getId() ){
+							altRoom.add(daylist.get(n).getId() + ":" + daylist.get(n).getRoom());
+							daylist.remove(n);
+						}
+					}
+					if(daylist.get(m).getRoom().equals("Saknas")){
+						ArrayList<String> altrooms = connectDB.getAltroom(daylist.get(m).getId());
+						for (String string:altrooms){
+							altRoom.add(string);
+						}
+					}
+				}
+			}
+			request.setAttribute("daylist", daylist);
+			request.setAttribute("altRoom", altRoom);
 
 			try {
 				RequestDispatcher rd = request.getRequestDispatcher("map.jsp");

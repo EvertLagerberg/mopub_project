@@ -94,7 +94,7 @@
 
     </tr>
 
-    <c:forEach items="${eventlist}" var="event">
+    <c:forEach items="${daylist}" var="event">
     <tr>
       <td><c:out value="${event.username}"/></td>
       <td><c:out value="${event.starttime}"/></td>
@@ -194,7 +194,7 @@
 <div id="footer">
   <div class="container">
    <button onclick="Route()" class="btn btn-primary btn-lg center-block">Route</button>
-   <div id="time">Current: - </div>
+   <div id="todaytime"> </div>
    <div id="duration">Durarion: - </div>
    <div id="total">Total:</div>
  </div>
@@ -204,45 +204,47 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
-    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+<script src="js/bootstrap.min.js"></script>
 
 
-    <!--Script that prevents drag function on mobile safari-->
-    <script>
-      $('#footer').on('touchmove', function(event) {
-        event.preventDefault();
-      });
-    </script>
+<!--Script that prevents drag function on mobile safari-->
+<script>
+  $('#footer').on('touchmove', function(event) {
+    event.preventDefault();
+  });
+</script>
 
-    <!--Script that collapses navbar after any link is clicked-->
-    <script>
-      $(document).on('click','.navbar-collapse.in',function(e) {
-        if( $(e.target).is('a') ) {
-          $(this).collapse('hide');
-        }
-      });
-    </script>
+<!--Script that collapses navbar after any link is clicked-->
+<script>
+  $(document).on('click','.navbar-collapse.in',function(e) {
+    if( $(e.target).is('a') ) {
+      $(this).collapse('hide');
+    }
+  });
+</script>
 
 
 <!-- GOOGLE MAPS -->
-  <script>
-      var list = new Array();
-      var timeNow = startTime();
-      console.log("Tiden " + timeNow);
-      
-  //schemaList är en array med bönor av varje event, som jag skapade upp i en controller.
+<script>
+  var list = new Array();
+  var timeNow = startTime();
   
-  <c:forEach items="${eventlist}" var="event" varStatus="status">
+  
+  //schemaList är en array med bönor av varje event, som jag skapade upp i en controller.
+
+  <c:forEach items="${daylist}" var="event" varStatus="status">
     var eventEnd ="${event.endtime}";
     var eventEnd = eventEnd.split(" ");
     var eventEnd = eventEnd[1];
-    
+  
     var eventStart ="${event.starttime}";
     var eventStart = eventStart.split(" ");
     var eventStart = eventStart[1];
-
+  
+    //Evert:if-satsen här krockar med Tommys grej att när en dag är slut så laddas nästa dagars events in. Men då är ju tiden den dagen "senare" än nästa dags events.
+  
     /*if (eventEnd > timeNow) {
       eventObject = new Object();
       eventObject.name = "${event.name}";
@@ -264,39 +266,20 @@
       eventObject.latitude="${event.latitude}";
       eventObject.longitude="${event.longitude}";
       list.push(eventObject);
-    
-     
   </c:forEach>
 
-      eventObject = new Object();
-      eventObject.name = "$TestEvent";
-      eventObject.description = "besk"; 
-      eventObject.starttime = "20:00:00"; 
-      eventObject.endtime = "21:00:00";
-      eventObject.room = "Hemma";
-      eventObject.latitude=59.35015106201172;
-      eventObject.longitude=18.06719970703125;
-      list.push(eventObject);
-
-            eventObject = new Object();
-      eventObject.name = "$TestEvent";
-      eventObject.description = "besk"; 
-      eventObject.starttime = "20:00:00"; 
-      eventObject.endtime = "21:00:00";
-      eventObject.room = "Hemma";
-      eventObject.latitude=59.351165771484375;
-      eventObject.longitude=18.071962356567383;
-      list.push(eventObject);
 
 
-
-
-
+  var markers = new Array();
   var rendererOptions = { draggable: true}; // Not needed
   var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
   var directionsService = new google.maps.DirectionsService();
   var map;
-  
+
+
+
+
+
   function initialize() {
 
     var properties = {
@@ -314,11 +297,9 @@
     });
 
     for (var i = 0; i < list.length; i++) { 
-      console.log("inne i loopen");
-      console.log(list[i].name);
-      console.log(list[i].longitude);
-      console.log(list[i].longitude);      
+      
       var location = new google.maps.LatLng(list[i].latitude,list[i].longitude);
+
       var marker = new google.maps.Marker({
         position: location,
         map: map,
@@ -326,17 +307,82 @@
         title: list[i].name
       });
 
+
+      var etime = list[i].endtime;
+      marker.setMap(map);
+      var markObject = new Object();
+      markObject.marker = marker;
+      markObject.etime = etime;
+      markers.push(markObject);
+
+
+      if(i==0){ //första marker sätts till att hoppa
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      }
+
       var content = infoWindowContent(list[i]);
       var infowindow = new google.maps.InfoWindow()
       google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
         return function() {
-         infowindow.setContent(content);
-         infowindow.open(map,marker);
+          infowindow.setContent(content);
+          infowindow.open(map,marker);
        };
-     })(marker,content,infowindow)); 
+      })(marker,content,infowindow)); 
+    }
 
+    //Evert: Hur är den är While-slingan till respektive marker?
+    var counter = 0; 
+    while(markers.length!=counter){ //while loopen körs lika många gånger som det finns markers
+      setTime(counter); //en timeout sätts för alla markers
+      counter++;
+    } 
+    //Evert: Vad är now för något?
+    function setTime(count){
+      var markEndTime = markers[count].etime;
+      var end = convertTime(markEndTime); //Tiden konverteras till millisekunder
+      var timeTemp = convertTime(now);
+      timeLeft = end-timeTemp; //Tiden som är kvar tills markern ska försvinna
+      setTimeout(callDelete,timeLeft); //Jag försökte att anropa deleteMarker direkt här, men det fungerade inte. 
+                        //Därav funktionen callDelete
+      function callDelete(){
+        deleteMarker(markEndTime);  
+      }
     }
   }
+
+
+
+
+
+
+
+  function deleteMarker(time) { 
+    for(var i = 0; i < markers.length; i++){ 
+      if(markers[i].etime==time){
+        var marker = markers[i].marker;
+        marker.setMap(null); //Marker tas bort från kartan
+        
+        if((markers.length-1)!=i){
+          markers[i+1].marker.setAnimation(google.maps.Animation.BOUNCE); //Nästa marker hoppar
+        }
+      }
+    }
+  }
+    
+
+
+
+
+  function convertTime(t){ //Konverterar tiden till millisekunder
+    var hour = Number(t.split(':')[0]);
+    var min = (hour*60+(Number(t.split(':')[1])))*60;
+    var convertedTime=(min+Number(t.split(':')[2]))*1000;
+    return convertedTime;
+  }
+
+
+
+
 
   function infoWindowContent(event){
     var contentString = '<div id="content">'+ '<h4>'+event.name+'</h4>'+
@@ -344,53 +390,50 @@
     return contentString;
   }
   
-  function Route() {
-    console.log("hej" + startTime());
-    geoLocation(function(startpos) {
-      
-      
-      
 
+
+
+
+
+  function Route() {
+    
+    geoLocation(function(startpos) {
+    
       var start = startpos;
       var end = null;
+      
       for (var i = 0; i < list.length; i++) {
 
-
         if(timeNow < list[i].endtime){
-
           var end = new google.maps.LatLng(list[i].latitude,list[i].longitude);
-          console.log(list[i].name)
+          
           break;
         }
-
-
       }
-      if(end != null){
-      var request = {
-        origin:start,
-        destination:end,
-        travelMode: google.maps.TravelMode.WALKING
-      };
-      console.log("utanför");
-      directionsService.route(request, function(response, status) {
-        console.log("innanföf");
-        console.log(status);
-        if (status == google.maps.DirectionsStatus.OK) {
-          console.log("inne i skiten");
-          directionsDisplay.setDirections(response);
-        }
-      });
 
-    } else {
-      console.log("alla event har passerat");
-    }
+      if(end != null){
+        var request = {
+          origin:start,
+          destination:end,
+          travelMode: google.maps.TravelMode.WALKING
+        };
+        directionsService.route(request, function(response, status) {
+
+          if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+          }
+        });
+      } 
+      else {
+        console.log("alla event har passerat");
+      }
     });
-    
   } 
 
 
 
-  
+
+
   function computeTotalDistance(result) {
     var total = 0;
     var time= 0;
@@ -412,19 +455,24 @@
   google.maps.event.addDomListener(window,'load',initialize);
   google.maps.event.addDomListener(window,'load',geoLocation);
 
+
+
+
+
   //// time and date for the device
   function startTime() {
-    var currentdate=new Date();
+    currentdate=new Date();
     var h=currentdate.getHours();
     var m=currentdate.getMinutes();
     var s=currentdate.getSeconds();
     m = checkTime(m);
     s = checkTime(s);
     var timeNow = h+":"+m+":"+s;
-    document.getElementById('time').innerHTML = h+":"+m+":"+s;
-    //var t = setTimeout(function(){startTime()},500);
+    document.getElementById('todaytime').innerHTML = timeNow;
+    var ts = setTimeout(function(){startTime()},500);
     return timeNow;
-  }
+    }
+
   function checkTime(i) {
       if (i<10) {i = "0" + i};  // adds zeros in front of numbers < 10
       return i;
@@ -432,56 +480,44 @@
     
 
 
-    function geoLocation(callback) {
+  function geoLocation(callback) {
 
-              // Try HTML5 geolocation
-              if(navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                  var navigator = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-                  
+    // Try HTML5 geolocation
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var navigator = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+      
+        var alienMarker = {
+          path: 'M 375,8.5 C 226.5,8.5 21.5,102.2 21.5,346 C 21.5,346.8 21.5,347.7 21.5,348.5 C 23.2,591.2 270.1,891.5 375,891.5 C 480.3,891.5 728.5,589.8 728.5,346 C 728.5,102.2 523.5,8.5 375,8.5 z M 57,367.5 C 230,367.5 355,489.5 355,672.5 C 174,672.5 57,555.5 57,367.5 z M 699,367.5 C 699,555.5 579.6,672.5 395,672.5 C 395,489.5 522.5,367.5 699,367.5 z',
+          fillColor: 'orange',
+          fillOpacity: 0.8,
+          scale: 0.05,
+          strokeColor: 'gold',
+          strokeWeight: 1
+        };
 
+        
+        var marker4 = new google.maps.Marker({
+          position:navigator,
+          map:map,
+          icon:alienMarker,
+          draggable:false,
+          animation: google.maps.Animation.DROP,
+          position: navigator,
+          title: "myPosition"
+        });
 
-                  var alienMarker = {
-                    path: 'M 375,8.5 C 226.5,8.5 21.5,102.2 21.5,346 C 21.5,346.8 21.5,347.7 21.5,348.5 C 23.2,591.2 270.1,891.5 375,891.5 C 480.3,891.5 728.5,589.8 728.5,346 C 728.5,102.2 523.5,8.5 375,8.5 z M 57,367.5 C 230,367.5 355,489.5 355,672.5 C 174,672.5 57,555.5 57,367.5 z M 699,367.5 C 699,555.5 579.6,672.5 395,672.5 C 395,489.5 522.5,367.5 699,367.5 z',
-                    fillColor: 'orange',
-                    fillOpacity: 0.8,
-                    scale: 0.05,
-                    strokeColor: 'gold',
-                    strokeWeight: 1
-                  };
+        if(callback && typeof(callback) === "function"){
+          callback(navigator);
 
-                  
-                  var marker4 = new google.maps.Marker({
-                    position:navigator,
-                    map:map,
-                    icon:alienMarker,
-                    draggable:false,
-                    animation: google.maps.Animation.DROP,
-                    position: navigator,
-                    title: "myPosition"
-
-
-
-
-                  });
-                  var word = "tja";
-                  if(callback){
-                    callback(navigator);
-
-                  }
+        }
 
 
-                })
+      });
 
-
-
-
-};
-}
+    }
+  }
 </script>
-
-
-
 
 
 </body>

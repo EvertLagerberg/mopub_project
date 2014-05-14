@@ -2,6 +2,8 @@
 drop table events_locations;
 drop table events;
 drop table locations;
+drop table altroom;
+
 
 
 create table events (
@@ -46,4 +48,17 @@ create table events_locations (
 	ON DELETE CASCADE
 	ON UPDATE CASCADE
 	
+) ENGINE=INNODB;
+
+create table altroom (
+	event_id int NOT NULL,
+	room varchar(64) NOT NULL,
+	
+	PRIMARY KEY (event_id),
+	
+	INDEX (event_id),
+	
+	FOREIGN KEY (event_id) REFERENCES events(id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
 ) ENGINE=INNODB;
