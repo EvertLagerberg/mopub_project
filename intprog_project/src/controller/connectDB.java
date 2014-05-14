@@ -193,8 +193,8 @@ public class connectDB {
 				e.setEndtime(rs.getString("endtime"));
 				e.setUsername(rs.getString("username"));
 				e.setRoom(rs.getString("room"));
-				e.setLongitude(rs.getFloat("longitude"));
-				e.setLatitude(rs.getFloat("latitude"));
+				e.setLongitude(rs.getDouble("longitude"));
+				e.setLatitude(rs.getDouble("latitude"));
 				
 				list.add(e);
 			}

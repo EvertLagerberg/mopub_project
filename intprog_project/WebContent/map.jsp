@@ -133,7 +133,7 @@ function checkTime(i) {
 
 </tr>
 
-<c:forEach items="${eventlist}" var="event">
+<c:forEach items="${daylist}" var="event">
 <tr>
 <td><c:out value="${event.username}"/></td>
 <td><c:out value="${event.starttime}"/></td>
@@ -146,7 +146,9 @@ function checkTime(i) {
 </tr>
 </c:forEach>
 </table>
-   
+<c:forEach items="${altRoom}" var="altRoom">
+<p><c:out value= "${altRoom}"/></p>
+</c:forEach>
    
   </body>
 </html>

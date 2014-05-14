@@ -22,7 +22,6 @@ import javax.naming.*;
 import javax.sql.DataSource;
 
 import java.sql.Timestamp;
-
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -36,8 +35,8 @@ public class Event {
 	private String endtime;
 	private String username;
 	private String room;
-	private Float longitude;
-	private Float latitude;
+	private Double longitude;
+	private Double latitude;
 	
 
 	private Connection conn = null;
@@ -75,11 +74,11 @@ public class Event {
 		this.room = e;
 	}
 	
-	public void setLongitude(Float e) {
+	public void setLongitude(Double e) {
 		this.longitude = e;
 	}
 	
-	public void setLatitude(Float e) {
+	public void setLatitude(Double e) {
 		this.latitude = e;
 	}
 
@@ -113,11 +112,11 @@ public class Event {
 		return room;
 	}
 	
-	public Float getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 	
-	public Float getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 	

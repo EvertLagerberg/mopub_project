@@ -69,7 +69,8 @@ public class EventController extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		HttpSession session = request.getSession(true);
-		username = session.getAttribute("Username").toString();
+		username="Tommy";
+		//username = session.getAttribute("Username").toString();
 
 		if (request.getParameter("action").equals("addUrl")) {
 			String input = request.getParameter("url");
