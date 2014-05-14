@@ -32,7 +32,7 @@
  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, minimal-ui">
  <meta name="mobile-web-app-capable" content="yes">
 
-<script type="text/javascript"src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOgf60Bt5Zk7eIz-eApBBXlVEcEsuOg6M&sensor=true"></script>
+ <script type="text/javascript"src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOgf60Bt5Zk7eIz-eApBBXlVEcEsuOg6M&sensor=true"></script>
 
 
 
@@ -75,53 +75,37 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
   <!--The Google Map -->
   <div id="map_canvas"> </div>
 
 
-
-
-  <div id="time">Current: - </div>
-  <div id="duration">Durarion: - </div>
-  <div id="total">Total:</div>
- 
-<table>
-<tr>
-<td>Username</td>
-<td>Starttime</td>
-<td>Endtime</td>
-<td class="namn">Namn</td>
-<td>Location</td>
-<td>Longitude</td>
-<td>Latitude</td>
+  <table>
+    <tr>
+      <td>Username</td>
+      <td>Starttime</td>
+      <td>Endtime</td>
+      <td class="namn">Namn</td>
+      <td>Location</td>
+      <td>Longitude</td>
+      <td>Latitude</td>
 
 
 
 
-</tr>
+    </tr>
 
-<c:forEach items="${eventlist}" var="event">
-<tr>
-<td><c:out value="${event.username}"/></td>
-<td><c:out value="${event.starttime}"/></td>
-<td><c:out value="${event.endtime}"/></td>
-<td><c:out value="${event.name}"/></td>
-<td><c:out value="${event.room}"/></td>
-<td><c:out value="${event.longitude}"/></td>
-<td><c:out value="${event.latitude}"/></td>
+    <c:forEach items="${eventlist}" var="event">
+    <tr>
+      <td><c:out value="${event.username}"/></td>
+      <td><c:out value="${event.starttime}"/></td>
+      <td><c:out value="${event.endtime}"/></td>
+      <td><c:out value="${event.name}"/></td>
+      <td><c:out value="${event.room}"/></td>
+      <td><c:out value="${event.longitude}"/></td>
+      <td><c:out value="${event.latitude}"/></td>
 
-</tr>
-</c:forEach>
+    </tr>
+  </c:forEach>
 </table>
 
 
@@ -209,9 +193,10 @@
 <!--PAGE FOOTER/MENUBAR-->
 <div id="footer">
   <div class="container">
-   <button onclick="Route()" class="btn btn-primary btn-lg center-block"> Route 
-   </button>
-
+   <button onclick="Route()" class="btn btn-primary btn-lg center-block">Route</button>
+   <div id="time">Current: - </div>
+   <div id="duration">Durarion: - </div>
+   <div id="total">Total:</div>
  </div>
 </div>
 
@@ -221,7 +206,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    
 
 
     <!--Script that prevents drag function on mobile safari-->
@@ -241,39 +226,87 @@
     </script>
 
 
-    <!--GOOGLE MAPS API SCRIPT -->
-  <script type="text/javascript">
-
-  var list = new Array();
+<!-- GOOGLE MAPS -->
+  <script>
+      var list = new Array();
+      var timeNow = startTime();
+      console.log("Tiden " + timeNow);
+      
   //schemaList är en array med bönor av varje event, som jag skapade upp i en controller.
+  
+  <c:forEach items="${eventlist}" var="event" varStatus="status">
+    var eventEnd ="${event.endtime}";
+    var eventEnd = eventEnd.split(" ");
+    var eventEnd = eventEnd[1];
+    
+    var eventStart ="${event.starttime}";
+    var eventStart = eventStart.split(" ");
+    var eventStart = eventStart[1];
 
-  <c:forEach items="${eventlist}" var="event" varStatus="status"> 
+    /*if (eventEnd > timeNow) {
       eventObject = new Object();
       eventObject.name = "${event.name}";
       eventObject.description = "${event.description}"; 
-      eventObject.starttime = "${event.starttime}"; 
-      eventObject.endtime = "${event.endtime}";
+      eventObject.starttime = eventStart; 
+      eventObject.endtime = eventEnd;
       eventObject.room = "${event.room}";
       eventObject.latitude="${event.latitude}";
       eventObject.longitude="${event.longitude}";
       list.push(eventObject);
+    }*/
+      
+      eventObject = new Object();
+      eventObject.name = "${event.name}";
+      eventObject.description = "${event.description}"; 
+      eventObject.starttime = eventStart; 
+      eventObject.endtime = eventEnd;
+      eventObject.room = "${event.room}";
+      eventObject.latitude="${event.latitude}";
+      eventObject.longitude="${event.longitude}";
+      list.push(eventObject);
+    
+     
   </c:forEach>
+
+      eventObject = new Object();
+      eventObject.name = "$TestEvent";
+      eventObject.description = "besk"; 
+      eventObject.starttime = "20:00:00"; 
+      eventObject.endtime = "21:00:00";
+      eventObject.room = "Hemma";
+      eventObject.latitude=59.35015106201172;
+      eventObject.longitude=18.06719970703125;
+      list.push(eventObject);
+
+            eventObject = new Object();
+      eventObject.name = "$TestEvent";
+      eventObject.description = "besk"; 
+      eventObject.starttime = "20:00:00"; 
+      eventObject.endtime = "21:00:00";
+      eventObject.room = "Hemma";
+      eventObject.latitude=59.351165771484375;
+      eventObject.longitude=18.071962356567383;
+      list.push(eventObject);
+
+
+
 
 
   var rendererOptions = { draggable: true}; // Not needed
   var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
   var directionsService = new google.maps.DirectionsService();
-    var map;
-    
-    function initialize() {
+  var map;
+  
+  function initialize() {
 
-      var properties = {
-          center: new google.maps.LatLng(59.347353, 18.073558),
-          zoom:15,
-          mapTypeId:google.maps.MapTypeId.SATELLITE
-      };
-      map = new google.maps.Map(document.getElementById('map_canvas'), properties);
-      directionsDisplay.setMap(map);
+    var properties = {
+      center: new google.maps.LatLng(59.347353, 18.073558),
+      zoom:15,
+      mapTypeId:google.maps.MapTypeId.SATELLITE,
+      disableDefaultUI: true
+    };
+    map = new google.maps.Map(document.getElementById('map_canvas'), properties);
+    directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('directionsPanel'));
 
     google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
@@ -291,40 +324,73 @@
         map: map,
         draggable: true, //not needed
         title: list[i].name
-        });
+      });
 
       var content = infoWindowContent(list[i]);
       var infowindow = new google.maps.InfoWindow()
       google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
-            return function() {
-               infowindow.setContent(content);
-               infowindow.open(map,marker);
-            };
-        })(marker,content,infowindow)); 
+        return function() {
+         infowindow.setContent(content);
+         infowindow.open(map,marker);
+       };
+     })(marker,content,infowindow)); 
 
-      }
     }
+  }
 
-    function infoWindowContent(event){
-      var contentString = '<div id="content">'+ '<h4>'+event.name+'</h4>'+
-        '<p><b>'+ event.starttime + '<br>'+event.endtime +'<br></b>'+event.description+'</p></div>';
-          return contentString;
-      }
-    
+  function infoWindowContent(event){
+    var contentString = '<div id="content">'+ '<h4>'+event.name+'</h4>'+
+    '<p><b>'+ event.starttime + '<br>'+event.endtime +'<br></b>'+event.description+'</p></div>';
+    return contentString;
+  }
+  
   function Route() {
-    var start = new google.maps.LatLng(list[0].longitude,list[0].latitude);
-    var end = new google.maps.LatLng(list[1].longitude,list[1].latitude);
-    var request = {
+    console.log("hej" + startTime());
+    geoLocation(function(startpos) {
+      
+      
+      
+
+      var start = startpos;
+      var end = null;
+      for (var i = 0; i < list.length; i++) {
+
+
+        if(timeNow < list[i].endtime){
+
+          var end = new google.maps.LatLng(list[i].latitude,list[i].longitude);
+          console.log(list[i].name)
+          break;
+        }
+
+
+      }
+      if(end != null){
+      var request = {
         origin:start,
         destination:end,
         travelMode: google.maps.TravelMode.WALKING
-    };
-    directionsService.route(request, function(response, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
-        directionsDisplay.setDirections(response);
+      };
+      console.log("utanför");
+      directionsService.route(request, function(response, status) {
+        console.log("innanföf");
+        console.log(status);
+        if (status == google.maps.DirectionsStatus.OK) {
+          console.log("inne i skiten");
+          directionsDisplay.setDirections(response);
         }
       });
-    } 
+
+    } else {
+      console.log("alla event har passerat");
+    }
+    });
+    
+  } 
+
+
+
+  
   function computeTotalDistance(result) {
     var total = 0;
     var time= 0;
@@ -333,36 +399,86 @@
     var myroute = result.routes[0];
     for (var i = 0; i < myroute.legs.length; i++) {
       total += myroute.legs[i].distance.value;
-        time +=myroute.legs[i].duration.text;
-        from =myroute.legs[i].start_address;
-        to =myroute.legs[i].end_address;
-        }
+      time +=myroute.legs[i].duration.text;
+      from =myroute.legs[i].start_address;
+      to =myroute.legs[i].end_address;
+    }
     time = time.replace('hours','H');
     time = time.replace('mins','M');
     document.getElementById('duration').innerHTML = time ;
     document.getElementById('total').innerHTML =total + " meter";
-    }
-   
+  }
+  
   google.maps.event.addDomListener(window,'load',initialize);
+  google.maps.event.addDomListener(window,'load',geoLocation);
 
   //// time and date for the device
   function startTime() {
-      var currentdate=new Date();
-        var h=currentdate.getHours();
-        var m=currentdate.getMinutes();
-        var s=currentdate.getSeconds();
-        m = checkTime(m);
-        s = checkTime(s);
-        document.getElementById('time').innerHTML = h+":"+m+":"+s;
-        var t = setTimeout(function(){startTime()},500);
-    }
-    function checkTime(i) {
+    var currentdate=new Date();
+    var h=currentdate.getHours();
+    var m=currentdate.getMinutes();
+    var s=currentdate.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    var timeNow = h+":"+m+":"+s;
+    document.getElementById('time').innerHTML = h+":"+m+":"+s;
+    //var t = setTimeout(function(){startTime()},500);
+    return timeNow;
+  }
+  function checkTime(i) {
       if (i<10) {i = "0" + i};  // adds zeros in front of numbers < 10
-        return i;
+      return i;
     }
     
 
-   </script>
+
+    function geoLocation(callback) {
+
+              // Try HTML5 geolocation
+              if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                  var navigator = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                  
+
+
+                  var alienMarker = {
+                    path: 'M 375,8.5 C 226.5,8.5 21.5,102.2 21.5,346 C 21.5,346.8 21.5,347.7 21.5,348.5 C 23.2,591.2 270.1,891.5 375,891.5 C 480.3,891.5 728.5,589.8 728.5,346 C 728.5,102.2 523.5,8.5 375,8.5 z M 57,367.5 C 230,367.5 355,489.5 355,672.5 C 174,672.5 57,555.5 57,367.5 z M 699,367.5 C 699,555.5 579.6,672.5 395,672.5 C 395,489.5 522.5,367.5 699,367.5 z',
+                    fillColor: 'orange',
+                    fillOpacity: 0.8,
+                    scale: 0.05,
+                    strokeColor: 'gold',
+                    strokeWeight: 1
+                  };
+
+                  
+                  var marker4 = new google.maps.Marker({
+                    position:navigator,
+                    map:map,
+                    icon:alienMarker,
+                    draggable:false,
+                    animation: google.maps.Animation.DROP,
+                    position: navigator,
+                    title: "myPosition"
+
+
+
+
+                  });
+                  var word = "tja";
+                  if(callback){
+                    callback(navigator);
+
+                  }
+
+
+                })
+
+
+
+
+};
+}
+</script>
 
 
 
