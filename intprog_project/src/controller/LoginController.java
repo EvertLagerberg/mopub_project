@@ -62,8 +62,14 @@ public class LoginController extends HttpServlet {
 							altRoom.add(daylist.get(n).getId() + ":" + daylist.get(n).getRoom());
 							daylist.remove(n);
 						}
+					}
+					if(daylist.get(m).getRoom().equals("Saknas")){
+						ArrayList<String> altrooms = connectDB.getAltroom(daylist.get(m).getId());
+						for (String string:altrooms){
+							altRoom.add(string);
+						}
+					}
 				}
-			}
 			}
 			request.setAttribute("daylist", daylist);
 			request.setAttribute("altRoom", altRoom);

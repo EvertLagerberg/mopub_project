@@ -69,15 +69,13 @@ public class EventController extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		HttpSession session = request.getSession(true);
-		username="Tommy";
-		//username = session.getAttribute("Username").toString();
-
+		username = session.getAttribute("Username").toString();
 		if (request.getParameter("action").equals("addUrl")) {
 			String input = request.getParameter("url");
 			try {
 				URL schemafile = new URL(input);
 				BufferedReader in = new BufferedReader(new InputStreamReader(
-						schemafile.openStream()));
+						schemafile.openStream(), "UTF-8"));
 
 				String line;
 				// Nu har jag lagt in varje rad i en array bara för att få se
