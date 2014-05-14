@@ -425,7 +425,7 @@
         });
       } 
       else {
-        console.log("alla event har passerat");
+        console.log("alla event har passerat den nuvarande tiden");
       }
     });
   } 
