@@ -10,6 +10,7 @@
 
  <!-- Bootstrap core CSS -->
  <link href="css/bootstrap.min.css" rel="stylesheet">
+ <link rel="stylesheet" type="text/css" href="css/jquery.countdown.css">
 
  <!-- CSS -->
  <link href="css/footer.css" rel="stylesheet">
@@ -30,7 +31,7 @@
 
 
  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, minimal-ui">
- <meta name="mobile-web-app-capable" content="yes">
+
 
  <script type="text/javascript"src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOgf60Bt5Zk7eIz-eApBBXlVEcEsuOg6M&sensor=true"></script>
 
@@ -78,42 +79,50 @@
   <!--The Google Map -->
   <div id="map_canvas"> </div>
 
+  <!--PAGE FOOTER/MENUBAR-->
+<div id="footer">
+  <div class="container">
+<div class="row toolbar">
+    
+<div class="col-xs-5">
 
-  <table>
-    <tr>
-      <td>Username</td>
-      <td>Starttime</td>
-      <td>Endtime</td>
-      <td class="namn">Namn</td>
-      <td>Location</td>
-      <td>Longitude</td>
-      <td>Latitude</td>
+  
+   <div id="nextevent_Room" class="small"> </div>
+   <div id="nextevent_Starttime" class="small"> </div >
+  
+
+   </div>
+  
+
+<div class="col-xs-3">
+   
+   <div id="total" class="small">-- </div>
+   <div id="duration" class="small">--</div >
+   
+   </div>
+
+   <div class="col-xs-3">
+         <button onclick="Route(null,null)" class="btn btn-primary btn-md center-block" id="route">Route</button>
+
+</div>
+   <div class="col-xs-1">
+
+
+</div>
+   
+
+  
+  </div>
 
 
 
-
-    </tr>
-
-    <c:forEach items="${daylist}" var="event">
-    <tr>
-      <td><c:out value="${event.username}"/></td>
-      <td><c:out value="${event.starttime}"/></td>
-      <td><c:out value="${event.endtime}"/></td>
-      <td><c:out value="${event.name}"/></td>
-      <td><c:out value="${event.room}"/></td>
-      <td><c:out value="${event.longitude}"/></td>
-      <td><c:out value="${event.latitude}"/></td>
-
-    </tr>
-  </c:forEach>
-</table>
 
 
 
 <!--SEARCH PAGE-->
 <div id="search">
   <div class="container">
-    <div class="row">
+    <div class="row page">
 
      <h2>Search Room</h2>
      <h3> Här lägger vi funktion för att söka på salar</h3>
@@ -133,14 +142,9 @@
 <!--ADD EVENT PAGE-->
 <div id="addevent">
   <div class="container">
-    <div class="row">
+    <div class="row page">
 
-     <h2>Add event</h2>
-     <h3> Här lägger vi funktion för att lägga till event</h3>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
+   <div id="nextevent_Starttime"> </div >
 
    </div>
  </div>
@@ -149,7 +153,7 @@
 <!--UPDATEE CAL PAGE-->
 <div id="update">
   <div class="container">
-    <div class="row">
+    <div class="row page">
 
      <h2>Uppdatera</h2>
      <h3> Här lägger vi funktion för att uppdatera sin länk</h3>
@@ -170,7 +174,7 @@
 
 <div id="about">
   <div class="container">
-    <div class="row">
+    <div class="row page">
 
       <!--ABOUT PAGE-->
       <h2>About</h2>
@@ -190,14 +194,19 @@
 
 
 
-<!--PAGE FOOTER/MENUBAR-->
-<div id="footer">
-  <div class="container">
-   <button onclick="Route()" class="btn btn-primary btn-lg center-block">Route</button>
-   <div id="todaytime"> </div>
-   <div id="duration">Durarion: - </div>
-   <div id="total">Total:</div>
- </div>
+
+
+
+
+
+
+ 
+
+
+
+  
+
+</div>
 </div>
 
 
@@ -207,6 +216,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.plugin.js"></script> 
+<script type="text/javascript" src="js/jquery.countdown.js"></script>
+<script type="text/javascript" src="js/date.js"></script>
 
 
 <!--Script that prevents drag function on mobile safari-->
@@ -228,6 +240,7 @@
 
 <!-- GOOGLE MAPS -->
 <script>
+  var routeON = false;
   var list = new Array();
   var timeNow = startTime();
   
@@ -236,12 +249,14 @@
 
   <c:forEach items="${daylist}" var="event" varStatus="status">
     var eventEnd ="${event.endtime}";
-    var eventEnd = eventEnd.split(" ");
-    var eventEnd = eventEnd[1];
+    var eventEndList = eventEnd.split(" ");
+    var eventEndtime = eventEndList[1];
+    var eventEnddate = eventEndList[0];
   
     var eventStart ="${event.starttime}";
-    var eventStart = eventStart.split(" ");
-    var eventStart = eventStart[1];
+    var eventStartList = eventStart.split(" ");
+    var eventStarttime = eventStartList[1];
+    var eventStartdate = eventStartList[0];
   
     //Evert:if-satsen här krockar med Tommys grej att när en dag är slut så laddas nästa dagars events in. Men då är ju tiden den dagen "senare" än nästa dags events.
   
@@ -260,13 +275,20 @@
       eventObject = new Object();
       eventObject.name = "${event.name}";
       eventObject.description = "${event.description}"; 
-      eventObject.starttime = eventStart; 
-      eventObject.endtime = eventEnd;
+
+      eventObject.startdate = eventStartdate; 
+      eventObject.enddate = eventEnddate;
+
+      eventObject.starttime = eventStarttime; 
+      eventObject.endtime = eventEndtime;
       eventObject.room = "${event.room}";
       eventObject.latitude="${event.latitude}";
       eventObject.longitude="${event.longitude}";
       list.push(eventObject);
   </c:forEach>
+
+
+  
 
 
 
@@ -285,7 +307,7 @@
     var properties = {
       center: new google.maps.LatLng(59.347353, 18.073558),
       zoom:15,
-      mapTypeId:google.maps.MapTypeId.SATELLITE,
+      mapTypeId:google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true
     };
     map = new google.maps.Map(document.getElementById('map_canvas'), properties);
@@ -318,6 +340,13 @@
 
       if(i==0){ //första marker sätts till att hoppa
         marker.setAnimation(google.maps.Animation.BOUNCE);
+        document.getElementById('nextevent_Room').innerHTML = "Next: in " + list[i].room;
+        
+          var deadline = Date.parse(list[i].startdate + " " + list[i].starttime);
+        $('#nextevent_Starttime').countdown({until: deadline, compact: true, format: 'HMS',
+    layout: 'starts in {hnn}{sep}{mnn}{sep}{snn}'});
+
+
       }
 
       var content = infoWindowContent(list[i]);
@@ -340,7 +369,7 @@
     function setTime(count){
       var markEndTime = markers[count].etime;
       var end = convertTime(markEndTime); //Tiden konverteras till millisekunder
-      var timeTemp = convertTime(now);
+      var timeTemp = convertTime(timeNow);
       timeLeft = end-timeTemp; //Tiden som är kvar tills markern ska försvinna
       setTimeout(callDelete,timeLeft); //Jag försökte att anropa deleteMarker direkt här, men det fungerade inte. 
                         //Därav funktionen callDelete
@@ -364,6 +393,10 @@
         
         if((markers.length-1)!=i){
           markers[i+1].marker.setAnimation(google.maps.Animation.BOUNCE); //Nästa marker hoppar
+        document.getElementById('nextevent_Room').innerHTML = "Next: in " + list[i].room;
+          var deadline = new Date(list[i+1].startdate + " " + list[i+1].starttime);
+        $('#nextevent_Starttime').countdown({until: deadline, compact: true, format: 'HMS',
+    layout: 'starts in {hnn}{sep}{mnn}{sep}{snn}'});
         }
       }
     }
@@ -386,7 +419,7 @@
 
   function infoWindowContent(event){
     var contentString = '<div id="content">'+ '<h4>'+event.name+'</h4>'+
-    '<p><b>'+ event.starttime + '<br>'+event.endtime +'<br></b>'+event.description+'</p></div>';
+    '<p><b>'+ event.starttime + '<br>'+event.endtime +'<br></b>'+event.description+'</p></div><br><button onclick="Route('+event.latitude +',' + event.longitude +')" class="btn btn-primary btn-md center-block" id="route">Route</button>';
     return contentString;
   }
   
@@ -395,39 +428,62 @@
 
 
 
-  function Route() {
+  function Route(endpointLat,enpointLong) {
+
+
+
+    routeON = !routeON;
+
+
+    if(routeON){
     
-    geoLocation(function(startpos) {
-    
-      var start = startpos;
-      var end = null;
+      geoLocation(function(startpos) {
+        directionsDisplay.setMap(map);
+        directionsDisplay.setOptions( { suppressMarkers: true } );
       
-      for (var i = 0; i < list.length; i++) {
+        var start = startpos;
+        var end = null;
 
-        if(timeNow < list[i].endtime){
-          var end = new google.maps.LatLng(list[i].latitude,list[i].longitude);
-          
-          break;
-        }
-      }
+      if(endpointLat==null){
+        
+        for (var i = 0; i < list.length; i++) {
 
-      if(end != null){
-        var request = {
-          origin:start,
-          destination:end,
-          travelMode: google.maps.TravelMode.WALKING
-        };
-        directionsService.route(request, function(response, status) {
-
-          if (status == google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(response);
+          if(timeNow < list[i].endtime){
+            var end = new google.maps.LatLng(list[i].latitude,list[i].longitude);
+            
+            break;
           }
-        });
-      } 
-      else {
-        console.log("alla event har passerat den nuvarande tiden");
+        }
+      } else {
+        var end = new google.maps.LatLng(endpointLat,enpointLong);
+
+        
+
+
       }
-    });
+        if(end != null){
+          var request = {
+            origin:start,
+            destination:end,
+            travelMode: google.maps.TravelMode.WALKING
+          };
+          directionsService.route(request, function(response, status) {
+
+            if (status == google.maps.DirectionsStatus.OK) {
+              directionsDisplay.setDirections(response);
+            }
+          });
+        } 
+        else {
+          console.log("alla event har passerat den nuvarande tiden");
+        }
+       
+      });
+    } else {
+      directionsDisplay.setMap();
+    
+
+    }
   } 
 
 
@@ -448,8 +504,8 @@
     }
     time = time.replace('hours','H');
     time = time.replace('mins','M');
-    document.getElementById('duration').innerHTML = time ;
-    document.getElementById('total').innerHTML =total + " meter";
+    document.getElementById('duration').innerHTML ="(approx " + time +")";
+    document.getElementById('total').innerHTML ="Walk " + total + " m";
   }
   
   google.maps.event.addDomListener(window,'load',initialize);
@@ -468,7 +524,7 @@
     m = checkTime(m);
     s = checkTime(s);
     var timeNow = h+":"+m+":"+s;
-    document.getElementById('todaytime').innerHTML = timeNow;
+    //document.getElementById('todaytime').innerHTML = timeNow;
     var ts = setTimeout(function(){startTime()},500);
     return timeNow;
     }
