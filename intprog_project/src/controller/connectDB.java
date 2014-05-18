@@ -120,8 +120,7 @@ public class connectDB {
 		}
 	}
 	//insert locations with long, lat in DB
-	public static void insertLocation(String room, double longitude,
-			double latitude) {
+	public static void insertSaknasLocation(){
 		conn = connect();
 		try {
 			query = "INSERT INTO locations (room,longitude,latitude) VALUES (?,?,?)";
@@ -135,6 +134,12 @@ public class connectDB {
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
+	}
+		
+	public static void insertLocation(String room, double longitude,
+			double latitude) {
+		conn = connect();
+	
 		try {
 			query = "INSERT INTO locations (room,longitude,latitude) VALUES (?,?,?)";
 			PreparedStatement pstmt = conn.prepareStatement(query);
@@ -159,18 +164,16 @@ public class connectDB {
 			ResultSet rs = null;
 			rs = stmt.executeQuery();
 			if (rs.next()) {
+				conn.close();
 				return true;
 			} else {
+				conn.close();
 				return false;
 			}
 		} catch (SQLException e) {
+			
 			System.out.println(query);
-		}
-		try {
-			conn.close();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			System.out.println(e);
 		}
 		return null;
 	}
@@ -206,12 +209,12 @@ public class connectDB {
 				e.setRoom(rs.getString("room"));
 				e.setLongitude(rs.getDouble("longitude"));
 				e.setLatitude(rs.getDouble("latitude"));
-				
 				list.add(e);
 			}
 			
 		} catch (SQLException e) {
 			System.out.println(e);
+			
 		}
 
 		return list;

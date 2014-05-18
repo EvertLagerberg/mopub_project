@@ -37,7 +37,7 @@ public class Event {
 	private String room;
 	private Double longitude;
 	private Double latitude;
-	
+	private ArrayList<String> altroom = new ArrayList<String>();
 
 	private Connection conn = null;
 
@@ -81,6 +81,11 @@ public class Event {
 	public void setLatitude(Double e) {
 		this.latitude = e;
 	}
+	
+	public void setAltroom(String e) {
+		this.altroom.add(e);
+	}
+
 
 	public int getId() {
 		return id;
@@ -120,6 +125,9 @@ public class Event {
 		return latitude;
 	}
 	
+	public ArrayList<String> getAltroom(String e) {
+		return altroom;
+	}
 
 	// end of class
 }

@@ -39,6 +39,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import bean.Event;
 import bean.Group;
 import bean.User;
 
@@ -86,15 +87,17 @@ public class EventController extends HttpServlet {
 				}
 				in.close();
 
-				request.setAttribute("schemaList", schemaList);
-
 				parseCalendartoDB(schemaList);
 
-				RequestDispatcher rd2 = request
-						.getRequestDispatcher("register.jsp");
-				rd2.forward(request, response);
-			} catch (ServletException e) {
-				System.out.print(e.getMessage());
+				ArrayList<Event> daylist = LoginController.getEvents(username);
+				request.setAttribute("daylist", daylist);
+				
+				try {
+					RequestDispatcher rd = request.getRequestDispatcher("map.jsp");
+					rd.forward(request, response);
+				} catch (ServletException e) {
+					System.out.print(e.getMessage());
+				}
 			} catch (IOException e) {
 				System.out.print(e.getMessage());
 			} catch (ParseException e) {

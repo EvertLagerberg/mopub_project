@@ -69,6 +69,7 @@
           <li><a href="#addevent">Add Event</a></li>
           <li><a href="#update">Update Cal</a></li>
           <li><a href="#about">About</a></li>
+          <li><a href="//localhost:8888/phpserver/login.php?logout=yes">Logout</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>

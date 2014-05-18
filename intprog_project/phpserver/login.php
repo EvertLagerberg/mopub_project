@@ -26,6 +26,11 @@ if (isset($_REQUEST['logout'])) {
  phpCAS::logout();
 }
 
+if (($_GET['logout'])==="yes") {
+	phpCAS::logout();
+}
+
+
 
 
 // for this test, simply print that the authentication was successfull

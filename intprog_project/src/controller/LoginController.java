@@ -33,47 +33,19 @@ public class LoginController extends HttpServlet {
 
 	private static Connection conn = null;
 	private String query;
-
+	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
 		conn = connectDB.connect();
 
 		String username = request.getParameter("username");
+		System.out.println("username = " + username);
 		HttpSession session = request.getSession(true);
 		session.setAttribute("Username", username);
-
-		if (connectDB.findUser(username)) {
-			System.out.println("True");
-			
-			ArrayList<Event> eventlist = connectDB.getEvents(username);
-			ArrayList<Event> daylist = new ArrayList<Event>();
-			ArrayList<String> altRoom = new ArrayList<String>();
-			String startDay = eventlist.get(0).getStarttime().substring(0, 10);
-			for (int i=0; i<eventlist.size()-1; i++){
-				if (eventlist.get(i).getStarttime().substring(0, 10).equals(startDay)){
-					daylist.add(eventlist.get(i));
-				}
-			}
-			if (daylist.size()>1){
-				for (int m=0; m<daylist.size(); m++){
-					for (int n=m+1; n<daylist.size(); n++){	
-						if (daylist.get(m).getId() == daylist.get(n).getId() ){
-							altRoom.add(daylist.get(n).getId() + ":" + daylist.get(n).getRoom());
-							daylist.remove(n);
-						}
-					}
-					if(daylist.get(m).getRoom().equals("Saknas")){
-						ArrayList<String> altrooms = connectDB.getAltroom(daylist.get(m).getId());
-						for (String string:altrooms){
-							altRoom.add(string);
-						}
-					}
-				}
-			}
+		if (connectDB.findUser(username)) {	
+			ArrayList<Event> daylist = getEvents(username); 
 			request.setAttribute("daylist", daylist);
-			request.setAttribute("altRoom", altRoom);
-
 			try {
 				RequestDispatcher rd = request.getRequestDispatcher("map.jsp");
 				rd.forward(request, response);
@@ -81,18 +53,43 @@ public class LoginController extends HttpServlet {
 				System.out.print(e.getMessage());
 			}
 
-		} else {
-			System.out.println("false");
-			try {
-				RequestDispatcher rd = request
-						.getRequestDispatcher("register.jsp");
-				rd.forward(request, response);
-			} catch (ServletException e) {
-				System.out.print(e.getMessage());
-			}
-
 		}
-
+		else{
+				System.out.println("false");
+				try {
+					RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
+					rd.forward(request, response);
+				} catch (ServletException e) {
+					System.out.print(e.getMessage());
+				}
+		}
+		} 
+		public static ArrayList<Event> getEvents(String username){
+				ArrayList<Event> eventlist = connectDB.getEvents(username);
+				ArrayList<Event> daylist = new ArrayList<Event>();
+				String startDay = eventlist.get(0).getStarttime().substring(0, 10);
+				for (int i=0; i<eventlist.size()-1; i++){
+					if (eventlist.get(i).getStarttime().substring(0, 10).equals(startDay)){
+						daylist.add(eventlist.get(i));
+					}
+				}
+				if (daylist.size()>1){
+					for (int m=0; m<daylist.size(); m++){
+						for (int n=m+1; n<daylist.size(); n++){	
+							if (daylist.get(m).getId() == daylist.get(n).getId() ){
+								daylist.get(m).setAltroom(daylist.get(n).getRoom());
+								daylist.remove(n);
+							}
+						}
+						if(daylist.get(m).getRoom().equals("Saknas")){
+							ArrayList<String> altrooms = connectDB.getAltroom(daylist.get(m).getId());
+							for (String string:altrooms){
+								daylist.get(m).setAltroom(string);
+							}
+						}
+					}
+				}
+				return daylist;
 	}
 
 }

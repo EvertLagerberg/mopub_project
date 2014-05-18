@@ -1,8 +1,9 @@
 
 drop table events_locations;
-drop table events;
+
 drop table locations;
 drop table altroom;
+drop table events;
 
 
 

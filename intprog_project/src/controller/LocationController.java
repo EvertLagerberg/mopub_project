@@ -53,8 +53,6 @@ public class LocationController extends HttpServlet {
 	ArrayList<String> nodata = new ArrayList<String>();
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
-
-
 		
 	   	String room = "";
     	double longitude = 0;
@@ -74,7 +72,7 @@ public class LocationController extends HttpServlet {
         Elements imports = doc.select("link[href]");
 
         System.out.println("\nLinks: (%d)" + links.size());
-        
+        connectDB.insertSaknasLocation();
         for (Element link : links) {
         	Boolean correct = true;
             //System.out.println(" * a: <%s>  (%s)", link.attr("abs:href"), trim(link.text(), 35));

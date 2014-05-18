@@ -19,6 +19,5 @@
 <input type="text" name="url" value=""><br>
 <input type="submit" value="Submit">
 </form>
-<%=request.getAttribute("schemaList")%>
 </body>
 </html>
