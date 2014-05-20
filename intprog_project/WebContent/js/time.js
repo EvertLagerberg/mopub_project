@@ -1,4 +1,5 @@
       function setTime(count){
+      console.log("SetTime");
       var markEndTime = markers[count].eTime;
       var end = convertTime(markEndTime); //Tiden konverteras till millisekunder
       var timeTemp = convertTime(timeNow);
@@ -6,13 +7,11 @@
       setTimeout(callDelete,timeLeft); //Jag försökte att anropa deleteMarker direkt här, men det fungerade inte. 
                         //Därav funktionen callDelete
       function callDelete(){
+        console.log("callDeletet");
         deleteMarker(markEndTime);  
       }
     }
-    function eventOverlap(marker){
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-    //Jag tog bort delen som satte animationen till null om man klickade på markern.
-    }
+
 
   function convertTime(t){ //Konverterar tiden till millisekunder
     var hour = Number(t.split(':')[0]);

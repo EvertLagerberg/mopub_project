@@ -309,11 +309,39 @@
 
 
 //  if (eventEnd > timeNow) {
+
+
       eventObject = new Object();
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
-      eventObject.starttime ="19:00:00"; 
-      eventObject.endtime = "19:58:00";
+      eventObject.starttime ="22:40:00"; 
+      eventObject.endtime = "23:00:00";
+      eventObject.room = "F1";
+      eventObject.latitude=59.34811019897461;
+      eventObject.longitude=18.06534767150879;
+      eventObject.altroom = "E35,E32,";
+      list.push(eventObject);
+
+
+      eventObject = new Object();
+      eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
+      eventObject.description = "${event.description}"; 
+      eventObject.starttime ="23:00:00"; 
+      eventObject.endtime = "23:30:00";
+      eventObject.room = "F1";
+      eventObject.latitude=59.34811019897462;
+      eventObject.longitude=18.06534767150873;
+      eventObject.altroom = "E35,E32,";
+      list.push(eventObject);
+
+
+
+
+      eventObject = new Object();
+      eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
+      eventObject.description = "${event.description}"; 
+      eventObject.starttime ="23:00:00"; 
+      eventObject.endtime = "23:30:00";
       eventObject.room = "Q1";
       eventObject.latitude=59.35015106201172;
       eventObject.longitude=18.06719970703125;
@@ -323,19 +351,8 @@
       eventObject = new Object();
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
-      eventObject.starttime ="19:00:00"; 
-      eventObject.endtime = "19:58:15";
-      eventObject.room = "F1";
-      eventObject.latitude=59.34811019897461;
-      eventObject.longitude=18.06534767150879;
-      eventObject.altroom = "E35,E32,";
-      list.push(eventObject);
-
-      eventObject = new Object();
-      eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
-      eventObject.description = "${event.description}"; 
-      eventObject.starttime ="19:00:00"; 
-      eventObject.endtime = "19:58:30";
+      eventObject.starttime ="23:30:00"; 
+      eventObject.endtime = "23:59:00";
       eventObject.room = "Saknas";
       eventObject.latitude=59.347330625522105;
       eventObject.longitude=18.07062953710556;

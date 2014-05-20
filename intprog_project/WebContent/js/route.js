@@ -98,7 +98,7 @@
 
   var geomarker = new Marker({
   map: map,
-  title: 'Map Icons',
+  title: 'I am Here',
   position: navigator,
   zIndex: 9,
   icon: {

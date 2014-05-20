@@ -53,7 +53,7 @@
     '<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
     'class="btn btn-primary btn-sm center-block" id="route">Route Here</button>'+
     '<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
-    'class="btn btn-primary btn-sm center-block" id="route">Route There</button>'+
+    'class="btn btn-success btn-sm center-block" id="choose">Choose</button>'+
     '</div';
 
 
@@ -84,7 +84,7 @@
     '<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
     'class="btn btn-primary btn-sm center-block" id="route">Route Here</button>'+
     '<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
-    'class="btn btn-primary btn-sm center-block" id="route">Route There</button>'+
+    'class="btn btn-success btn-sm center-block" id="choose">Choose</button>'+
     '</div';
     }
     return contentString;
@@ -93,9 +93,11 @@
 
 
     function deleteMarker(time) {
+      console.log("deleteMarker");
     for(var i = 0; i < markers.length; i++){ 
       if(markers[i].eTime==time){
         var marker = markers[i].marker;
+        console.log("setMapNull");
         marker.setMap(null); //Marker tas bort från kartan
         
         if((markers.length-1)!=i){
@@ -106,6 +108,22 @@
       }
     }
   }
+
+
+
+    function eventOverlap(marker){
+    console.log("overlap");
+
+    var icon = {
+     url: "Marker-Symbols/krockorange.png", // url
+     scaledSize: new google.maps.Size(65, 62) // size
+    };
+
+    marker.setIcon(icon);
+
+
+    //Jag tog bort delen som satte animationen till null om man klickade på markern.
+    }
 
 
 
