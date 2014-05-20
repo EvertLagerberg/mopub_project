@@ -32,6 +32,17 @@
 
 
     function infoWindowContent(event){
+
+    if(event.room === "Saknas"){
+
+     var contentString = '<div id="content">'+
+    '<h4>'+event.name+'</h4>'+
+    '<p><b>'+ event.starttime + ' - '+event.endtime +'</p>'+
+    '</div>'+
+    '<p>Given location is invalid</p>'; 
+
+    } else {
+
     var contentString = '<div id="content">'+
     '<h4>'+event.name+'</h4>'+
     '<p><span class="badge">'+event.room+'</span></p>'+
@@ -43,6 +54,7 @@
     '<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
     'class="btn btn-primary btn-sm center-block" id="route">Route There</button>'+
     '</div';
+    }
     return contentString;
   }
 

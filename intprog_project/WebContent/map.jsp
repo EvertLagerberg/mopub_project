@@ -119,6 +119,8 @@
 
   
   </div>
+  </div>
+  </div>
 
 
 
@@ -308,8 +310,7 @@
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
 
-      eventObject.startdate = "2014-05-20"; 
-      eventObject.enddate = "2014-05-20";
+
 
       eventObject.starttime ="16:00:00"; 
       eventObject.endtime = "18:00:00";
@@ -327,8 +328,7 @@
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
 
-      eventObject.startdate = "2014-05-20"; 
-      eventObject.enddate = "2014-05-20";
+  
 
       eventObject.starttime ="19:00:00"; 
       eventObject.endtime = "22:00:00";
@@ -341,14 +341,13 @@
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
 
-      eventObject.startdate = "2014-05-20"; 
-      eventObject.enddate = "2014-05-20";
+
 
       eventObject.starttime ="19:00:00"; 
       eventObject.endtime = "22:00:00";
-      eventObject.room = "E1";
-      eventObject.latitude=59.34691619873047;
-      eventObject.longitude=18.073184967041016;
+      eventObject.room = "Saknas";
+      eventObject.latitude=59.347330625522105;
+      eventObject.longitude=18.07062953710556;
       list.push(eventObject);
 
 
@@ -387,14 +386,25 @@
 
     for (var i = 0; i < list.length; i++) { 
       
-      var location = new google.maps.LatLng(list[i].latitude,list[i].longitude);
+    var location = new google.maps.LatLng(list[i].latitude,list[i].longitude);
+
+
+  if (list[i].room === "Saknas"){
+    var icon = {
+     url: "Marker-Symbols/saknasred.png", // url
+     scaledSize: new google.maps.Size(65, 62) // size
+    };
 
 
 
+
+    } else {
     var icon = {
      url: "Marker-Symbols/marker.png", // url
      scaledSize: new google.maps.Size(65, 62) // size
       };
+
+    }  
 
 
       var marker = new google.maps.Marker({
@@ -414,7 +424,7 @@
       markers.push(markObject);
 
 
-      if(i==0){ //första marker sätts till att hoppa
+     if(i==0){ //första marker sätts till att hoppa
         marker.setAnimation(google.maps.Animation.BOUNCE);
         nextEvent(list[i]);
 
@@ -466,7 +476,7 @@
 
   //// time and date for the device
   function startTime() {
-	start();
+	//start();
     currentdate=new Date();
     var h=currentdate.getHours();
     var m=currentdate.getMinutes();
@@ -484,13 +494,13 @@
       return i;
     }
   
-  function start(){
+  /*function start(){
 	  var isUser = <c:out value="${isUser}"/>;
 	   	if(isUser){
 	   		//console.log("hej2")
 	   		$('#update').trigger('click');
 	   		}
-  }
+  }*/
     
 
   google.maps.event.addDomListener(window,'load',initialize);
