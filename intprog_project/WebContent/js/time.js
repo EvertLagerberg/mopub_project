@@ -1,5 +1,5 @@
       function setTime(count){
-      var markEndTime = markers[count].etime;
+      var markEndTime = markers[count].eTime;
       var end = convertTime(markEndTime); //Tiden konverteras till millisekunder
       var timeTemp = convertTime(timeNow);
       timeLeft = end-timeTemp; //Tiden som är kvar tills markern ska försvinna
@@ -11,7 +11,6 @@
     }
     function eventOverlap(marker){
     marker.setAnimation(google.maps.Animation.BOUNCE);
-    console.log("inne") 
     //Jag tog bort delen som satte animationen till null om man klickade på markern.
     }
 

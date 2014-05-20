@@ -305,12 +305,12 @@
   </c:forEach>*/
 
 
-
+//  if (eventEnd > timeNow) {
       eventObject = new Object();
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
       eventObject.starttime ="19:00:00"; 
-      eventObject.endtime = "22:00:00";
+      eventObject.endtime = "19:58:00";
       eventObject.room = "Q1";
       eventObject.latitude=59.35015106201172;
       eventObject.longitude=18.06719970703125;
@@ -321,18 +321,18 @@
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
       eventObject.starttime ="19:00:00"; 
-      eventObject.endtime = "22:00:00";
+      eventObject.endtime = "19:58:15";
       eventObject.room = "F1";
       eventObject.latitude=59.34811019897461;
       eventObject.longitude=18.06534767150879;
-      eventObject.altroom = "E35,E32,"
+      eventObject.altroom = "E35,E32,";
       list.push(eventObject);
 
       eventObject = new Object();
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
       eventObject.starttime ="19:00:00"; 
-      eventObject.endtime = "22:00:00";
+      eventObject.endtime = "19:58:30";
       eventObject.room = "Saknas";
       eventObject.latitude=59.347330625522105;
       eventObject.longitude=18.07062953710556;
@@ -341,6 +341,7 @@
 
 
 
+  //}
 
 
   
@@ -405,31 +406,29 @@
       });
 
 
-      var etime = list[i].endtime;
+      var eTime = list[i].endtime;
       marker.setMap(map);
       var markObject = new Object();
       markObject.marker = marker;
-      markObject.etime = etime;
+      markObject.eTime = eTime;
       markers.push(markObject);
+      var markerTimeNow = list[i].starttime;
 
 
      if(i==0){ //första marker sätts till att hoppa
         marker.setAnimation(google.maps.Animation.BOUNCE);
         nextEvent(list[i]);
-
-
       }
       else{
-      console.log("inne i elsen");
       var num = i;
       num = parseInt(num);
       numBefore = num - 1;
       markerTimeBefore = markers[numBefore].eTime; //Plockar ut förra markerns sluttid
-      if(startTime<markerTimeBefore){ //om starttime är innan sluttiden
-        eventOverlap(marker); //båda markers sätts till att hoppa
-        var m = markers[numBefore].marker; 
-        eventOverlap(m);
-          }
+      if(markerTimeNow<markerTimeBefore){ //om starttime är innan sluttiden
+    	  eventOverlap(marker); //båda markers sätts till att hoppa
+    	  var m = markers[numBefore].marker; 
+    	  eventOverlap(m);
+    	  }
           
         }
 
@@ -449,7 +448,7 @@
       setTime(counter); //en timeout sätts för alla markers
       counter++;
     } 
-    //Evert: Vad är now för något?
+    //Evert: Vad är now för något? 
 
   }
 

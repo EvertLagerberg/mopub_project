@@ -92,9 +92,9 @@
 
 
 
-    function deleteMarker(time) { 
+    function deleteMarker(time) {
     for(var i = 0; i < markers.length; i++){ 
-      if(markers[i].etime==time){
+      if(markers[i].eTime==time){
         var marker = markers[i].marker;
         marker.setMap(null); //Marker tas bort från kartan
         
