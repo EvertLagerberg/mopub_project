@@ -47,9 +47,8 @@
 
 </head>
 
+<body onload="start()">
 
-
-<body>
 
   <!-- Fixed navbar -->
   <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -65,12 +64,14 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#search"  id="update">Search</a></li>
+
+          <li class="active"><a id="map" href="#">Home</a></li>
+          <li><a href="#search">Search</a></li>
           <li><a href="#addevent">Add Event</a></li>
-          <li><a href="#update"><span class="glyphicon glyphicon-cog"></span> Update Cal</a></li>
-          <li><a href="#about"><span class="glyphicon glyphicon-heart"></span> About</a></li>
-          <li><a href="//localhost:8888/phpserver/login.php?logout=yes"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          <li><a id="Update" href="#update"><span class="glyphicon glyphicon-cog"></span>Update Cal</a></li>
+          <li><a href="#about"><span class="glyphicon glyphicon-heart"></span>About</a></li>
+          <li><a href="//localhost:8888/phpserver/login.php?logout=yes"><span class="glyphicon glyphicon-log-out"></span>)Logout</a></li>
+
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -164,7 +165,8 @@
     <div class="row page">
 
      <h2>Uppdatera</h2>
-     <h3> Här lägger vi funktion för att uppdatera sin länk</h3>
+     <h3>Enter the url to your KTH schedule here.</h3>
+     <p>When events are entered, they will appear on the map.<br/> If there is already a schedule is added then it will be removed and a new will be added.</p>
 
      <h3>Url to ics-file:</h3>
      <form action="/intprog_project/EventController" method="POST">
@@ -260,6 +262,7 @@
 <script>
   var routeON = false;
   var list = new Array();
+  var counter = 1;
   var timeNow = startTime();
   
   //schemaList är en array med bönor av varje event, som jag skapade upp i en controller.
@@ -464,13 +467,13 @@
 
   //// time and date for the device
   function startTime() {
-	//start();
     currentdate=new Date();
     var h=currentdate.getHours();
     var m=currentdate.getMinutes();
     var s=currentdate.getSeconds();
     m = checkTime(m);
     s = checkTime(s);
+    
     var timeNow = h+":"+m+":"+s;
     //document.getElementById('todaytime').innerHTML = timeNow;
     var ts = setTimeout(function(){startTime()},500);
@@ -481,20 +484,24 @@
       if (i<10) {i = "0" + i};  // adds zeros in front of numbers < 10
       return i;
     }
-  
-  /*function start(){
+
+  function start(){
+	  startTime();
 	  var isUser = <c:out value="${isUser}"/>;
-	   	if(isUser){
-	   		//console.log("hej2")
-	   		$('#update').trigger('click');
+	   	if(!isUser){
+	   	 	window.location.href = $('#Update').attr('href');
 	   		}
-  }*/
-    
+	   	else{
+	   		window.location.href = $('#map').attr('href');
+	   	}
+  }
+
+
 
   google.maps.event.addDomListener(window,'load',initialize);
   google.maps.event.addDomListener(window,'load',geoLocation);
 
- 
+
 </script>
 
 

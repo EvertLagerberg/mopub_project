@@ -31,16 +31,15 @@ import bean.Event;
 
 public class LoginController extends HttpServlet {
 
-	private static Connection conn = null;
-	private String query;
+	String username;
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
-
-		conn = connectDB.connect();
-
-		String username = request.getParameter("username");
-		System.out.println("username = " + username);
+			throws IOException, ServletException {
+	
+		 if (request.getParameterMap().containsKey("username")) {
+	            username = request.getParameter("username");
+	        }
+		
 		HttpSession session = request.getSession(true);
 		session.setAttribute("Username", username);
 		if (connectDB.findUser(username)) {	

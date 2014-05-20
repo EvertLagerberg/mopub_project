@@ -18,14 +18,13 @@ import java.util.ArrayList;
 import bean.Event;
 
 
-
-
 import java.net.URL;
 
 import net.fortuna.ical4j.model.*;
 
 
 public class EventController extends HttpServlet {
+
 
 
 	static String formated_starttime;
@@ -47,14 +46,18 @@ public class EventController extends HttpServlet {
 			}
 			setSchemma(input);
 			ArrayList<Event> daylist = LoginController.getEvents(username);
-			request.setAttribute("daylist", daylist);
+
 			try {
+				request.setAttribute("daylist", daylist);
+				request.setAttribute("isUser",true);
 				RequestDispatcher rd = request.getRequestDispatcher("map.jsp");
 				rd.forward(request, response);
 			} catch (ServletException e) {
 				System.out.print(e.getMessage());
 			
 		}
+			
+
 		}
 		}
 	
