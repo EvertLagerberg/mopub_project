@@ -10,7 +10,13 @@
 
  <!-- Bootstrap core CSS -->
  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+ <!-- Countdown css -->
  <link rel="stylesheet" type="text/css" href="css/jquery.countdown.css">
+
+  <!-- icons css -->
+ <link rel="stylesheet" type="text/css" href="css/map-icons.css">
+
 
  <!-- CSS -->
  <link href="css/footer.css" rel="stylesheet">
@@ -34,6 +40,8 @@
 
 
  <script type="text/javascript"src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOgf60Bt5Zk7eIz-eApBBXlVEcEsuOg6M&sensor=true"></script>
+
+
 
 
 
@@ -64,12 +72,12 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
+          <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
           <li><a href="#search">Search</a></li>
           <li><a href="#addevent">Add Event</a></li>
-          <li><a href="#update">Update Cal</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="//localhost:8888/phpserver/login.php?logout=yes">Logout</a></li>
+          <li><a href="#update"><span class="glyphicon glyphicon-cog"></span> Update Cal</a></li>
+          <li><a href="#about"><span class="glyphicon glyphicon-heart"></span> About</a></li>
+          <li><a href="//localhost:8888/phpserver/login.php?logout=yes"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -83,9 +91,17 @@
   <!--PAGE FOOTER/MENUBAR-->
 <div id="footer">
   <div class="container">
+  <div class="row" id="routebar">
+  <div class="text-center">
+  <p><b>Chosen route:</b>
+  <span id="total" class="small">-- </span>
+  <span id="duration" class="small">--</span>
+  </p>
+  </div>
+  </div>
 <div class="row toolbar">
     
-<div class="col-xs-5">
+<div class="col-xs-8">
 
   
    <div id="nextevent_Room" class="small"> </div>
@@ -95,12 +111,7 @@
    </div>
   
 
-<div class="col-xs-3">
-   
-   <div id="total" class="small">-- </div>
-   <div id="duration" class="small">--</div >
-   
-   </div>
+
 
    <div class="col-xs-3">
          <button onclick="Route(null,null)" class="btn btn-primary btn-md center-block" id="route">Route</button>
@@ -220,6 +231,7 @@
 <script type="text/javascript" src="js/jquery.plugin.js"></script> 
 <script type="text/javascript" src="js/jquery.countdown.js"></script>
 <script type="text/javascript" src="js/date.js"></script>
+<script type="text/javascript" src="js/map-icons.js"></script>
 
 
 <!--Script that prevents drag function on mobile safari-->
@@ -323,7 +335,16 @@
       
       var location = new google.maps.LatLng(list[i].latitude,list[i].longitude);
 
+
+
+    var icon = {
+     url: "Marker-Symbols/marker.png", // url
+     scaledSize: new google.maps.Size(65, 62) // size
+      };
+
+
       var marker = new google.maps.Marker({
+        icon: icon,
         position: location,
         map: map,
         draggable: true, //not needed
@@ -341,11 +362,17 @@
 
       if(i==0){ //första marker sätts till att hoppa
         marker.setAnimation(google.maps.Animation.BOUNCE);
-        document.getElementById('nextevent_Room').innerHTML = "Next: in " + list[i].room;
+        document.getElementById('nextevent_Room').innerHTML = "Next event: in " + "<span class='badge'>"+list[i].room+"</span>";
         
-          var deadline = Date.parse(list[i].startdate + " " + list[i].starttime);
-        $('#nextevent_Starttime').countdown({until: deadline, compact: true, format: 'HMS',
+          var deadline = Date.parse("2014-05-20 02:32:00"/*list[i].startdate + " " + list[i].starttime*/);
+        $('#nextevent_Starttime').countdown({until: deadline, onExpiry: countUp, compact: true, format: 'HMS',
     layout: 'starts in {hnn}{sep}{mnn}{sep}{snn}'});
+
+        function countUp(){
+          console.log(deadline)
+          $('#nextevent_Room').countdown({since: deadline, compact: true, format: 'HMS',
+    layout: 'starts in {hnn}{sep}{mnn}{sep}{snn}'});
+        }
 
 
       }
@@ -394,8 +421,8 @@
         
         if((markers.length-1)!=i){
           markers[i+1].marker.setAnimation(google.maps.Animation.BOUNCE); //Nästa marker hoppar
-        document.getElementById('nextevent_Room').innerHTML = "Next: in " + list[i].room;
-          var deadline = new Date(list[i+1].startdate + " " + list[i+1].starttime);
+        document.getElementById('nextevent_Room').innerHTML = "Next event: in " + "<span class='badge'>"+list[i+1].room+"</span>";
+       var deadline = Date.parse(list[i+1].startdate + " " + list[i+1].starttime);
         $('#nextevent_Starttime').countdown({until: deadline, compact: true, format: 'HMS',
     layout: 'starts in {hnn}{sep}{mnn}{sep}{snn}'});
         }
@@ -420,7 +447,7 @@
 
   function infoWindowContent(event){
     var contentString = '<div id="content">'+ '<h4>'+event.name+'</h4>'+
-    '<p><b>'+ event.starttime + '<br>'+event.endtime +'<br></b>'+event.description+'</p></div><br><button onclick="Route('+event.latitude +',' + event.longitude +')" class="btn btn-primary btn-md center-block" id="route">Route</button>';
+    '<p><b>'+ event.starttime + '<br>'+event.endtime +'</p></div><br><button onclick="Route('+event.latitude +',' + event.longitude +')" class="btn btn-primary btn-md center-block" id="route">Route</button>';
     return contentString;
   }
   
@@ -429,7 +456,7 @@
 
 
 
-  function Route(endpointLat,enpointLong) {
+  function Route(endpointLat,endpointLong) {
 
 
 
@@ -456,7 +483,7 @@
           }
         }
       } else {
-        var end = new google.maps.LatLng(endpointLat,enpointLong);
+        var end = new google.maps.LatLng(endpointLat,endpointLong);
 
         
 
@@ -544,7 +571,7 @@
       navigator.geolocation.getCurrentPosition(function(position) {
         var navigator = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
       
-        var alienMarker = {
+        /*var alienMarker = {
           path: 'M 375,8.5 C 226.5,8.5 21.5,102.2 21.5,346 C 21.5,346.8 21.5,347.7 21.5,348.5 C 23.2,591.2 270.1,891.5 375,891.5 C 480.3,891.5 728.5,589.8 728.5,346 C 728.5,102.2 523.5,8.5 375,8.5 z M 57,367.5 C 230,367.5 355,489.5 355,672.5 C 174,672.5 57,555.5 57,367.5 z M 699,367.5 C 699,555.5 579.6,672.5 395,672.5 C 395,489.5 522.5,367.5 699,367.5 z',
           fillColor: 'orange',
           fillOpacity: 0.8,
@@ -562,7 +589,24 @@
           animation: google.maps.Animation.DROP,
           position: navigator,
           title: "myPosition"
-        });
+        });*/
+
+
+  var geomarker = new Marker({
+  map: map,
+  title: 'Map Icons',
+  position: navigator,
+  zIndex: 9,
+  icon: {
+    path: MAP_PIN,
+    fillColor: '#FF4981',
+    fillOpacity: 0.8,
+    scale: 0.3,
+    strokeColor: '#FB2B69',
+    strokeWeight: 1
+  },
+  label: '<i class="map-icon-walking"></i>'
+});
 
         if(callback && typeof(callback) === "function"){
           callback(navigator);
