@@ -41,7 +41,39 @@
     '</div>'+
     '<p>Given location is invalid</p>'; 
 
-    } else {
+    } else if(event.altroom !=""){
+
+    console.log(event.altroom);
+    var contentString = '<div id="content">'+
+    '<h4>'+event.name+'</h4>'+
+    '<p><span class="badge">'+event.room+'</span> '+event.altroom+'</p>'+
+    '<p><b>'+ event.starttime + ' - '+event.endtime +'</p>'+
+    '</div>'+
+    '<br><div class="btn-group">'+
+    '<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
+    'class="btn btn-primary btn-sm center-block" id="route">Route Here</button>'+
+    '<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
+    'class="btn btn-primary btn-sm center-block" id="route">Route There</button>'+
+    '</div';
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+    else {
+
+
 
     var contentString = '<div id="content">'+
     '<h4>'+event.name+'</h4>'+

@@ -38,9 +38,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import bean.Event;
-import bean.Group;
+
 import bean.Location;
-import bean.User;
+
 
 import java.sql.Timestamp;
 

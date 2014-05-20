@@ -16,8 +16,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import bean.Event;
-import bean.Group;
-import bean.User;
+
+
 
 
 import java.net.URL;
@@ -27,12 +27,12 @@ import net.fortuna.ical4j.model.*;
 
 public class EventController extends HttpServlet {
 
-	public static User loggedinUser = null;
+
 	static String formated_starttime;
 	static String formated_endtime;
 	static String[] split_rooms = null;
 	boolean correctUser = false;
-	ArrayList<Group> grouplist = new ArrayList<Group>();
+	
 	static String username_FORM = "";
 	static String username;
 

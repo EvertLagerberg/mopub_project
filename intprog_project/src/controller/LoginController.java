@@ -26,8 +26,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import bean.Event;
-import bean.Group;
-import bean.User;
+
+
 
 public class LoginController extends HttpServlet {
 

@@ -125,8 +125,16 @@ public class Event {
 		return latitude;
 	}
 	
-	public ArrayList<String> getAltroom(String e) {
-		return altroom;
+	public String getAltroom(String e) {
+		String rooms ="";
+		if(altroom != null){
+			for(String alt:altroom){
+				rooms += alt +",";	
+			}
+			return rooms;
+			
+		}
+		return null;
 	}
 
 	// end of class

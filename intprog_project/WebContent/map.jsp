@@ -309,45 +309,34 @@
       eventObject = new Object();
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
-
-
-
-      eventObject.starttime ="16:00:00"; 
-      eventObject.endtime = "18:00:00";
+      eventObject.starttime ="19:00:00"; 
+      eventObject.endtime = "22:00:00";
       eventObject.room = "Q1";
       eventObject.latitude=59.35015106201172;
       eventObject.longitude=18.06719970703125;
+      eventObject.altroom = "";
       list.push(eventObject);
-
-
-
-
-
 
       eventObject = new Object();
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
-
-  
-
       eventObject.starttime ="19:00:00"; 
       eventObject.endtime = "22:00:00";
       eventObject.room = "F1";
       eventObject.latitude=59.34811019897461;
       eventObject.longitude=18.06534767150879;
+      eventObject.altroom = "E35,E32,"
       list.push(eventObject);
 
       eventObject = new Object();
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
-
-
-
       eventObject.starttime ="19:00:00"; 
       eventObject.endtime = "22:00:00";
       eventObject.room = "Saknas";
       eventObject.latitude=59.347330625522105;
       eventObject.longitude=18.07062953710556;
+      eventObject.altroom="";
       list.push(eventObject);
 
 
