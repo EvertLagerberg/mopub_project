@@ -99,6 +99,7 @@
   
    <div id="nextevent_Room" class="small"> </div>
    <div id="nextevent_Starttime" class="small"> </div >
+   <div id="nextevent_Late" class="small"> </div >
   
 
    </div>
@@ -227,6 +228,15 @@
 <script type="text/javascript" src="js/map-icons.js"></script>
 
 
+    <!--Javascript functions for events-->
+<script type="text/javascript" src="js/event.js"></script>
+
+ <!--Javascript functions for route-->
+<script type="text/javascript" src="js/route.js"></script>
+ <!--Javascript functions for time-->
+<script type="text/javascript" src="js/time.js"></script>
+
+
 <!--Script that prevents drag function on mobile safari-->
 <script>
   $('#footer').on('touchmove', function(event) {
@@ -295,17 +305,17 @@
 
 
       eventObject = new Object();
-      eventObject.name = "Lektion 1";
+      eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
 
       eventObject.startdate = "2014-05-20"; 
       eventObject.enddate = "2014-05-20";
 
-      eventObject.starttime ="12:00:00"; 
-      eventObject.endtime = "13:00:00";
+      eventObject.starttime ="16:00:00"; 
+      eventObject.endtime = "18:00:00";
       eventObject.room = "Q1";
-      eventObject.latitude=59.34811019897461;
-      eventObject.longitude=18.074687957763672;
+      eventObject.latitude=59.35015106201172;
+      eventObject.longitude=18.06719970703125;
       list.push(eventObject);
 
 
@@ -314,28 +324,28 @@
 
 
       eventObject = new Object();
-      eventObject.name = "Lektion 2";
+      eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
 
       eventObject.startdate = "2014-05-20"; 
       eventObject.enddate = "2014-05-20";
 
-      eventObject.starttime ="14:00:00"; 
-      eventObject.endtime = "17:00:00";
-      eventObject.room = "Q1";
-      eventObject.latitude=59.3536376953125;
+      eventObject.starttime ="19:00:00"; 
+      eventObject.endtime = "22:00:00";
+      eventObject.room = "F1";
+      eventObject.latitude=59.34811019897461;
       eventObject.longitude=18.06534767150879;
       list.push(eventObject);
 
-            eventObject = new Object();
-      eventObject.name = "Lektion 3";
+      eventObject = new Object();
+      eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
 
       eventObject.startdate = "2014-05-20"; 
       eventObject.enddate = "2014-05-20";
 
-      eventObject.starttime ="14:00:00"; 
-      eventObject.endtime = "17:00:00";
+      eventObject.starttime ="19:00:00"; 
+      eventObject.endtime = "22:00:00";
       eventObject.room = "E1";
       eventObject.latitude=59.34691619873047;
       eventObject.longitude=18.073184967041016;
@@ -406,17 +416,7 @@
 
       if(i==0){ //första marker sätts till att hoppa
         marker.setAnimation(google.maps.Animation.BOUNCE);
-        document.getElementById('nextevent_Room').innerHTML = "Next event: in " + "<span class='badge'>"+list[i].room+"</span>";
-        
-          var deadline = Date.parse("2014-05-20 02:32:00"/*list[i].startdate + " " + list[i].starttime*/);
-        $('#nextevent_Starttime').countdown({until: deadline, onExpiry: countUp, compact: true, format: 'HMS',
-    layout: 'starts in {hnn}{sep}{mnn}{sep}{snn}'});
-
-        function countUp(){
-          console.log(deadline)
-          $('#nextevent_Room').countdown({since: deadline, compact: true, format: 'HMS',
-    layout: 'starts in {hnn}{sep}{mnn}{sep}{snn}'});
-        }
+        nextEvent(list[i]);
 
 
       }
@@ -435,7 +435,7 @@
         }
 
       var content = infoWindowContent(list[i]);
-      var infowindow = new google.maps.InfoWindow()
+      var infowindow = new google.maps.InfoWindow();
       google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
         return function() {
           infowindow.setContent(content);
@@ -451,22 +451,7 @@
       counter++;
     } 
     //Evert: Vad är now för något?
-    function setTime(count){
-      var markEndTime = markers[count].etime;
-      var end = convertTime(markEndTime); //Tiden konverteras till millisekunder
-      var timeTemp = convertTime(timeNow);
-      timeLeft = end-timeTemp; //Tiden som är kvar tills markern ska försvinna
-      setTimeout(callDelete,timeLeft); //Jag försökte att anropa deleteMarker direkt här, men det fungerade inte. 
-                        //Därav funktionen callDelete
-      function callDelete(){
-        deleteMarker(markEndTime);  
-      }
-    }
-    function eventOverlap(marker){
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-    console.log("inne") 
-    //Jag tog bort delen som satte animationen till null om man klickade på markern.
-    }
+
   }
 
 
@@ -474,132 +459,6 @@
 
 
 
-
-  function deleteMarker(time) { 
-    for(var i = 0; i < markers.length; i++){ 
-      if(markers[i].etime==time){
-        var marker = markers[i].marker;
-        marker.setMap(null); //Marker tas bort från kartan
-        
-        if((markers.length-1)!=i){
-          markers[i+1].marker.setAnimation(google.maps.Animation.BOUNCE); //Nästa marker hoppar
-        document.getElementById('nextevent_Room').innerHTML = "Next event: in " + "<span class='badge'>"+list[i+1].room+"</span>";
-       var deadline = Date.parse(list[i+1].startdate + " " + list[i+1].starttime);
-        $('#nextevent_Starttime').countdown({until: deadline, compact: true, format: 'HMS',
-    layout: 'starts in {hnn}{sep}{mnn}{sep}{snn}'});
-        }
-      }
-    }
-  }
-    
-
-
-
-
-  function convertTime(t){ //Konverterar tiden till millisekunder
-    var hour = Number(t.split(':')[0]);
-    var min = (hour*60+(Number(t.split(':')[1])))*60;
-    var convertedTime=(min+Number(t.split(':')[2]))*1000;
-    return convertedTime;
-  }
-
-
-
-
-
-  function infoWindowContent(event){
-    var contentString = '<div id="content">'+ '<h4>'+event.name+'</h4>'+
-    '<p><b>'+ event.starttime + '<br>'+event.endtime +'</p></div><br><button onclick="Route('+event.latitude +',' + event.longitude +')" class="btn btn-primary btn-md center-block" id="route">Route</button>';
-    return contentString;
-  }
-  
-
-
-
-
-
-  function Route(endpointLat,endpointLong) {
-
-
-
-    routeON = !routeON;
-
-
-    if(routeON){
-    
-      geoLocation(function(startpos) {
-        directionsDisplay.setMap(map);
-        directionsDisplay.setOptions( { suppressMarkers: true } );
-      
-        var start = startpos;
-        var end = null;
-
-      if(endpointLat==null){
-        
-        for (var i = 0; i < list.length; i++) {
-
-          if(timeNow < list[i].endtime){
-            var end = new google.maps.LatLng(list[i].latitude,list[i].longitude);
-            
-            break;
-          }
-        }
-      } else {
-        var end = new google.maps.LatLng(endpointLat,endpointLong);
-
-        
-
-
-      }
-        if(end != null){
-          var request = {
-            origin:start,
-            destination:end,
-            travelMode: google.maps.TravelMode.WALKING
-          };
-          directionsService.route(request, function(response, status) {
-
-            if (status == google.maps.DirectionsStatus.OK) {
-              directionsDisplay.setDirections(response);
-            }
-          });
-        } 
-        else {
-          console.log("alla event har passerat den nuvarande tiden");
-        }
-       
-      });
-    } else {
-      directionsDisplay.setMap();
-    
-
-    }
-  } 
-
-
-
-
-
-  function computeTotalDistance(result) {
-    var total = 0;
-    var time= 0;
-    var from=0;
-    var to=0;
-    var myroute = result.routes[0];
-    for (var i = 0; i < myroute.legs.length; i++) {
-      total += myroute.legs[i].distance.value;
-      time +=myroute.legs[i].duration.text;
-      from =myroute.legs[i].start_address;
-      to =myroute.legs[i].end_address;
-    }
-    time = time.replace('hours','H');
-    time = time.replace('mins','M');
-    document.getElementById('duration').innerHTML ="(approx " + time +")";
-    document.getElementById('total').innerHTML ="Walk " + total + " m";
-  }
-  
-  google.maps.event.addDomListener(window,'load',initialize);
-  google.maps.event.addDomListener(window,'load',geoLocation);
 
 
 
@@ -634,61 +493,10 @@
   }
     
 
+  google.maps.event.addDomListener(window,'load',initialize);
+  google.maps.event.addDomListener(window,'load',geoLocation);
 
-  function geoLocation(callback) {
-
-    // Try HTML5 geolocation
-    if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var navigator = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-      
-        /*var alienMarker = {
-          path: 'M 375,8.5 C 226.5,8.5 21.5,102.2 21.5,346 C 21.5,346.8 21.5,347.7 21.5,348.5 C 23.2,591.2 270.1,891.5 375,891.5 C 480.3,891.5 728.5,589.8 728.5,346 C 728.5,102.2 523.5,8.5 375,8.5 z M 57,367.5 C 230,367.5 355,489.5 355,672.5 C 174,672.5 57,555.5 57,367.5 z M 699,367.5 C 699,555.5 579.6,672.5 395,672.5 C 395,489.5 522.5,367.5 699,367.5 z',
-          fillColor: 'orange',
-          fillOpacity: 0.8,
-          scale: 0.05,
-          strokeColor: 'gold',
-          strokeWeight: 1
-        };
-
-        
-        var marker4 = new google.maps.Marker({
-          position:navigator,
-          map:map,
-          icon:alienMarker,
-          draggable:false,
-          animation: google.maps.Animation.DROP,
-          position: navigator,
-          title: "myPosition"
-        });*/
-
-
-  var geomarker = new Marker({
-  map: map,
-  title: 'Map Icons',
-  position: navigator,
-  zIndex: 9,
-  icon: {
-    path: MAP_PIN,
-    fillColor: '#FF4981',
-    fillOpacity: 0.8,
-    scale: 0.3,
-    strokeColor: '#FB2B69',
-    strokeWeight: 1
-  },
-  label: '<i class="map-icon-walking"></i>'
-});
-
-        if(callback && typeof(callback) === "function"){
-          callback(navigator);
-
-        }
-
-
-      });
-
-    }
-  }
+ 
 </script>
 
 
