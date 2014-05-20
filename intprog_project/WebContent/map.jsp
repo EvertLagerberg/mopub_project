@@ -49,14 +49,7 @@
 
 
 
-
-
-
-
-
-
-
-<body onload="startTime()">
+<body>
 
   <!-- Fixed navbar -->
   <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -72,8 +65,8 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-          <li><a href="#search">Search</a></li>
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#search"  id="update">Search</a></li>
           <li><a href="#addevent">Add Event</a></li>
           <li><a href="#update"><span class="glyphicon glyphicon-cog"></span> Update Cal</a></li>
           <li><a href="#about"><span class="glyphicon glyphicon-heart"></span> About</a></li>
@@ -257,10 +250,9 @@
   var list = new Array();
   var timeNow = startTime();
   
-  
   //schemaList är en array med bönor av varje event, som jag skapade upp i en controller.
 
-  <c:forEach items="${daylist}" var="event" varStatus="status">
+  /*<c:forEach items="${daylist}" var="event" varStatus="status">
     var eventEnd ="${event.endtime}";
     var eventEndList = eventEnd.split(" ");
     var eventEndtime = eventEndList[1];
@@ -273,7 +265,7 @@
   
     //Evert:if-satsen här krockar med Tommys grej att när en dag är slut så laddas nästa dagars events in. Men då är ju tiden den dagen "senare" än nästa dags events.
   
-    /*if (eventEnd > timeNow) {
+    if (eventEnd > timeNow) {
       eventObject = new Object();
       eventObject.name = "${event.name}";
       eventObject.description = "${event.description}"; 
@@ -283,7 +275,7 @@
       eventObject.latitude="${event.latitude}";
       eventObject.longitude="${event.longitude}";
       list.push(eventObject);
-    }*/
+    }
       
       eventObject = new Object();
       eventObject.name = "${event.name}";
@@ -298,7 +290,59 @@
       eventObject.latitude="${event.latitude}";
       eventObject.longitude="${event.longitude}";
       list.push(eventObject);
-  </c:forEach>
+  </c:forEach>*/
+
+
+
+      eventObject = new Object();
+      eventObject.name = "Lektion 1";
+      eventObject.description = "${event.description}"; 
+
+      eventObject.startdate = "2014-05-20"; 
+      eventObject.enddate = "2014-05-20";
+
+      eventObject.starttime ="12:00:00"; 
+      eventObject.endtime = "13:00:00";
+      eventObject.room = "Q1";
+      eventObject.latitude=59.34811019897461;
+      eventObject.longitude=18.074687957763672;
+      list.push(eventObject);
+
+
+
+
+
+
+      eventObject = new Object();
+      eventObject.name = "Lektion 2";
+      eventObject.description = "${event.description}"; 
+
+      eventObject.startdate = "2014-05-20"; 
+      eventObject.enddate = "2014-05-20";
+
+      eventObject.starttime ="14:00:00"; 
+      eventObject.endtime = "17:00:00";
+      eventObject.room = "Q1";
+      eventObject.latitude=59.3536376953125;
+      eventObject.longitude=18.06534767150879;
+      list.push(eventObject);
+
+            eventObject = new Object();
+      eventObject.name = "Lektion 3";
+      eventObject.description = "${event.description}"; 
+
+      eventObject.startdate = "2014-05-20"; 
+      eventObject.enddate = "2014-05-20";
+
+      eventObject.starttime ="14:00:00"; 
+      eventObject.endtime = "17:00:00";
+      eventObject.room = "E1";
+      eventObject.latitude=59.34691619873047;
+      eventObject.longitude=18.073184967041016;
+      list.push(eventObject);
+
+
+
 
 
   
@@ -376,6 +420,19 @@
 
 
       }
+      else{
+      console.log("inne i elsen");
+      var num = i;
+      num = parseInt(num);
+      numBefore = num - 1;
+      markerTimeBefore = markers[numBefore].eTime; //Plockar ut förra markerns sluttid
+      if(startTime<markerTimeBefore){ //om starttime är innan sluttiden
+        eventOverlap(marker); //båda markers sätts till att hoppa
+        var m = markers[numBefore].marker; 
+        eventOverlap(m);
+          }
+          
+        }
 
       var content = infoWindowContent(list[i]);
       var infowindow = new google.maps.InfoWindow()
@@ -404,6 +461,11 @@
       function callDelete(){
         deleteMarker(markEndTime);  
       }
+    }
+    function eventOverlap(marker){
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    console.log("inne") 
+    //Jag tog bort delen som satte animationen till null om man klickade på markern.
     }
   }
 
@@ -545,6 +607,7 @@
 
   //// time and date for the device
   function startTime() {
+	start();
     currentdate=new Date();
     var h=currentdate.getHours();
     var m=currentdate.getMinutes();
@@ -561,6 +624,14 @@
       if (i<10) {i = "0" + i};  // adds zeros in front of numbers < 10
       return i;
     }
+  
+  function start(){
+	  var isUser = <c:out value="${isUser}"/>;
+	   	if(isUser){
+	   		//console.log("hej2")
+	   		$('#update').trigger('click');
+	   		}
+  }
     
 
 

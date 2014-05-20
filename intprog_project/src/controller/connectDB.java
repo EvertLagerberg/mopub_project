@@ -38,7 +38,6 @@ public class connectDB {
 
 			System.err.println("Cannot connect to database server");
 			e.printStackTrace();
-
 		}
 		return conn;
 
@@ -221,6 +220,7 @@ public class connectDB {
 	}
 	
 	public static void insertAltroom (int event_id,String altroom){
+		conn = connect();
 		query = "INSERT INTO altroom (event_id,room) VALUES (?,?)";
 		PreparedStatement pstmt;
 		try {
@@ -232,6 +232,22 @@ public class connectDB {
 		conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	} 
+	
+	public static void deleteEvents (String username){
+		conn = connect();
+		query = "DELETE FROM events WHERE username = ?";
+		PreparedStatement pstmt;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, username);
+			pstmt.executeUpdate();
+		
+		conn.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		

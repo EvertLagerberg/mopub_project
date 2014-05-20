@@ -47,6 +47,7 @@ public class LoginController extends HttpServlet {
 			ArrayList<Event> daylist = getEvents(username); 
 			request.setAttribute("daylist", daylist);
 			try {
+				request.setAttribute("isUser",true);
 				RequestDispatcher rd = request.getRequestDispatcher("map.jsp");
 				rd.forward(request, response);
 			} catch (ServletException e) {
@@ -57,7 +58,8 @@ public class LoginController extends HttpServlet {
 		else{
 				System.out.println("false");
 				try {
-					RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
+					request.setAttribute("isUser",false);
+					RequestDispatcher rd = request.getRequestDispatcher("map.jsp");
 					rd.forward(request, response);
 				} catch (ServletException e) {
 					System.out.print(e.getMessage());
@@ -67,6 +69,7 @@ public class LoginController extends HttpServlet {
 		public static ArrayList<Event> getEvents(String username){
 				ArrayList<Event> eventlist = connectDB.getEvents(username);
 				ArrayList<Event> daylist = new ArrayList<Event>();
+				if (eventlist.size()>0){
 				String startDay = eventlist.get(0).getStarttime().substring(0, 10);
 				for (int i=0; i<eventlist.size()-1; i++){
 					if (eventlist.get(i).getStarttime().substring(0, 10).equals(startDay)){
@@ -88,6 +91,7 @@ public class LoginController extends HttpServlet {
 							}
 						}
 					}
+				}
 				}
 				return daylist;
 	}
