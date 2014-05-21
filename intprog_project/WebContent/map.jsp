@@ -66,11 +66,9 @@
         <ul class="nav navbar-nav">
 
           <li class="active"><a id="map" href="#">Home</a></li>
-          <li><a href="#search">Search</a></li>
-          <li><a href="#addevent">Add Event</a></li>
-          <li><a id="Update" href="#update"><span class="glyphicon glyphicon-cog"></span>Update Cal</a></li>
+          <li><a id="Update" href="#update"><span class="glyphicon glyphicon-cog"></span>Add Cal</a></li>
           <li><a href="#about"><span class="glyphicon glyphicon-heart"></span>About</a></li>
-          <li><a href="//localhost:8888/phpserver/login.php?logout=yes"><span class="glyphicon glyphicon-log-out"></span>)Logout</a></li>
+          <li><a href="//localhost:8888/phpserver/login.php?logout=yes"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
 
         </ul>
       </div><!--/.nav-collapse -->
@@ -123,48 +121,12 @@
   </div>
   </div>
 
-
-
-
-
-
-<!--SEARCH PAGE-->
-<div id="search">
-  <div class="container">
-    <div class="row page">
-
-     <h2>Search Room</h2>
-     <h3> Här lägger vi funktion för att söka på salar</h3>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-
-
-     <br/>
-     <br/>
-
-   </div>
- </div>
-</div>
-
-<!--ADD EVENT PAGE-->
-<div id="addevent">
-  <div class="container">
-    <div class="row page">
-
-   <div id="nextevent_Starttime"> </div >
-
-   </div>
- </div>
-</div>
-
-<!--UPDATEE CAL PAGE-->
+<!--ADD CAL PAGE-->
 <div id="update">
   <div class="container">
     <div class="row page">
 
-     <h2>Uppdatera</h2>
+     <h2>Add calander</h2>
      <h3>Enter the url to your KTH schedule here.</h3>
      <p>When events are entered, they will appear on the map.<br/> If there is already a schedule is added then it will be removed and a new will be added.</p>
 
@@ -504,13 +466,20 @@
 
   function start(){
 	  startTime();
-	  var isUser = <c:out value="${isUser}"/>;
+	  var isUser = <c:out value="${isUser}"/>
+	  var existUser = <c:out value="${existUser}"/>;
+	  	if(!existUser){
+	  		window.location.href = "http://localhost:8888/phpserver/login.php"
+	  	}
+	  	else{
 	   	if(!isUser){
 	   	 	window.location.href = $('#Update').attr('href');
 	   		}
 	   	else{
 	   		window.location.href = $('#map').attr('href');
 	   	}
+
+	  	}
   }
 
 

@@ -4,26 +4,11 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import javax.naming.*;
-import javax.sql.DataSource;
+import java.util.ArrayList;
 
 import controller.connectDB;
 
-import java.sql.PreparedStatement;
-import java.io.IOException;
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import bean.Event;
 
@@ -32,6 +17,43 @@ import bean.Event;
 public class LoginController extends HttpServlet {
 
 	String username;
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession(true);
+		if(null == session.getAttribute("username")){ 
+			System.out.println("nudu");
+			req.setAttribute("daylist", null);
+			req.setAttribute("isUser",true);
+			req.setAttribute("existUser",false);
+			RequestDispatcher rd = req.getRequestDispatcher("map.jsp");
+			rd.forward(req, resp);
+			}
+		username = session.getAttribute("Username").toString();
+		
+		if (connectDB.findUser(username)) {	
+			ArrayList<Event> daylist = getEvents(username); 
+			req.setAttribute("daylist", daylist);
+			try {
+				req.setAttribute("isUser",true);
+				req.setAttribute("existUser",true);
+				RequestDispatcher rd = req.getRequestDispatcher("map.jsp");
+				rd.forward(req, resp);
+			} catch (ServletException e) {
+				System.out.print(e.getMessage());
+			}
+
+		}
+		else{
+				System.out.println("false");
+				try {
+					req.setAttribute("isUser",false);
+					req.setAttribute("existUser",true);
+					RequestDispatcher rd = req.getRequestDispatcher("map.jsp");
+					rd.forward(req, resp);
+				} catch (ServletException e) {
+					System.out.print(e.getMessage());
+				}
+		}
+    }
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -47,6 +69,7 @@ public class LoginController extends HttpServlet {
 			request.setAttribute("daylist", daylist);
 			try {
 				request.setAttribute("isUser",true);
+				request.setAttribute("existUser",true);
 				RequestDispatcher rd = request.getRequestDispatcher("map.jsp");
 				rd.forward(request, response);
 			} catch (ServletException e) {
@@ -58,6 +81,7 @@ public class LoginController extends HttpServlet {
 				System.out.println("false");
 				try {
 					request.setAttribute("isUser",false);
+					request.setAttribute("existUser",true);
 					RequestDispatcher rd = request.getRequestDispatcher("map.jsp");
 					rd.forward(request, response);
 				} catch (ServletException e) {
