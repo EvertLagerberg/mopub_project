@@ -315,11 +315,6 @@
 
   //}
 
-
-  
-
-
-
   var markers = new Array();
   var rendererOptions = { draggable: true}; // Not needed
   var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
@@ -463,7 +458,7 @@
 	  var isUser = <c:out value="${isUser}"/>
 	  var existUser = <c:out value="${existUser}"/>;
 	  	if(!existUser){
-	  		window.location.href = "http://localhost:8888/phpserver/login.php"
+	  		window.location.href = "http://130.229.137.142:8888/phpserver/login.php"
 	  	}
 	  	else{
 	   	if(!isUser){

@@ -103,8 +103,11 @@ public class LoginController extends HttpServlet {
 					for (int m=0; m<daylist.size(); m++){
 						for (int n=m+1; n<daylist.size(); n++){	
 							if (daylist.get(m).getId() == daylist.get(n).getId() ){
-								daylist.get(m).setAltroom(daylist.get(n).getRoom());
+								if(! daylist.get(n).getRoom().equals("Saknas")){
+								    daylist.get(m).setAltroom(daylist.get(n).getRoom());
+								}
 								daylist.remove(n);
+								
 							}
 						}
 						if(daylist.get(m).getRoom().equals("Saknas")){

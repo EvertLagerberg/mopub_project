@@ -180,7 +180,7 @@ public class connectDB {
 		Date date = new Date();
 		String Date = dateFormat.format(date);
 
-		Date = "2014-08-20 08:00:00";
+		Date = "2014-03-14 08:00:00";
 
 		System.out.println(Date);
 
