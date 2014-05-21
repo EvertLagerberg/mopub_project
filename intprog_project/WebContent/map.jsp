@@ -122,22 +122,26 @@
   </div>
   </div>
 
+
+
+
 <!--ADD CAL PAGE-->
 <div id="update">
-  <div class="container">
-    <div class="row page">
+  <div class="container theme-showcase">
+  <div class="page">
+    <div class="jumbotron">
 
-     <h2>Add calander</h2>
-     <h3>Enter the url to your KTH schedule here.</h3>
-     <p>When events are entered, they will appear on the map.<br/> If there is already a schedule is added then it will be removed and a new will be added.</p>
+     <h2>Add calendar</h2>
+     <p>Enter the URL to your KTH schedule here. Once you have entered your URL , your scheduled events will appear on the map. To update your schedule, just enter the link again.</p>
 
-     <h3>Url to ics-file:</h3>
-     <form action="/intprog_project/EventController" method="POST">
+     <form role="form" action="/intprog_project/EventController" method="POST">
       <input type="hidden" name="action" value="addUrl">
-      <input type="text" name="url" value=""><br>
-      <input type="submit" value="Submit">
+      <label for="URL">Schedule URL:</label>
+      <input type="url" class="form-control" id="URL" name="url" value="">
+      <button type="submit" class="btn btn-primary btn-lg center-block" value="Submit" id="submit">Submit</button>
     </form>
 
+  </div>
   </div>
 </div>
 </div>
@@ -145,10 +149,18 @@
 
 
 
+  
+
+
+
+
+
+<!--ABOUT PAGE-->
 <div id="about">
   <div class="container">
-    <div class="row page">
+    <div class="page">
 
+<<<<<<< HEAD
       <!--ABOUT PAGE-->
       <h2>About</h2>
       
@@ -160,6 +172,25 @@
       You can see the exact location for your event, and can get a route to your location of the day</p>
       <br/>
       <p>Today it is limited to location on KTH, but it could easily expand to other organisations as well</p>
+=======
+      
+      
+  <h2 id="history" class="page-header">About</h2>
+      
+  <p class="lead">This web app was made as a project in the course  Mobile development with web technologies (DM2518) Kungliga Tekniska Högskolan,KTH</p>
+
+  <div class="well well-sm">
+  <p>The idea of the site is to use the <a href="https://www.kth.se/social/">KTH Social</a> schedule service to easily find the location for every event and quickly get a quick overview of all the events for a day of lectures, seminars and labs at KTH Campus.</p>
+
+  <p>After exporting your KTH Schedule into this web page, you will be able to see all the events of your schoolday. You can see the exact location for each event, and load a route on how to get there from your current location.</p>
+  
+  <p>Today the service is limited to KTH , but it could easily expand to other organizations as well</p>
+
+  <br/>
+  <p> Team: Tommy Roshult, Kristina Högberg och Evert Lagerberg.</p>
+  </div>
+  
+>>>>>>> branch 'master' of https://github.com/EvertLagerberg/mopub_project.git
      
         
 
@@ -167,6 +198,14 @@
     </div>
   </div>
 </div>
+
+
+  
+
+
+  
+  
+
 
 
 
