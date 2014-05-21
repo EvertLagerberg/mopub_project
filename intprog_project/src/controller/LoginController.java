@@ -115,6 +115,9 @@ public class LoginController extends HttpServlet {
 						}
 					}
 				}
+				for (Event ev :daylist){
+					System.out.println(ev.getAltroom());
+				}
 				}
 				return daylist;
 	}

@@ -225,11 +225,11 @@
   var routeON = false;
   var list = new Array();
   var counter = 1;
-  var timeNow = startTime();
+  var timeNow = "08:00:00";
   
   //schemaList är en array med bönor av varje event, som jag skapade upp i en controller.
 
-  /*<c:forEach items="${daylist}" var="event" varStatus="status">
+  <c:forEach items="${daylist}" var="event" varStatus="status">
     var eventEnd ="${event.endtime}";
     var eventEndList = eventEnd.split(" ");
     var eventEndtime = eventEndList[1];
@@ -239,20 +239,6 @@
     var eventStartList = eventStart.split(" ");
     var eventStarttime = eventStartList[1];
     var eventStartdate = eventStartList[0];
-  
-    //Evert:if-satsen här krockar med Tommys grej att när en dag är slut så laddas nästa dagars events in. Men då är ju tiden den dagen "senare" än nästa dags events.
-  
-    if (eventEnd > timeNow) {
-      eventObject = new Object();
-      eventObject.name = "${event.name}";
-      eventObject.description = "${event.description}"; 
-      eventObject.starttime = eventStart; 
-      eventObject.endtime = eventEnd;
-      eventObject.room = "${event.room}";
-      eventObject.latitude="${event.latitude}";
-      eventObject.longitude="${event.longitude}";
-      list.push(eventObject);
-    }
       
       eventObject = new Object();
       eventObject.name = "${event.name}";
@@ -266,13 +252,14 @@
       eventObject.room = "${event.room}";
       eventObject.latitude="${event.latitude}";
       eventObject.longitude="${event.longitude}";
+      eventObject.altroom="${event.altroom}";
       list.push(eventObject);
-  </c:forEach>*/
+  </c:forEach>
 
 
 //  if (eventEnd > timeNow) {
 
-
+/*
       eventObject = new Object();
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
@@ -322,7 +309,7 @@
       list.push(eventObject);
 
 
-
+*/
   //}
 
 
@@ -465,6 +452,7 @@
     }
 
   function start(){
+
 	  startTime();
 	  var isUser = <c:out value="${isUser}"/>
 	  var existUser = <c:out value="${existUser}"/>;

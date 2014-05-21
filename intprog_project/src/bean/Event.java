@@ -125,7 +125,7 @@ public class Event {
 		return latitude;
 	}
 	
-	public String getAltroom(String e) {
+	public String getAltroom() {
 		String rooms ="";
 		if(altroom != null){
 			for(String alt:altroom){
@@ -134,7 +134,7 @@ public class Event {
 			return rooms;
 			
 		}
-		return null;
+		return "";
 	}
 
 	// end of class
