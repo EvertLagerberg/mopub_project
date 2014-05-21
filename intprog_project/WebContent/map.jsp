@@ -122,22 +122,26 @@
   </div>
   </div>
 
+
+
+
 <!--ADD CAL PAGE-->
 <div id="update">
-  <div class="container">
-    <div class="row page">
+  <div class="container theme-showcase">
+  <div class="page">
+    <div class="jumbotron">
 
-     <h2>Add calander</h2>
-     <h3>Enter the url to your KTH schedule here.</h3>
-     <p>When events are entered, they will appear on the map.<br/> If there is already a schedule is added then it will be removed and a new will be added.</p>
+     <h2>Add calendar</h2>
+     <p>Enter the URL to your KTH schedule here. Once you have entered your URL , your scheduled events will appear on the map. To update your schedule, just enter the link again.</p>
 
-     <h3>Url to ics-file:</h3>
-     <form action="/intprog_project/EventController" method="POST">
+     <form role="form" action="/intprog_project/EventController" method="POST">
       <input type="hidden" name="action" value="addUrl">
-      <input type="text" name="url" value=""><br>
-      <input type="submit" value="Submit">
+      <label for="URL">Schedule URL:</label>
+      <input type="url" class="form-control" id="URL" name="url" value="">
+      <button type="submit" class="btn btn-primary btn-lg center-block" value="Submit" id="submit">Submit</button>
     </form>
 
+  </div>
   </div>
 </div>
 </div>
@@ -145,22 +149,49 @@
 
 
 
+  
+
+
+
+
+
+<!--ABOUT PAGE-->
 <div id="about">
   <div class="container">
-    <div class="row page">
+    <div class="page">
 
-      <!--ABOUT PAGE-->
-      <h2>About</h2>
-      <h3> Här lägger vi  information om projektet</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
+      
+      
+  <h2 id="history" class="page-header">About</h2>
+      
+  <p class="lead">This web app was made as a project in the course  Mobile development with web technologies (DM2518) Kungliga Tekniska Högskolan,KTH</p>
+
+  <div class="well well-sm">
+  <p>The idea of the site is to use the <a href="https://www.kth.se/social/">KTH Social</a> schedule service to easily find the location for every event and quickly get a quick overview of all the events for a day of lectures, seminars and labs at KTH Campus.</p>
+
+  <p>After exporting your KTH Schedule into this web page, you will be able to see all the events of your schoolday. You can see the exact location for each event, and load a route on how to get there from your current location.</p>
+  
+  <p>Today the service is limited to KTH , but it could easily expand to other organizations as well</p>
+
+  <br/>
+  <p> Team: Tommy Roshult, Kristina Högberg och Evert Lagerberg.</p>
+  </div>
+  
+     
+        
 
 
     </div>
   </div>
 </div>
+
+
+  
+
+
+  
+  
+
 
 
 
@@ -226,7 +257,7 @@
   var routeON = false;
   var list = new Array();
   var counter = 1;
-  var timeNow = startTime();
+  var timeNow = "08:00:00";
   
   //schemaList är en array med bönor av varje event, som jag skapade upp i en controller.
 
@@ -240,8 +271,7 @@
     var eventStartList = eventStart.split(" ");
     var eventStarttime = eventStartList[1];
     var eventStartdate = eventStartList[0];
-  
- 
+
       
       eventObject = new Object();
       eventObject.name = "${event.name}";
@@ -255,7 +285,9 @@
       eventObject.room = "${event.room}";
       eventObject.latitude="${event.latitude}";
       eventObject.longitude="${event.longitude}";
-      eventObject.altroom="";
+
+      eventObject.altroom="${event.altroom}";
+
       list.push(eventObject);
   </c:forEach>
 
@@ -264,6 +296,7 @@
 
 
       /*eventObject = new Object();
+
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
       eventObject.starttime ="22:40:00"; 
@@ -311,14 +344,7 @@
       eventObject.altroom="";
       list.push(eventObject);*/
 
-
-
- 
-
-
-  
-
-
+  //}
 
   var markers = new Array();
   var rendererOptions = { draggable: true}; // Not needed
@@ -458,6 +484,7 @@
     }
 
   function start(){
+
 	  startTime();
 	  var isUser = <c:out value="${isUser}"/>
 	  var existUser = <c:out value="${existUser}"/>;

@@ -32,11 +32,9 @@ public class connectDB {
 			Database("jdbc/db");
 			conn = dataSource.getConnection();
 
-			System.out.println("Database connection established");
 
 		} catch (Exception e) {
 
-			System.err.println("Cannot connect to database server");
 			e.printStackTrace();
 		}
 		return conn;
@@ -97,12 +95,11 @@ public class connectDB {
 			pstmt.setInt(1, event_id);
 			pstmt.setString(2, room);
 			pstmt.executeUpdate();
-			
 			conn.close();
 
 		} catch (SQLException e) {
+			conn = connect();
 			insertAltroom(event_id,room);
-			System.out.println("--------------------------->" + room);
 			query = "INSERT INTO events_locations (event_id,room) VALUES (?,?)";
 			PreparedStatement pstmt;
 			try {
@@ -182,6 +179,9 @@ public class connectDB {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String Date = dateFormat.format(date);
+
+		Date = "2014-03-14 08:00:00";
+
 		System.out.println(Date);
 
 		ArrayList<Event> list = new ArrayList<Event>();
@@ -220,7 +220,7 @@ public class connectDB {
 	}
 	
 	public static void insertAltroom (int event_id,String altroom){
-		conn = connect();
+		
 		query = "INSERT INTO altroom (event_id,room) VALUES (?,?)";
 		PreparedStatement pstmt;
 		try {
@@ -229,7 +229,7 @@ public class connectDB {
 			pstmt.setString(2, altroom);
 			pstmt.executeUpdate();
 		
-		conn.close();
+	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -272,12 +272,6 @@ public class connectDB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return altrooms;
-		
+		return altrooms;	
 	}
-	
-	
-	
-	
-//end of class	
 }

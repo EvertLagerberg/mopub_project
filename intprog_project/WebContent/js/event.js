@@ -37,16 +37,24 @@
 
 
     function infoWindowContent(event){
+    	
+    	if(event.room === "Saknas" && event.altroom ==""){
 
-    if(event.room === "Saknas"){
+    	     var contentString = '<div id="content">'+
+    	    '<h4>'+event.name+'</h4>'+
+    	    '<p><b>'+ event.starttime + ' - '+event.endtime +'</p>'+
+    	    '</div>'+
+    	    '<p>Location is missing.</p>'; 
 
-     var contentString = '<div id="content">'+
-    '<h4>'+event.name+'</h4>'+
-    '<p><b>'+ event.starttime + ' - '+event.endtime +'</p>'+
-    '</div>'+
-    '<p>Given location is invalid</p>'; 
-
-    } else if(event.altroom !=""){
+    	    } else if(event.room === "Saknas" && event.altroom !=""){
+    	    	var contentString = '<div id="content">'+
+    	        '<h4>'+event.name+'</h4>'+
+    	        '<p><b>'+ event.starttime + ' - '+event.endtime +'</p>'+
+    	        '<p>' +event.altroom+' Coordinates for the location couldn\'t be found!</p>'+
+    	        '</div>'; 
+    	    	
+    	    }
+   else if(event.altroom !=""){
 
     console.log(event.altroom);
     var contentString = '<div id="content">'+
