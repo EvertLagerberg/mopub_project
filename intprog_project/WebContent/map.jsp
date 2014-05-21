@@ -66,11 +66,9 @@
         <ul class="nav navbar-nav">
 
           <li class="active"><a id="map" href="#">Home</a></li>
-          <li><a href="#search">Search</a></li>
-          <li><a href="#addevent">Add Event</a></li>
-          <li><a id="Update" href="#update"><span class="glyphicon glyphicon-cog"></span>Update Cal</a></li>
+          <li><a id="Update" href="#update"><span class="glyphicon glyphicon-cog"></span>Add Cal</a></li>
           <li><a href="#about"><span class="glyphicon glyphicon-heart"></span>About</a></li>
-          <li><a href="//localhost:8888/phpserver/login.php?logout=yes"><span class="glyphicon glyphicon-log-out"></span>)Logout</a></li>
+          <li><a href="//localhost:8888/phpserver/login.php?logout=yes"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
 
         </ul>
       </div><!--/.nav-collapse -->
@@ -97,8 +95,9 @@
     
 <div class="col-xs-8">
 
-  
+   
    <div id="nextevent_Room" class="small"> </div>
+   <div id="nextevent_Date" class="small"> </div>
    <div id="nextevent_Starttime" class="small"> </div >
    <div id="nextevent_Late" class="small"> </div >
   
@@ -123,48 +122,12 @@
   </div>
   </div>
 
-
-
-
-
-
-<!--SEARCH PAGE-->
-<div id="search">
-  <div class="container">
-    <div class="row page">
-
-     <h2>Search Room</h2>
-     <h3> Här lägger vi funktion för att söka på salar</h3>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada sollicitudin mauris sit amet auctor. Pellentesque sed tincidunt turpis. Sed a sapien vel nibh sollicitudin condimentum quis id magna. Nam eget sollicitudin massa. Nullam aliquet ullamcorper nisl, quis tempor augue lobortis id. Donec vel placerat nibh. Sed posuere sit amet enim vel scelerisque. Nunc ac elit pharetra nibh scelerisque vehicula et et libero. Vivamus ut lacus lectus. Donec convallis erat sed purus sodales aliquam. Ut non elit non felis volutpat rhoncus id et nunc. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse eget tellus venenatis, adipiscing metus nec, pellentesque est.</p>
-
-
-     <br/>
-     <br/>
-
-   </div>
- </div>
-</div>
-
-<!--ADD EVENT PAGE-->
-<div id="addevent">
-  <div class="container">
-    <div class="row page">
-
-   <div id="nextevent_Starttime"> </div >
-
-   </div>
- </div>
-</div>
-
-<!--UPDATEE CAL PAGE-->
+<!--ADD CAL PAGE-->
 <div id="update">
   <div class="container">
     <div class="row page">
 
-     <h2>Uppdatera</h2>
+     <h2>Add calander</h2>
      <h3>Enter the url to your KTH schedule here.</h3>
      <p>When events are entered, they will appear on the map.<br/> If there is already a schedule is added then it will be removed and a new will be added.</p>
 
@@ -267,7 +230,7 @@
   
   //schemaList är en array med bönor av varje event, som jag skapade upp i en controller.
 
-  /*<c:forEach items="${daylist}" var="event" varStatus="status">
+  <c:forEach items="${daylist}" var="event" varStatus="status">
     var eventEnd ="${event.endtime}";
     var eventEndList = eventEnd.split(" ");
     var eventEndtime = eventEndList[1];
@@ -278,23 +241,11 @@
     var eventStarttime = eventStartList[1];
     var eventStartdate = eventStartList[0];
   
-    //Evert:if-satsen här krockar med Tommys grej att när en dag är slut så laddas nästa dagars events in. Men då är ju tiden den dagen "senare" än nästa dags events.
-  
-    if (eventEnd > timeNow) {
-      eventObject = new Object();
-      eventObject.name = "${event.name}";
-      eventObject.description = "${event.description}"; 
-      eventObject.starttime = eventStart; 
-      eventObject.endtime = eventEnd;
-      eventObject.room = "${event.room}";
-      eventObject.latitude="${event.latitude}";
-      eventObject.longitude="${event.longitude}";
-      list.push(eventObject);
-    }
+ 
       
       eventObject = new Object();
       eventObject.name = "${event.name}";
-      eventObject.description = "${event.description}"; 
+      
 
       eventObject.startdate = eventStartdate; 
       eventObject.enddate = eventEnddate;
@@ -304,14 +255,15 @@
       eventObject.room = "${event.room}";
       eventObject.latitude="${event.latitude}";
       eventObject.longitude="${event.longitude}";
+      eventObject.altroom="";
       list.push(eventObject);
-  </c:forEach>*/
+  </c:forEach>
 
 
-//  if (eventEnd > timeNow) {
 
 
-      eventObject = new Object();
+
+      /*eventObject = new Object();
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
       eventObject.starttime ="22:40:00"; 
@@ -357,11 +309,11 @@
       eventObject.latitude=59.347330625522105;
       eventObject.longitude=18.07062953710556;
       eventObject.altroom="";
-      list.push(eventObject);
+      list.push(eventObject);*/
 
 
 
-  //}
+ 
 
 
   
@@ -401,7 +353,7 @@
 
   if (list[i].room === "Saknas"){
     var icon = {
-     url: "Marker-Symbols/saknasred.png", // url
+     url: "Marker-Symbols/redquestion.png", // url
      scaledSize: new google.maps.Size(65, 62) // size
     };
 
@@ -427,10 +379,13 @@
 
 
       var eTime = list[i].endtime;
+      var eDate = list[i].eventStartdate;
+      console.log(eDate);
       marker.setMap(map);
       var markObject = new Object();
       markObject.marker = marker;
       markObject.eTime = eTime;
+      markObject.eDate = eDate;
       markers.push(markObject);
       var markerTimeNow = list[i].starttime;
 
@@ -504,13 +459,20 @@
 
   function start(){
 	  startTime();
-	  var isUser = <c:out value="${isUser}"/>;
+	  var isUser = <c:out value="${isUser}"/>
+	  var existUser = <c:out value="${existUser}"/>;
+	  	if(!existUser){
+	  		window.location.href = "http://localhost:8888/phpserver/login.php"
+	  	}
+	  	else{
 	   	if(!isUser){
 	   	 	window.location.href = $('#Update').attr('href');
 	   		}
 	   	else{
 	   		window.location.href = $('#map').attr('href');
 	   	}
+
+	  	}
   }
 
 

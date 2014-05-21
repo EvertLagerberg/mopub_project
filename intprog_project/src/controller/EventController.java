@@ -34,6 +34,43 @@ public class EventController extends HttpServlet {
 	
 	static String username_FORM = "";
 	static String username;
+	
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession(true);
+		if(null == session.getAttribute("username")){ 
+			System.out.println("nudu");
+			req.setAttribute("daylist", null);
+			req.setAttribute("isUser",true);
+			req.setAttribute("existUser",false);
+			RequestDispatcher rd = req.getRequestDispatcher("map.jsp");
+			rd.forward(req, resp);
+			}
+		username = session.getAttribute("Username").toString();
+		System.out.println("---------------->" + "=" + username);
+		if (connectDB.findUser(username)) {	
+			ArrayList<Event> daylist = LoginController.getEvents(username); 
+			req.setAttribute("daylist", daylist);
+			try {
+				req.setAttribute("isUser",true);
+				req.setAttribute("existUser",true);
+				RequestDispatcher rd = req.getRequestDispatcher("map.jsp");
+				rd.forward(req, resp);
+			} catch (ServletException e) {
+				System.out.print(e.getMessage());
+			}
+		}
+		else{
+			System.out.println("false");
+			try {
+				req.setAttribute("isUser",false);
+				req.setAttribute("existUser",true);
+				RequestDispatcher rd = req.getRequestDispatcher("map.jsp");
+				rd.forward(req, resp);
+			} catch (ServletException e) {
+				System.out.print(e.getMessage());
+			}
+	}
+		}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -50,6 +87,7 @@ public class EventController extends HttpServlet {
 			try {
 				request.setAttribute("daylist", daylist);
 				request.setAttribute("isUser",true);
+				request.setAttribute("existUser",true);
 				RequestDispatcher rd = request.getRequestDispatcher("map.jsp");
 				rd.forward(request, response);
 			} catch (ServletException e) {

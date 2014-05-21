@@ -181,7 +181,7 @@ public class connectDB {
 		conn = connect();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
-		String Date = dateFormat.format(date).substring(0, 10) + " 00:01:01";
+		String Date = dateFormat.format(date);
 		System.out.println(Date);
 
 		ArrayList<Event> list = new ArrayList<Event>();

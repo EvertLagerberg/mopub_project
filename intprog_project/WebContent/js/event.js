@@ -3,8 +3,13 @@
 
         
         document.getElementById('nextevent_Room').innerHTML = "Next event: in " + "<span class='badge'>"+event.room+"</span>";
-        
+        document.getElementById('nextevent_Date').innerHTML = 'starts on <span class="badge">'+event.startdate+'</span>';
+          
+
           var deadline = Date.parse(event.starttime);
+
+
+
           
         $('#nextevent_Starttime').countdown({until: deadline, onExpiry:countUp, expiryText: '<div class="over">has already started</div>', alwaysExpire: true, compact: true, format: 'HMS',
     layout: 'starts in {hnn}{sep}{mnn}{sep}{snn}'});
@@ -49,12 +54,9 @@
     '<p><span class="badge">'+event.room+'</span> '+event.altroom+'</p>'+
     '<p><b>'+ event.starttime + ' - '+event.endtime +'</p>'+
     '</div>'+
-    '<br><div class="btn-group">'+
+    '<br>'+
     '<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
-    'class="btn btn-primary btn-sm center-block" id="route">Route Here</button>'+
-    '<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
-    'class="btn btn-success btn-sm center-block" id="choose">Choose</button>'+
-    '</div';
+    'class="btn btn-primary btn-sm center-block" id="route">Route Here</button>';
 
 
 
@@ -80,12 +82,9 @@
     '<p><span class="badge">'+event.room+'</span></p>'+
     '<p><b>'+ event.starttime + ' - '+event.endtime +'</p>'+
     '</div>'+
-    '<br><div class="btn-group">'+
+    '<br>'+
     '<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
-    'class="btn btn-primary btn-sm center-block" id="route">Route Here</button>'+
-    '<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
-    'class="btn btn-success btn-sm center-block" id="choose">Choose</button>'+
-    '</div';
+    'class="btn btn-primary btn-sm center-block" id="route">Route Here</button>';
     }
     return contentString;
   }
@@ -94,7 +93,12 @@
 
     function deleteMarker(time) {
       console.log("deleteMarker");
+      var myDate=new Date();
+      myDate.setDate(myDate.getDate());
+      console.log(myDate);
+
     for(var i = 0; i < markers.length; i++){ 
+      if(markers[i].eDate == myDate){
       if(markers[i].eTime==time){
         var marker = markers[i].marker;
         console.log("setMapNull");
@@ -107,6 +111,7 @@
         }
       }
     }
+    }
   }
 
 
@@ -115,7 +120,7 @@
     console.log("overlap");
 
     var icon = {
-     url: "Marker-Symbols/krockorange.png", // url
+     url: "Marker-Symbols/orangeexclamation.png", // url
      scaledSize: new google.maps.Size(65, 62) // size
     };
 
