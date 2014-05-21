@@ -95,8 +95,9 @@
     
 <div class="col-xs-8">
 
-  
+   
    <div id="nextevent_Room" class="small"> </div>
+   <div id="nextevent_Date" class="small"> </div>
    <div id="nextevent_Starttime" class="small"> </div >
    <div id="nextevent_Late" class="small"> </div >
   
@@ -239,10 +240,11 @@
     var eventStartList = eventStart.split(" ");
     var eventStarttime = eventStartList[1];
     var eventStartdate = eventStartList[0];
+
       
       eventObject = new Object();
       eventObject.name = "${event.name}";
-      eventObject.description = "${event.description}"; 
+      
 
       eventObject.startdate = eventStartdate; 
       eventObject.enddate = eventEnddate;
@@ -252,15 +254,18 @@
       eventObject.room = "${event.room}";
       eventObject.latitude="${event.latitude}";
       eventObject.longitude="${event.longitude}";
+
       eventObject.altroom="${event.altroom}";
+
       list.push(eventObject);
   </c:forEach>
 
 
-//  if (eventEnd > timeNow) {
 
-/*
-      eventObject = new Object();
+
+
+      /*eventObject = new Object();
+
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
       eventObject.starttime ="22:40:00"; 
@@ -306,10 +311,8 @@
       eventObject.latitude=59.347330625522105;
       eventObject.longitude=18.07062953710556;
       eventObject.altroom="";
-      list.push(eventObject);
+      list.push(eventObject);*/
 
-
-*/
   //}
 
 
@@ -350,7 +353,7 @@
 
   if (list[i].room === "Saknas"){
     var icon = {
-     url: "Marker-Symbols/saknasred.png", // url
+     url: "Marker-Symbols/redquestion.png", // url
      scaledSize: new google.maps.Size(65, 62) // size
     };
 
@@ -376,10 +379,13 @@
 
 
       var eTime = list[i].endtime;
+      var eDate = list[i].eventStartdate;
+      console.log(eDate);
       marker.setMap(map);
       var markObject = new Object();
       markObject.marker = marker;
       markObject.eTime = eTime;
+      markObject.eDate = eDate;
       markers.push(markObject);
       var markerTimeNow = list[i].starttime;
 
