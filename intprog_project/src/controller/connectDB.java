@@ -131,7 +131,8 @@ public class connectDB {
 			System.out.println(e);
 		}
 	}
-		
+	
+	//Insert locations and positions
 	public static void insertLocation(String room, double longitude,
 			double latitude) {
 		conn = connect();
@@ -174,16 +175,13 @@ public class connectDB {
 		return null;
 	}
 	
+	//Get the events of the day
 	public static ArrayList<Event> getEvents(String username) {
 		conn = connect();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String Date = dateFormat.format(date);
-
-		Date = "2014-03-14 08:00:00";
-
-		System.out.println(Date);
-
+		//Date = "2014-05-14 07:00:00";
 		ArrayList<Event> list = new ArrayList<Event>();
 		try {
 			ResultSet rs = null;
@@ -219,6 +217,7 @@ public class connectDB {
 		return list;
 	}
 	
+	//Insert alt room
 	public static void insertAltroom (int event_id,String altroom){
 		
 		query = "INSERT INTO altroom (event_id,room) VALUES (?,?)";
@@ -237,6 +236,7 @@ public class connectDB {
 		
 	} 
 	
+	//delete events from user
 	public static void deleteEvents (String username){
 		conn = connect();
 		query = "DELETE FROM events WHERE username = ?";
@@ -252,7 +252,7 @@ public class connectDB {
 		}
 		
 	} 
-	
+	 // get alt room
 	public static ArrayList<String> getAltroom (int event_id){
 		query = "SELECT * FROM altroom where event_id = ?";
 		PreparedStatement pstmt;

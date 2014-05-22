@@ -60,7 +60,6 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Mopub</a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
@@ -147,33 +146,10 @@
 </div>
 
 
-
-
-  
-
-
-
-
-
 <!--ABOUT PAGE-->
 <div id="about">
   <div class="container">
-    <div class="page">
-
-<<<<<<< HEAD
-      <!--ABOUT PAGE-->
-      <h2>About</h2>
-      
-      <p> This webpage is the result from a project in the couse (DM2518) mobile development with web technologies<br/>
-      the developers behind this site is Tommy Roshult, Kristina Högberg och Evert Lagerberg.<p>
-      <br/>
-      <p>The idea is to easy find the locations on the calander, and fast get a quick overview on all the events for the day, or coming day <br/>
-      After exporting your calander into this side, you will be able to see all the events for the current day.<br/>
-      You can see the exact location for your event, and can get a route to your location of the day</p>
-      <br/>
-      <p>Today it is limited to location on KTH, but it could easily expand to other organisations as well</p>
-=======
-      
+    <div class="page">      
       
   <h2 id="history" class="page-header">About</h2>
       
@@ -189,10 +165,6 @@
   <br/>
   <p> Team: Tommy Roshult, Kristina Högberg och Evert Lagerberg.</p>
   </div>
-  
->>>>>>> branch 'master' of https://github.com/EvertLagerberg/mopub_project.git
-     
-        
 
 
     </div>
@@ -271,7 +243,7 @@
   var routeON = false;
   var list = new Array();
   var counter = 1;
-  var timeNow = "08:00:00";
+  var timeNow = starttime();
   
   //schemaList är en array med bönor av varje event, som jag skapade upp i en controller.
 

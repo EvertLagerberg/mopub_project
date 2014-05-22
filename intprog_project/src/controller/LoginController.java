@@ -17,9 +17,12 @@ import bean.Event;
 public class LoginController extends HttpServlet {
 
 	String username;
+	 // If the controller are beeing call with a Get-request - like from URL
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession(true);
+		//if there is no session cookie called "username"
 		if(null == session.getAttribute("username")){ 
+			//go to loggin
 			System.out.println("nudu");
 			req.setAttribute("daylist", null);
 			req.setAttribute("isUser",true);
@@ -28,11 +31,12 @@ public class LoginController extends HttpServlet {
 			rd.forward(req, resp);
 			}
 		username = session.getAttribute("Username").toString();
-		
+		//if a user exist in the database
 		if (connectDB.findUser(username)) {	
 			ArrayList<Event> daylist = getEvents(username); 
 			req.setAttribute("daylist", daylist);
 			try {
+				//Go to map
 				req.setAttribute("isUser",true);
 				req.setAttribute("existUser",true);
 				RequestDispatcher rd = req.getRequestDispatcher("map.jsp");
@@ -43,6 +47,7 @@ public class LoginController extends HttpServlet {
 
 		}
 		else{
+			//Go to the map, and get relinked to the url site
 				System.out.println("false");
 				try {
 					req.setAttribute("isUser",false);
@@ -54,20 +59,16 @@ public class LoginController extends HttpServlet {
 				}
 		}
     }
-	
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
-	
-		 if (request.getParameterMap().containsKey("username")) {
-	            username = request.getParameter("username");
-	        }
-		
+	// in post request
+	public void doPost(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {	
 		HttpSession session = request.getSession(true);
 		session.setAttribute("Username", username);
+		// If username exist in database
 		if (connectDB.findUser(username)) {	
 			ArrayList<Event> daylist = getEvents(username); 
 			request.setAttribute("daylist", daylist);
 			try {
+				// Go to the map
 				request.setAttribute("isUser",true);
 				request.setAttribute("existUser",true);
 				RequestDispatcher rd = request.getRequestDispatcher("map.jsp");
@@ -78,6 +79,7 @@ public class LoginController extends HttpServlet {
 
 		}
 		else{
+			// Go to the add-cal page if username dont exist in database
 				System.out.println("false");
 				try {
 					request.setAttribute("isUser",false);
@@ -89,6 +91,7 @@ public class LoginController extends HttpServlet {
 				}
 		}
 		} 
+		//Get all events from the next current day
 		public static ArrayList<Event> getEvents(String username){
 				ArrayList<Event> eventlist = connectDB.getEvents(username);
 				ArrayList<Event> daylist = new ArrayList<Event>();
