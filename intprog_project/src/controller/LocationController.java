@@ -44,7 +44,7 @@ import bean.Location;
 
 import java.sql.Timestamp;
 
-
+//Get locations and positions to the 
 public class LocationController extends HttpServlet {
 
 

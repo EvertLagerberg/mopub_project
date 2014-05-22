@@ -150,6 +150,7 @@
 <div id="about">
   <div class="container">
     <div class="page">      
+
       
   <h2 id="history" class="page-header">About</h2>
       

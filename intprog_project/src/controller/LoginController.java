@@ -60,7 +60,8 @@ public class LoginController extends HttpServlet {
 		}
     }
 	// in post request
-	public void doPost(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {	
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {	
 		HttpSession session = request.getSession(true);
 		session.setAttribute("Username", username);
 		// If username exist in database
@@ -79,7 +80,7 @@ public class LoginController extends HttpServlet {
 
 		}
 		else{
-			// Go to the add-cal page if username dont exist in database
+			// Go to the add-cal page if username dont exist in d
 				System.out.println("false");
 				try {
 					request.setAttribute("isUser",false);
@@ -91,7 +92,6 @@ public class LoginController extends HttpServlet {
 				}
 		}
 		} 
-		//Get all events from the next current day
 		public static ArrayList<Event> getEvents(String username){
 				ArrayList<Event> eventlist = connectDB.getEvents(username);
 				ArrayList<Event> daylist = new ArrayList<Event>();
