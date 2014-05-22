@@ -61,15 +61,18 @@ public class LoginController extends HttpServlet {
     }
 	// in post request
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {	
+			throws IOException, ServletException {
+	
+		 if (request.getParameterMap().containsKey("username")) {
+	            username = request.getParameter("username");
+	        }
+		
 		HttpSession session = request.getSession(true);
 		session.setAttribute("Username", username);
-		// If username exist in database
 		if (connectDB.findUser(username)) {	
 			ArrayList<Event> daylist = getEvents(username); 
 			request.setAttribute("daylist", daylist);
 			try {
-				// Go to the map
 				request.setAttribute("isUser",true);
 				request.setAttribute("existUser",true);
 				RequestDispatcher rd = request.getRequestDispatcher("map.jsp");
@@ -80,7 +83,6 @@ public class LoginController extends HttpServlet {
 
 		}
 		else{
-			// Go to the add-cal page if username dont exist in d
 				System.out.println("false");
 				try {
 					request.setAttribute("isUser",false);
