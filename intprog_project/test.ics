@@ -1,0 +1,76 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Mitt schema//kth.se//
+METHOD:PUBLISH
+DESCRIPTION:Ditt personliga schema innehållande schema- och kalenderhänd
+ elser från dina kurser\, program och grupper
+NAME:Mitt schema
+UID:cd95f312-6d27-5b85-b430-0cb141ddf588
+URL:https://www.kth.se/social/user/109779/icalendar/a6f1f1af623b94de1b10b6
+ cc5a9b2e39b2fa6251
+X-PUBLISHED-TTL:PT3H
+X-WR-CALDESC:Ditt personliga schema innehållande schema- och kalenderhän
+ delser från dina kurser\, program och grupper
+X-WR-CALNAME:Mitt schema
+X-WR-RELCALID:cd95f312-6d27-5b85-b430-0cb141ddf588
+BEGIN:VEVENT
+SUMMARY:Föreläsning - Mobilutveckling med webbteknologier (DM2518).\nSe 
+ beskrivning
+DTSTART;VALUE=DATE-TIME:201405022T100000Z
+DTEND;VALUE=DATE-TIME:20140522T120000Z
+DTSTAMP;VALUE=DATE-TIME:20140401T205616Z
+UID:1e6d1d99930e30f39c9d84a85a8f8baa25897a2b
+DESCRIPTION:https://www.kth.se/social/course/DM2518/subgroup/mobut14/event
+ /6ce190d2a5ee5755166a3345427305a1-1/\n\nTillhör: mobut14\n\nVideoförelä
+ sningar\; molntjänster för mobilt (ej i sal Q36)\n\nPaolo Bochini\, Stef
+ ano Buliani\n\nhttp://www.codefessions.com/2013/04/using-cloudbaseio-and-p
+ ubnub-with.html
+LAST-MODIFIED;VALUE=DATE-TIME:20140401T205616Z
+LOCATION:B1
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Föreläsning - Mobilutveckling med webbteknologier (DM2518).\nSe 
+ beskrivning
+DTSTART;VALUE=DATE-TIME:20140522T130000Z
+DTEND;VALUE=DATE-TIME:20140522T150000Z
+DTSTAMP;VALUE=DATE-TIME:20140401T205616Z
+UID:1e6d1d99930e30f39c9d84a85a8f8baa25897a2b
+DESCRIPTION:https://www.kth.se/social/course/DM2518/subgroup/mobut14/event
+ /6ce190d2a5ee5755166a3345427305a1-1/\n\nTillhör: mobut14\n\nVideoförelä
+ sningar\; molntjänster för mobilt (ej i sal Q36)\n\nPaolo Bochini\, Stef
+ ano Buliani\n\nhttp://www.codefessions.com/2013/04/using-cloudbaseio-and-p
+ ubnub-with.html
+LAST-MODIFIED;VALUE=DATE-TIME:20140401T205616Z
+LOCATION:Q36
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Föreläsning - Programutvecklingsteknik.\nSe 
+ beskrivning
+DTSTART;VALUE=DATE-TIME:20140522T130000Z
+DTEND;VALUE=DATE-TIME:20140522T150000Z
+DTSTAMP;VALUE=DATE-TIME:20140401T205616Z
+UID:1e6d1d99930e30f39c9d84a85a8f8baa25897a2b
+DESCRIPTION:https://www.kth.se/social/course/DM2518/subgroup/mobut14/event
+ /6ce190d2a5ee5755166a3345427305a1-1/\n\nTillhör: mobut14\n\nVideoförelä
+ sningar\; molntjänster för mobilt (ej i sal Q36)\n\nPaolo Bochini\, Stef
+ ano Buliani\n\nhttp://www.codefessions.com/2013/04/using-cloudbaseio-and-p
+ ubnub-with.html
+LAST-MODIFIED;VALUE=DATE-TIME:20140401T205616Z
+LOCATION:E51\, E52\, E53
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Laboration - Electrical Engineering\, Basic Course Media (MF1035)
+DTSTART;VALUE=DATE-TIME:20140402T160000Z
+DTEND;VALUE=DATE-TIME:20140402T180000Z
+DTSTAMP;VALUE=DATE-TIME:20140114T055856Z
+UID:2a2b1c6c91e814e8bae331193417eee34d7ce01d
+DESCRIPTION:https://www.kth.se/social/course/MF1035/subgroup/vt-2014-60786
+ /event/b100f5c4b5f20dd6d557f20d10c31bfb-1/\n\nTillhör: VT 2014\, 60786\n\
+ n
+LAST-MODIFIED;VALUE=DATE-TIME:20140114T055856Z
+LOCATION:Elektrolabbet
+STATUS:CONFIRMED
+END:VEVENT

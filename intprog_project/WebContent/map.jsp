@@ -244,11 +244,11 @@
   var routeON = false;
   var list = new Array();
   var counter = 1;
-  var timeNow = starttime();
+  var timeNow = startTime();
   
   //schemaList är en array med bönor av varje event, som jag skapade upp i en controller.
 
-  <c:forEach items="${daylist}" var="event" varStatus="status">
+  /*<c:forEach items="${daylist}" var="event" varStatus="status">
     var eventEnd ="${event.endtime}";
     var eventEndList = eventEnd.split(" ");
     var eventEndtime = eventEndList[1];
@@ -276,13 +276,13 @@
       eventObject.altroom="${event.altroom}";
 
       list.push(eventObject);
-  </c:forEach>
+  </c:forEach>*/
 
 
 
 
 
-      /*eventObject = new Object();
+      eventObject = new Object();
 
       eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
       eventObject.description = "${event.description}"; 
@@ -329,7 +329,7 @@
       eventObject.latitude=59.347330625522105;
       eventObject.longitude=18.07062953710556;
       eventObject.altroom="";
-      list.push(eventObject);*/
+      list.push(eventObject);
 
   //}
 
