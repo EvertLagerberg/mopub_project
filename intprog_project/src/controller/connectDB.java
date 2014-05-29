@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -181,6 +182,7 @@ public class connectDB {
 	public static ArrayList<Event> getEvents(String username) {
 		conn = connect();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Stockholm"));
 		Date date = new Date();
 		String Date = dateFormat.format(date);
 		//Date="2014-08-29";

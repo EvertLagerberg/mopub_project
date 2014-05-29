@@ -140,6 +140,7 @@ public class EventController extends HttpServlet {
 		DateFormat df = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
 		DateFormat new_df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		df.setTimeZone(TimeZone.getTimeZone("GMT"));
+		new_df.setTimeZone(TimeZone.getTimeZone("Europe/Stockholm"));
 
 		for (String s : schema) {
 			if (s.contains("BEGIN:VEVENT")) {
