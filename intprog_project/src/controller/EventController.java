@@ -15,12 +15,13 @@ import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import bean.Event;
+import java.util.TimeZone;
 
+import bean.Event;
 
 import java.net.URL;
 
-import net.fortuna.ical4j.model.*;
+
 
 
 public class EventController extends HttpServlet {
@@ -138,7 +139,7 @@ public class EventController extends HttpServlet {
 		java.util.Date event_endtime = null;
 		DateFormat df = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
 		DateFormat new_df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		df.setTimeZone(TimeZone.getTimeZone("UTC"));
+		df.setTimeZone(TimeZone.getTimeZone("GMT"));
 
 		for (String s : schema) {
 			if (s.contains("BEGIN:VEVENT")) {

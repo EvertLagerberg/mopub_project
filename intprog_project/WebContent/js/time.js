@@ -7,7 +7,7 @@
       setTimeout(callDelete,timeLeft); //Jag försökte att anropa deleteMarker direkt här, men det fungerade inte. 
                         //Därav funktionen callDelete
       function callDelete(){
-        console.log("callDeletet");
+        console.log("callDelete");
         deleteMarker(markEndTime);  
       }
     }

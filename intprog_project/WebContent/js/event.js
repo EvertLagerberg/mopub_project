@@ -53,11 +53,6 @@ function infoWindowContent(event){
 
 
 
-
-
-
-
-
 	else {
 
 
@@ -78,10 +73,6 @@ function infoWindowContent(event){
 
 function deleteMarker(time) {
 	console.log("deleteMarker");
-	var myDate=new Date();
-	myDate.setDate(myDate.getDate());
-	console.log(myDate);
-
 	for(var i = 0; i < markers.length; i++){ 
 		if(markers[i].eDate == myDate){
 			if(markers[i].eTime==time){
@@ -92,10 +83,9 @@ function deleteMarker(time) {
 				if((markers.length-1)!=i){
 					markers[i+1].marker.setAnimation(google.maps.Animation.BOUNCE); //Nästa marker hoppar
 					nextEvent(list[i+1]);
-
 				}
 				else{
-					window.alert("There are no more events today, to see your next events refresh your browser");
+					window.alert("There are no more events today, to see your next events refresh your browser.");
 				}
 			}
 		}
@@ -113,9 +103,6 @@ function eventOverlap(marker){
 	};
 
 	marker.setIcon(icon);
-
-
-	//Jag tog bort delen som satte animationen till null om man klickade på markern.
 }
 
 

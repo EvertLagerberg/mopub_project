@@ -180,6 +180,7 @@ public class connectDB {
 		conn = connect();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
+		System.out.println("we use this date " + date);
 		String Date = dateFormat.format(date);
 		//Date = "2014-05-14 07:00:00";
 		ArrayList<Event> list = new ArrayList<Event>();
