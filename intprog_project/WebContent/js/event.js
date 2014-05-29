@@ -78,10 +78,10 @@ function deleteMarker(time) {
 			if(markers[i].eTime==time){
 				var marker = markers[i].marker;
 				console.log("setMapNull");
-				marker.setMap(null); //Marker tas bort från kartan
+				marker.setMap(null); //Marker tas bort fr??n kartan
 
 				if((markers.length-1)!=i){
-					markers[i+1].marker.setAnimation(google.maps.Animation.BOUNCE); //Nästa marker hoppar
+					markers[i+1].marker.setAnimation(google.maps.Animation.BOUNCE); //N??sta marker hoppar
 					nextEvent(list[i+1]);
 				}
 				else{

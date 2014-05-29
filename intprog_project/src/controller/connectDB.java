@@ -95,6 +95,7 @@ public class connectDB {
 			pstmt.setInt(1, event_id);
 			pstmt.setString(2, room);
 			pstmt.executeUpdate();
+			System.out.println(room + " ------------>Normal");
 			conn.close();
 
 		} catch (SQLException e) {
@@ -108,6 +109,7 @@ public class connectDB {
 				pstmt.setInt(1, event_id);
 				pstmt.setString(2, room);
 				pstmt.executeUpdate();
+				System.out.println(room + " ------------>Saknas");
 				conn.close();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -180,9 +182,8 @@ public class connectDB {
 		conn = connect();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
-		System.out.println("we use this date " + date);
 		String Date = dateFormat.format(date);
-		//Date = "2014-05-14 07:00:00";
+		//Date="2014-08-29";
 		ArrayList<Event> list = new ArrayList<Event>();
 		try {
 			ResultSet rs = null;
@@ -198,6 +199,7 @@ public class connectDB {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Event e = new Event();
+				System.out.println(rs.getInt("id"));
 				e.setId(rs.getInt("id"));
 				e.setName(rs.getString("name"));
 				e.setDescription(rs.getString("description"));
@@ -265,7 +267,7 @@ public class connectDB {
 			pstmt.setInt(1, event_id);
 			rs = pstmt.executeQuery();
 			while (rs.next()){
-				altrooms.add(Integer.toString(rs.getInt("event_id"))+":"+rs.getString("room"));
+				altrooms.add(rs.getString("room"));
 			}
 		conn.close();
 	

@@ -101,30 +101,29 @@ public class LoginController extends HttpServlet {
 				String startDay = eventlist.get(0).getStarttime().substring(0, 10);
 				for (int i=0; i<eventlist.size()-1; i++){
 					if (eventlist.get(i).getStarttime().substring(0, 10).equals(startDay)){
+						System.out.println("Dagens event: "+eventlist.get(i).getId());
 						daylist.add(eventlist.get(i));
 					}
 				}
 				if (daylist.size()>1){
 					for (int m=0; m<daylist.size(); m++){
+						System.out.println(daylist.get(m).getId());
 						for (int n=m+1; n<daylist.size(); n++){	
 							if (daylist.get(m).getId() == daylist.get(n).getId() ){
-								if(! daylist.get(n).getRoom().equals("Saknas")){
-								    daylist.get(m).setAltroom(daylist.get(n).getRoom());
-								}
+								daylist.get(m).setAltroom(daylist.get(n).getRoom());
 								daylist.remove(n);
-								
+								n--;
 							}
-						}
-						if(daylist.get(m).getRoom().equals("Saknas")){
-							ArrayList<String> altrooms = connectDB.getAltroom(daylist.get(m).getId());
-							for (String string:altrooms){
-								daylist.get(m).setAltroom(string);
-							}
-						}
 					}
 				}
+				}
 				for (Event ev :daylist){
-					System.out.println(ev.getAltroom());
+					if(ev.getRoom().equals("Saknas")){
+						ArrayList<String> altrooms = connectDB.getAltroom(ev.getId());
+						for (String string:altrooms){
+							ev.setAltroom(string);
+						}
+					}
 				}
 				}
 				return daylist;

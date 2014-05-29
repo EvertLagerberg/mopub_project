@@ -3,9 +3,9 @@
       var markEndTime = markers[count].eTime;
       var end = convertTime(markEndTime); //Tiden konverteras till millisekunder
       var timeTemp = convertTime(timeNow);
-      timeLeft = end-timeTemp; //Tiden som är kvar tills markern ska försvinna
-      setTimeout(callDelete,timeLeft); //Jag försökte att anropa deleteMarker direkt här, men det fungerade inte. 
-                        //Därav funktionen callDelete
+      timeLeft = end-timeTemp; //Tiden som ??r kvar tills markern ska f??rsvinna
+      setTimeout(callDelete,timeLeft); //Jag f??rs??kte att anropa deleteMarker direkt h??r, men det fungerade inte. 
+                        //D??rav funktionen callDelete
       function callDelete(){
         console.log("callDelete");
         deleteMarker(markEndTime);  
