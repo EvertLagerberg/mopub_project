@@ -99,15 +99,22 @@ public class LoginController extends HttpServlet {
 				ArrayList<Event> daylist = new ArrayList<Event>();
 				if (eventlist.size()>0){
 				String startDay = eventlist.get(0).getStarttime().substring(0, 10);
-				for (int i=0; i<eventlist.size()-1; i++){
+				for(Event ev:eventlist){
+					System.out.println("Uthämtad--->"+ ev.getId());
+				}
+				
+				for (int i=0; i<eventlist.size(); i++){
 					if (eventlist.get(i).getStarttime().substring(0, 10).equals(startDay)){
-						System.out.println("Dagens event: "+eventlist.get(i).getId());
 						daylist.add(eventlist.get(i));
+						System.out.println("Inlagd--->"+eventlist.get(i).getId());
 					}
+				}
+				for(Event ev:daylist){
+					System.out.println("Skickad--->"+ ev.getId());
 				}
 				if (daylist.size()>1){
 					for (int m=0; m<daylist.size(); m++){
-						System.out.println(daylist.get(m).getId());
+						
 						for (int n=m+1; n<daylist.size(); n++){	
 							if (daylist.get(m).getId() == daylist.get(n).getId() ){
 								daylist.get(m).setAltroom(daylist.get(n).getRoom());
@@ -118,6 +125,7 @@ public class LoginController extends HttpServlet {
 				}
 				}
 				for (Event ev :daylist){
+				
 					if(ev.getRoom().equals("Saknas")){
 						ArrayList<String> altrooms = connectDB.getAltroom(ev.getId());
 						for (String string:altrooms){

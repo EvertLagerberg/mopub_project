@@ -458,7 +458,7 @@
 					};
 				})(marker, content, infowindow));
 			}
-			
+
 			var counter = 0;
 			while (markers.length != counter) { //while loopen körs lika många gånger som det finns markers
 				setTime(counter); //en timeout sätts för alla markers
@@ -522,6 +522,3 @@
 
 </body>
 </html>
-
-
-

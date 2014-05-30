@@ -185,7 +185,9 @@ public class connectDB {
 		dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Stockholm"));
 		Date date = new Date();
 		String Date = dateFormat.format(date);
-		//Date="2014-08-29";
+		System.out.println("serverdate "+ Date.toString());
+		System.out.println("serverdate "+ Date);
+		//Date="2014-02-05";
 		ArrayList<Event> list = new ArrayList<Event>();
 		try {
 			ResultSet rs = null;
@@ -201,7 +203,7 @@ public class connectDB {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Event e = new Event();
-				System.out.println(rs.getInt("id"));
+				System.out.println("till bönan-->"+rs.getInt("id"));
 				e.setId(rs.getInt("id"));
 				e.setName(rs.getString("name"));
 				e.setDescription(rs.getString("description"));
@@ -259,6 +261,7 @@ public class connectDB {
 	} 
 	 // get alt room
 	public static ArrayList<String> getAltroom (int event_id){
+		conn = connect();
 		query = "SELECT * FROM altroom where event_id = ?";
 		PreparedStatement pstmt;
 		ArrayList<String> altrooms = new ArrayList<String>();
