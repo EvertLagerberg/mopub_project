@@ -34,7 +34,7 @@
 	content="black-translucent" />
 
 <!-- Home Screen Title -->
-<title>Google and time</title>
+<title>School Day</title>
 <meta name="apple-mobile-web-app-title" content="Google and Time">
 
 
@@ -74,7 +74,7 @@
 							class="glyphicon glyphicon-cog"></span>Add Cal</a></li>
 					<li><a href="#about"><span
 							class="glyphicon glyphicon-heart"></span>About</a></li>
-					<li><a href="//localhost:8888/phpserver/login.php?logout=yes"><span
+					<li><a href="http://login-schoolday.rhcloud.com/login.php?logout=yes"><span
 							class="glyphicon glyphicon-log-out"></span>Logout</a></li>
 
 				</ul>
@@ -285,77 +285,17 @@
 
 		eventObject = new Object();
 		eventObject.name = "${event.name}";
-
 		eventObject.startdate = eventStartdate;
 		eventObject.enddate = eventEnddate;
-
 		eventObject.starttime = eventStarttime;
 		eventObject.endtime = eventEndtime;
 		eventObject.room = "${event.room}";
 		eventObject.latitude = "${event.latitude}";
 		eventObject.longitude = "${event.longitude}";
-
 		eventObject.altroom = "${event.altroom}";
 
 		list.push(eventObject);
 		</c:forEach>
-
-		/*eventObject = new Object();
-
-		eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
-		eventObject.description = "${event.description}"; 
-		eventObject.starttime ="10:47:00"; 
-		eventObject.endtime = "10:47:30";
-		eventObject.room = "F1";
-		eventObject.latitude=59.34811019897461;
-		eventObject.longitude=18.06534767150879;
-		eventObject.altroom = "E35,E32,";
-		eventObject.startdate = "2014/05/23"; 
-		eventObject.enddate =  "2014/05/23";
-		list.push(eventObject);
-
-
-		eventObject = new Object();
-		eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
-		eventObject.description = "${event.description}"; 
-		eventObject.starttime ="10:48:00"; 
-		eventObject.endtime = "10:48:30";
-		eventObject.room = "F1";
-		eventObject.latitude=59.34811019897462;
-		eventObject.longitude=18.06534767150873;
-		eventObject.altroom = "";
-		eventObject.startdate = "2014/05/23"; 
-		eventObject.enddate =  "2014/05/23";
-		list.push(eventObject);
-
-
-
-
-		eventObject = new Object();
-		eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
-		eventObject.description = "${event.description}"; 
-		eventObject.starttime ="23:00:00"; 
-		eventObject.endtime = "23:30:00";
-		eventObject.room = "Q1";
-		eventObject.latitude=59.35015106201172;
-		eventObject.longitude=18.06719970703125;
-		eventObject.altroom = "";
-		eventObject.startdate = "2014/05/23"; 
-		eventObject.enddate =  "2014/05/23";
-		list.push(eventObject);
-
-		eventObject = new Object();
-		eventObject.name = "Övrigt - Mobilutveckling med webbteknologier (DM2518)";
-		eventObject.description = "${event.description}"; 
-		eventObject.starttime ="23:30:00"; 
-		eventObject.endtime = "23:59:00";
-		eventObject.room = "Saknas";
-		eventObject.latitude=59.347330625522105;
-		eventObject.longitude=18.07062953710556;
-		eventObject.altroom="";
-		eventObject.startdate = "2014/05/23"; 
-		eventObject.enddate =  "2014/05/23";
-		list.push(eventObject);*/
 
 		var markers = new Array();
 		var rendererOptions = {
@@ -416,7 +356,7 @@
 						icon : icon,
 						position : location,
 						map : map,
-						draggable : true, //ändra till false när allt fungerar korrekt
+						draggable : false, 
 						title : list[i].name
 					});
 
@@ -505,7 +445,7 @@
 			var isUser = <c:out value="${isUser}"/>
 			var existUser = <c:out value="${existUser}"/>;
 			if (!existUser) {
-				window.location.href = "http://localhost:8888/phpserver/login.php"
+				window.location.href = "http://login-schoolday.rhcloud.com/login.php";
 			} else {
 				if (!isUser) {
 					window.location.href = $('#Update').attr('href');

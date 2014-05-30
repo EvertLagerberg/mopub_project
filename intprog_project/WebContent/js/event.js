@@ -1,10 +1,11 @@
 function nextEvent(event){
 
-
+	var eventStartTemp = event.starttime.split(".");
+	var eventStart = eventStartTemp[0];
 
 	document.getElementById('nextevent_Room').innerHTML = "Next event: in " + "<span class='badge'>"+event.room+"</span>";
-	document.getElementById('nextevent_Date').innerHTML = 'starts on <span class="badge">'+event.startdate+'</span>';
-	document.getElementById('nextevent_Starttime').innerHTML = 'Starts at ' + event.starttime; 
+	document.getElementById('nextevent_Date').innerHTML = 'Starts on <span class="badge">'+event.startdate+'</span>';
+	document.getElementById('nextevent_Starttime').innerHTML = 'Starts at ' + eventStart; 
 
 	
 
@@ -14,19 +15,23 @@ function nextEvent(event){
 
 
 function infoWindowContent(event){
-
+	var eventStartTemp = event.starttime.split(".");
+	var eventStart = eventStartTemp[0];
+	var eventEndTemp = event.endtime.split(".");
+	var eventEnd = eventEndTemp[0];
+	
 	if(event.room === "Saknas" && event.altroom ==""){
 
 		var contentString = '<div id="content">'+
 		'<h4>'+event.name+'</h4>'+
-		'<p><b>'+ event.starttime + ' - '+event.endtime +'</p>'+
+		'<p><b>'+ eventStart + ' - '+eventEnd +'</p>'+
 		'</div>'+
 		'<p>Location is missing.</p>'; 
 
 	} else if(event.room === "Saknas" && event.altroom !=""){
 		var contentString = '<div id="content">'+
 		'<h4>'+event.name+'</h4>'+
-		'<p><b>'+ event.starttime + ' - '+event.endtime +'</p>'+
+		'<p><b>'+ eventStart + ' - '+eventEnd +'</p>'+
 		'<p>' +event.altroom+' Coordinates for the location couldn\'t be found!</p>'+
 		'</div>'; 
 
@@ -37,7 +42,7 @@ function infoWindowContent(event){
 		var contentString = '<div id="content">'+
 		'<h4>'+event.name+'</h4>'+
 		'<p><span class="badge">'+event.room+'</span> '+event.altroom+'</p>'+
-		'<p><b>'+ event.starttime + ' - '+event.endtime +'</p>'+
+		'<p><b>'+ eventStart + ' - '+eventEnd +'</p>'+
 		'</div>'+
 		'<br>'+
 		'<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
@@ -60,7 +65,7 @@ function infoWindowContent(event){
 		var contentString = '<div id="content">'+
 		'<h4>'+event.name+'</h4>'+
 		'<p><span class="badge">'+event.room+'</span></p>'+
-		'<p><b>'+ event.starttime + ' - '+event.endtime +'</p>'+
+		'<p><b>'+ eventStart + ' - '+eventEnd +'</p>'+
 		'</div>'+
 		'<br>'+
 		'<button type="button" onclick="Route('+event.latitude +',' + event.longitude +')"'+
